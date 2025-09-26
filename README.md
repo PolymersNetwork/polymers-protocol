@@ -9,9 +9,23 @@
 [![AR](https://img.shields.io/badge/Feature-AR_Navigation-00CED1)](https://docs.polymers.io/ar)
 [![ESG](https://img.shields.io/badge/Feature-ESG_Tracking-32CD32)](https://docs.polymers.io/esg)
 
+🌐 **Website & Dashboard Demo**: [https://poiymers-website.vercel.app](https://poiymers-website.vercel.app)
+
+Or in the Screenshots section, above the table:
+
+Check out the live **Website & Dashboard Demo** here: [https://poiymers-website.vercel.app](https://poiymers-website.vercel.app)
+
+| **Web Dashboard** | **Mobile App** | **SmartBin Map / AR** |
+|--------------------|----------------|-----------------------|
+| ![Web Dashboard](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/smartbin-map.png) |
+| Analytics, NFT Twins, ESG | Wallet, AI Chat, Scan-to-Pay | Real-time AR navigation |
+
 **Polymers Protocol** is a production-ready platform integrating **blockchain**, **IoT**, and **ESG** solutions. It provides seamless wallet management, NFT Twins, payments, recycling analytics, AI assistance, and SmartBin integration.
 
 This repository is a **monorepo** housing the **Web Dashboard**, **Mobile App**, and **Backend APIs**.
+
+Got it! We can add a “Website & Dashboard Demo” link prominently in the README right after the title or in the Screenshots section so developers and users can access it quickly. Here’s an example update:
+
 
 ---
 
