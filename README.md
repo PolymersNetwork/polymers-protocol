@@ -1,41 +1,120 @@
-# Polymers Protocol – Full Stack Platform
+Polymers Protocol – Full Stack Platform
 
-Polymers Protocol is a production-ready blockchain + IoT + ESG platform with wallet management, NFT Twins, staking, payments, recycling analytics, AI assistant, and SmartBin/IoT integration. This repository contains a monorepo for Web Dashboard, Mobile App, and Backend APIs.
+Polymers Protocol is a production-ready blockchain + IoT + ESG platform featuring:
+	•	Wallet management
+	•	NFT Twins & staking
+	•	Payments & token swap
+	•	Recycling analytics & ESG dashboards
+	•	AI assistant
+	•	SmartBin / IoT integration
+
+This repository is a monorepo for Web Dashboard, Mobile App, and Backend APIs.
 
 ⸻
 
-🚀 Features
-	•	Wallet & Token Management
-	•	Phantom, Solflare, Backpack, Privy, embedded wallet, biometric fallback
+Screenshots
+
+Web Dashboard
+
+Mobile App
+
+SmartBin Map / AR
+
+
+⸻
+
+Features
+
+<details>
+<summary><b>Wallet & Token Management</b></summary>
+
+
+	•	Supports Phantom, Solflare, Backpack, Privy, embedded wallet, and biometric fallback
 	•	Manage SOL, PLY, CARB, USDC
 	•	Staking & NFT Twin rewards
-	•	NFT Twins
+	•	Automatic updates after blockchain actions
+
+</details>
+
+
+<details>
+<summary><b>NFT Twins</b></summary>
+
+
 	•	Staking, evolution, gamification, reward claiming
 	•	NFT Twin rewards linked to token issuance
-	•	AI Chat
-	•	GPT-powered with PLY token billing
-	•	10 free messages/user, additional messages cost 100,000 PLY per 10 messages
-	•	Saved prompts and quick insert
-	•	Payments & Token Swap
-	•	Jupiter/Raydium swap
+
+</details>
+
+
+<details>
+<summary><b>AI Chat</b></summary>
+
+
+	•	GPT-powered chat with PLY token billing
+	•	Free 10 messages per user; additional 10 messages = 100,000 PLY
+	•	Saved prompts with quick insert
+
+</details>
+
+
+<details>
+<summary><b>Payments & Token Swap</b></summary>
+
+
+	•	Swap tokens using Jupiter/Raydium
 	•	Pay via SOL, PLY, CARB, USDC, or Blinks
 	•	QR/NFC scan-to-pay with fallback
-	•	Recycling & ESG
+
+</details>
+
+
+<details>
+<summary><b>Recycling & ESG</b></summary>
+
+
 	•	Track recycled items, CO2 reduction, plastic collected
-	•	City-level dashboards, leaderboards, and analytics
-	•	Transactions
-	•	Paginated, sortable, wallet-specific views
-	•	SmartBins / IoT / AR
-	•	Real-time maps, AR navigation, offline caching
-	•	Telemetry and predictive maintenance
-	•	Offline & Fallbacks
+	•	City-level dashboards and leaderboards
+
+</details>
+
+
+<details>
+<summary><b>Transactions</b></summary>
+
+
+	•	Paginated, sortable transaction history
+	•	Wallet-specific views
+
+</details>
+
+
+<details>
+<summary><b>SmartBins / IoT / AR</b></summary>
+
+
+	•	Real-time maps with AR navigation
+	•	Offline caching and synchronization
+	•	Telemetry and device status monitoring
+
+</details>
+
+
+<details>
+<summary><b>Offline & Fallbacks</b></summary>
+
+
 	•	Wallet: Embedded → Privy → Biometric
-	•	Maps: AR → Mapbox → Static images
+	•	Map: AR → Mapbox → Static images
 	•	Scanning: QR/NFC → manual input
+
+</details>
+
+
 
 ⸻
 
-🏗️ Monorepo Structure
+Monorepo Structure
 
 /apps
   /web         # Web Dashboard
@@ -43,7 +122,7 @@ Polymers Protocol is a production-ready blockchain + IoT + ESG platform with wal
   /backend     # Fastify / MCP Backend API
   /shared      # Shared components, hooks, types, constants
 
-/app/data      # Sample data, migrations, seed scripts
+/app/data      # Sample data and seeding
 /lib           # Blockchain libraries: Solana, SUI, Helium/DePIN, Metaplex, Jupiter, Raydium, Solana Pay
 /hooks         # React hooks for dashboard/mobile consumption
 /context       # WalletContext, UserContext, AIProvider, ESGContext, PaymentsContext
@@ -55,7 +134,7 @@ Polymers Protocol is a production-ready blockchain + IoT + ESG platform with wal
   swagger.yaml
   architecture.md
 /public
-  images       # Example screenshots, logos
+  images       # Logos, screenshots
 /scripts
   deploy.ts
 .env.example
@@ -64,48 +143,7 @@ README.md
 
 ⸻
 
-🗄️ Supabase Integration
-	•	Tables: Users, Wallets, NFT Twins, Staking, Transactions, ESG, Payments, Donations, SmartBins, SavedPrompts, Recycling, Swap
-	•	Hooks fetch & update blockchain and user data
-	•	Seed/sample data in /app/data/sample-data.ts
-
-⸻
-
-💬 AI Chat Billing
-	•	Free: 10 messages per user
-	•	Additional: 10 messages = 100,000 PLY tokens
-	•	Messages & prompts stored in Supabase with quick insert into dashboard sidebar
-
-⸻
-
-⛓ Blockchain & DeFi Integration
-	•	Solana: Blinks, NFT Twins (Metaplex), Dialect, Pyth, Jupiter, Raydium, Solana Pay, Helius, Helium/DePIN, Embedded Wallets
-	•	SUI: CARB token, NFT Twins, PoT, staking
-	•	Payments & Swap: SOL, PLY, CARB, USDC via Jupiter/Raydium
-	•	Maps & AR: Mapbox + AR Wayfinder + fallback images
-
-⸻
-
-📱 Mobile App Features
-	•	Expo + React Native
-	•	Wallet management (embedded/Privy/biometric fallback)
-	•	Scan-to-Pay (QR/NFC) with fallback
-	•	AR SmartBin navigation
-	•	AI chat & ESG dashboards
-	•	Offline caching & sync
-	•	Push notifications
-
-⸻
-
-⚡ Backend API & MCP
-	•	Framework: Fastify + MCP actions
-	•	Endpoints: /users, /transactions, /nft-twins, /payments, /esg, /smartbins, /ai-agents, /donations, /recycling, /swap, /settings, /messages
-	•	MCP actions: Staking, NFT Twin evolution, claim rewards, token swaps, ESG updates
-	•	Telemetry ingestion for IoT/SmartBin devices
-
-⸻
-
-⚙️ Environment Variables
+Environment Variables
 
 NEXT_PUBLIC_SUPABASE_URL=https://<your-supabase-url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
@@ -115,62 +153,96 @@ SOLANA_PRIVATE_KEY=<base58-private-key>
 
 ⸻
 
-🛠️ Installation
+Installation
 
-Web Dashboard
+<details>
+<summary><b>Web Dashboard</b></summary>
+
 
 cd apps/web
 npm install
 npm run dev
 
-Mobile App
+</details>
+
+
+<details>
+<summary><b>Mobile App</b></summary>
+
 
 cd apps/mobile
 npm install
 expo start
 
-Backend API
+</details>
+
+
+<details>
+<summary><b>Backend API</b></summary>
+
 
 cd apps/backend
 npm install
 npm run dev
 
+</details>
 
-⸻
-
-📄 Swagger API
-	•	Full API documentation: Swagger YAML
-	•	Includes: users, transactions, NFT Twins, ESG, payments, donations, SmartBins, AI agents, swaps, messages
 
 
 ⸻
 
-🚀 Usage
+Supabase Setup
+	1.	Create tables:
+Users, Wallets, NFT Twins, Staking, Transactions, ESG, Payments, Donations, SmartBins, SavedPrompts, Recycling, Swap
+	2.	Run migrations and seed sample data from /app/data/sample-data.ts
+	3.	Configure API keys in .env
+
+⸻
+
+Usage
 	•	Dashboard: Analytics, NFT Twins, staking, ESG, SmartBins, token flows
-	•	Mobile App: Wallet management, AI chat, scan-to-pay, AR navigation, ESG dashboards
+	•	Mobile App: Wallet management, AI chat, scan-to-pay, AR SmartBin navigation, ESG dashboards
 	•	API: REST endpoints for /users, /transactions, /nft-twins, /payments, /esg, /smartbins, /ai-agents
 
 ⸻
 
-🤝 Contributing
+AI Chat Billing
+	•	Free: 10 messages per user
+	•	Additional: 10 messages = 100,000 PLY tokens
+	•	Messages and prompts stored in Supabase and integrated into the chat interface
+
+⸻
+
+Blockchain & DeFi Integration
+	•	Solana: Blinks, NFT Twins (Metaplex), Dialect, Pyth, Jupiter, Raydium, Solana Pay, Helius, Helium/DePIN, Embedded Wallets
+	•	SUI: CARB token, NFT Twins, PoT, staking
+	•	Payments & Swap: SOL, PLY, CARB, USDC via Jupiter/Raydium
+	•	Maps & AR: Mapbox + AR Wayfinder + fallback images
+
+⸻
+
+Backend API & MCP
+	•	Fastify + MCP actions
+	•	Endpoints: /users, /transactions, /nft-twins, /payments, /esg, /smartbins, /ai-agents, /donations, /recycling, /swap, /settings, /messages
+	•	MCP actions: Staking, NFT Twin evolution, claim rewards, token swaps, ESG updates
+	•	Telemetry ingestion for IoT/SmartBin devices
+
+⸻
+
+Contributing
 	•	Use TypeScript & follow monorepo structure
-	•	Ensure all blockchain ops go through MCP actions
+	•	Ensure blockchain operations go through MCP actions
 	•	Include fallbacks for wallets, maps, scanning, offline scenarios
 	•	Maintain offline caching for IoT/SmartBin telemetry
 
 ⸻
 
-📷 Screenshots
-
-Web Dashboard Overview
-
-Mobile App AI Chat
-
-SmartBin Map & AR
-
+Swagger API
+	•	Full API documentation: swagger.yaml
+	•	Endpoints: /users, /transactions, /nft-twins, /payments, /esg, /smartbins, /ai-agents, /donations, /swap, /messages
 
 ⸻
 
-📝 License
+License
 
 MIT License
