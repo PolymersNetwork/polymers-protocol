@@ -1,13 +1,16 @@
-Here’s the fully formatted Markdown-ready version of your professional Polymers Protocol README, using proper ## headers, bold titles, collapsible <details> sections, badges, and placeholder tables for screenshots. This version is ready to copy-paste directly into GitHub:
-
 # **Polymers Protocol – Full Stack Blockchain Platform**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue)](https://www.typescriptlang.org/)  
 [![Solana](https://img.shields.io/badge/Solana-Mainnet-green)](https://solana.com/)  
-[![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E)](https://supabase.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E)](https://supabase.com/)  
+[![React Native](https://img.shields.io/badge/React%20Native-Expo-blue)](https://reactnative.dev/)  
+[![Fastify](https://img.shields.io/badge/Fastify-Backend-yellow)](https://www.fastify.io/)  
+[![Swagger](https://img.shields.io/badge/Swagger-API-orange)](./docs/swagger.yaml)
 
-**Polymers Protocol** is a production-ready platform integrating **blockchain**, **IoT**, and **ESG** solutions. It provides wallet management, NFT Twins, staking, payments, AI assistance, recycling analytics, and SmartBin/IoT integration. This repository is a **monorepo** for the Web Dashboard, Mobile App, and Backend APIs.
+**Polymers Protocol** is a production-ready platform integrating **blockchain**, **IoT**, and **ESG** solutions. It offers wallet management, NFT Twins, staking, payments, AI assistance, recycling analytics, and SmartBin/IoT integration.
+
+This repository is a **monorepo** for **Web Dashboard**, **Mobile App**, and **Backend APIs**.
 
 ---
 
@@ -36,7 +39,7 @@ Here’s the fully formatted Markdown-ready version of your professional Polymer
 
 | **Web Dashboard** | **Mobile App** | **SmartBin Map / AR** |
 |------------------|----------------|-----------------------|
-| Analytics, NFT Twins, ESG | Wallet, AI Chat, Scan-to-Pay | Real-time AR navigation |
+| ![Dashboard](./public/images/dashboard-placeholder.png) | ![Mobile](./public/images/mobile-placeholder.png) | ![AR Map](./public/images/ar-placeholder.png) |
 
 ---
 
@@ -369,7 +372,7 @@ Usage
 AI Chat Billing
 	•	Free: 10 messages per user
 	•	Additional: 10 messages = 100,000 PLY tokens
-	•	Messages stored in Supabase and integrated into the chat interface
+	•	Messages and prompts stored in Supabase and integrated into chat interface
 
 ⸻
 
@@ -377,7 +380,7 @@ Blockchain & DeFi Integration
 	•	Solana: Blinks, NFT Twins (Metaplex), Dialect, Pyth, Jupiter, Raydium, Solana Pay, Helius, Helium/DePIN, Embedded Wallets
 	•	SUI: CARB token, NFT Twins, PoT, staking
 	•	Payments & Swap: SOL, PLY, CARB, USDC via Jupiter/Raydium
-	•	Maps & AR: Mapbox + AR Wayfinder + static image fallback
+	•	Maps & AR: Mapbox + AR Wayfinder + fallback images
 
 ⸻
 
@@ -390,7 +393,7 @@ Backend API & MCP
 ⸻
 
 Contributing
-	•	Use TypeScript and follow monorepo structure
+	•	Use TypeScript and adhere to the monorepo structure
 	•	Route blockchain operations through MCP actions
 	•	Implement fallbacks for wallets, maps, scanning, and offline scenarios
 	•	Maintain offline caching for IoT/SmartBin telemetry
@@ -398,7 +401,7 @@ Contributing
 ⸻
 
 Swagger API
-	•	Full documentation: docs/swagger.yaml
+	•	Full API documentation: swagger.yaml
 	•	Endpoints: /users, /transactions, /nft-twins, /payments, /esg, /smartbins, /ai-agents, /donations, /swap, /messages
 
 ⸻
@@ -406,16 +409,3 @@ Swagger API
 License
 
 MIT License
-
-✅ This Markdown is fully GitHub-compatible:  
-- **Bold headers** with `##`  
-- **Collapsible sections** using `<details>`  
-- **Badges** for tech stack  
-- **Tables** for screenshots placeholders  
-- **Code blocks** for API examples  
-
----
-
-If you want, I can **also add interactive badges for blockchain actions, mobile, AI chat, and Solana integrations**, and replace screenshot placeholders with actual image links so it looks like a polished public repo README.  
-
-Do you want me to do that next?
