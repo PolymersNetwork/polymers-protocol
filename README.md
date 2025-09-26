@@ -15,6 +15,8 @@ Or in the Screenshots section, above the table:
 
 Check out the live **Website & Dashboard Demo** here: [https://poiymers-website.vercel.app](https://poiymers-website.vercel.app)
 
+## Screenshots
+
 | **Web Dashboard** | **Mobile App** | **SmartBin Map / AR** |
 |--------------------|----------------|-----------------------|
 | ![Web Dashboard](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/smartbin-map.png) |
@@ -48,15 +50,6 @@ Got it! We can add a “Website & Dashboard Demo” link prominently in the READ
 - [Contributing](#contributing)
 - [Swagger API](#swagger-api)
 - [License](#license)
-
----
-
-## Screenshots
-
-| **Web Dashboard** | **Mobile App** | **SmartBin Map / AR** |
-|--------------------|----------------|-----------------------|
-| ![Web Dashboard](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/smartbin-map.png) |
-| Analytics, NFT Twins, ESG | Wallet, AI Chat, Scan-to-Pay | Real-time AR navigation |
 
 ---
 
