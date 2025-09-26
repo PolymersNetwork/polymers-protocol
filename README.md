@@ -1,4 +1,4 @@
-Polymers Protocol – Full Stack Platform
+# Polymers Protocol – Full Stack Platform
 
 Polymers Protocol is a production-ready blockchain + IoT + ESG platform featuring:
 	•	Wallet management
@@ -26,7 +26,7 @@ SmartBin Map / AR
 Features
 
 <details>
-<summary><b>Wallet & Token Management</b></summary>
+<summary>**Wallet & Token Management**</summary>
 
 
 	•	Supports Phantom, Solflare, Backpack, Privy, embedded wallet, and biometric fallback
@@ -38,7 +38,7 @@ Features
 
 
 <details>
-<summary><b>NFT Twins</b></summary>
+<summary>**NFT Twins**</summary>
 
 
 	•	Staking, evolution, gamification, reward claiming
@@ -48,7 +48,7 @@ Features
 
 
 <details>
-<summary><b>AI Chat</b></summary>
+<summary>**AI Chat**</summary>
 
 
 	•	GPT-powered chat with PLY token billing
@@ -59,10 +59,10 @@ Features
 
 
 <details>
-<summary><b>Payments & Token Swap</b></summary>
+<summary>**Payments & Token Swap**</summary>
 
 
-	•	Swap tokens using Jupiter/Raydium
+	•	Swap tokens using Jupiter / Raydium
 	•	Pay via SOL, PLY, CARB, USDC, or Blinks
 	•	QR/NFC scan-to-pay with fallback
 
@@ -70,7 +70,7 @@ Features
 
 
 <details>
-<summary><b>Recycling & ESG</b></summary>
+<summary>**Recycling & ESG**</summary>
 
 
 	•	Track recycled items, CO2 reduction, plastic collected
@@ -80,7 +80,7 @@ Features
 
 
 <details>
-<summary><b>Transactions</b></summary>
+<summary>**Transactions**</summary>
 
 
 	•	Paginated, sortable transaction history
@@ -90,7 +90,7 @@ Features
 
 
 <details>
-<summary><b>SmartBins / IoT / AR</b></summary>
+<summary>**SmartBins / IoT / AR**</summary>
 
 
 	•	Real-time maps with AR navigation
@@ -101,7 +101,7 @@ Features
 
 
 <details>
-<summary><b>Offline & Fallbacks</b></summary>
+<summary>**Offline & Fallbacks**</summary>
 
 
 	•	Wallet: Embedded → Privy → Biometric
@@ -156,7 +156,7 @@ SOLANA_PRIVATE_KEY=<base58-private-key>
 Installation
 
 <details>
-<summary><b>Web Dashboard</b></summary>
+<summary>**Web Dashboard**</summary>
 
 
 cd apps/web
@@ -167,7 +167,7 @@ npm run dev
 
 
 <details>
-<summary><b>Mobile App</b></summary>
+<summary>**Mobile App**</summary>
 
 
 cd apps/mobile
@@ -178,7 +178,7 @@ expo start
 
 
 <details>
-<summary><b>Backend API</b></summary>
+<summary>**Backend API**</summary>
 
 
 cd apps/backend
@@ -209,7 +209,7 @@ Usage
 AI Chat Billing
 	•	Free: 10 messages per user
 	•	Additional: 10 messages = 100,000 PLY tokens
-	•	Messages and prompts stored in Supabase and integrated into the chat interface
+	•	Messages and prompts stored in Supabase and integrated into chat interface
 
 ⸻
 
