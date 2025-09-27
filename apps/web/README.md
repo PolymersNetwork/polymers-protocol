@@ -8,6 +8,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 ## 🚀 Website + Dashboard Features
 
 <details>
+	
 <summary>🔬 Polymer Recycling Focus</summary>
 
 - **SmartBins for Polymers** – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics  
@@ -18,6 +19,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
+	
 <summary>🎯 Role-Based Access</summary>
 
 - **Recycler+** – Gamified plastic recycling with streaks, missions, and Solana rewards  
@@ -28,6 +30,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
+	
 <summary>🔗 Blockchain Integrations</summary>
 
 - **Solana** – NFTs, token transfers, staking, Solana Pay, Actions + Blinks  
@@ -41,6 +44,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
+	
 <summary>📊 Dashboard Context</summary>
 
 - **Website Frontend** – Public-facing educational pages + ESG campaign landing pages  
@@ -51,6 +55,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
+	
 <summary>🎮 Gamification for Polymers</summary>
 
 - **Recycling Missions** – Target specific polymer categories for streak bonuses  
@@ -61,6 +66,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
+	
 <summary>📱 AR & Website Features</summary>
 
 - **2D + AR Maps** – Navigate to nearest polymer SmartBins  
@@ -75,6 +81,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 ## 💻 Mobile App Prompts & Dashboard
 
 <details>
+	
 <summary>Mobile App Features</summary>
 
 - **Sign In / Wallet Login** – Access dashboard via Solana wallet or Privy login  
@@ -86,6 +93,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
+	
 <summary>Dashboard Sidebar & Footer</summary>
 
 - **Sidebar Navigation** – Home, Missions, NFTs, Token Balances, Analytics, Profile, Settings  
@@ -98,6 +106,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 ## ⚙️ Development Setup
 
 <details>
+	
 <summary>Environment Variables</summary>
 
 ```bash
@@ -116,6 +125,7 @@ STRIPE_API_KEY="your_stripe_key"
 
 
 <details>
+
 <summary>Scripts</summary>
 
 
@@ -133,6 +143,7 @@ npm run db:migrate   # Database migrations for polymer recycling
 🧩 APIs & Libraries
 
 <details>
+
 <summary>AI Providers</summary>
 
 
@@ -143,6 +154,7 @@ npm run db:migrate   # Database migrations for polymer recycling
 
 
 <details>
+
 <summary>Blockchain & Token Libraries</summary>
 
 
@@ -156,6 +168,7 @@ npm run db:migrate   # Database migrations for polymer recycling
 
 
 <details>
+
 <summary>Backend, Hooks, & Utilities</summary>
 
 
@@ -172,6 +185,7 @@ npm run db:migrate   # Database migrations for polymer recycling
 
 
 <details>
+
 <summary>Swagger / API Docs</summary>
 
 
@@ -186,6 +200,7 @@ npm run db:migrate   # Database migrations for polymer recycling
 ♻️ ESG & Polymer Impact
 
 <details>
+
 <summary>Recycling Credits & Carbon Offsets</summary>
 
 
