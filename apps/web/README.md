@@ -19,7 +19,7 @@ Live Token Balances
 Website + Dashboard Features
 
 <details>
-<summary>Polymer Recycling Focus</summary>
+<summary>**Polymer Recycling Focus**</summary>
 
 
 	•	SmartBins for Polymers – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics
@@ -31,7 +31,7 @@ Website + Dashboard Features
 
 
 <details>
-<summary>Role-Based Access</summary>
+<summary>**Role-Based Access**</summary>
 
 
 	•	Recycler+ – Gamified plastic recycling with streaks, missions, and Solana rewards
@@ -43,7 +43,7 @@ Website + Dashboard Features
 
 
 <details>
-<summary>Blockchain Integrations</summary>
+<summary>**Blockchain Integrations**</summary>
 
 
 	•	Solana – NFTs, token transfers, staking, Solana Pay, Actions + Blinks
@@ -57,7 +57,7 @@ Website + Dashboard Features
 
 
 <details>
-<summary>Dashboard Context</summary>
+<summary>**Dashboard Context**</summary>
 
 
 	•	Website Frontend – Public-facing educational pages + ESG campaign landing pages
@@ -69,7 +69,7 @@ Website + Dashboard Features
 
 
 <details>
-<summary>Gamification for Polymers</summary>
+<summary>**Gamification for Polymers**</summary>
 
 
 	•	Recycling Missions – Target specific polymer categories for streak bonuses
@@ -81,7 +81,7 @@ Website + Dashboard Features
 
 
 <details>
-<summary>AR & Website Features</summary>
+<summary>**AR & Website Features**</summary>
 
 
 	•	2D + AR Maps – Navigate to nearest polymer SmartBins
@@ -98,7 +98,7 @@ Website + Dashboard Features
 Production Dashboard – Build & Features
 
 <details>
-<summary>Dashboard Features</summary>
+<summary>**Dashboard Features**</summary>
 
 
 	•	User Authentication – Solana wallet login or Privy login (fallback if Privy fails)
@@ -112,7 +112,7 @@ Production Dashboard – Build & Features
 
 
 <details>
-<summary>Production Build Commands</summary>
+<summary>**Production Build Commands**</summary>
 
 
 npm ci
@@ -137,7 +137,7 @@ USDC_MINT="Es9vMFrzxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 
 <details>
-<summary>Dashboard Layout</summary>
+<summary>**Dashboard Layout**</summary>
 
 
 	•	Sidebar: Navigation – Dashboard, Missions, Wallet, Analytics, ESG Reports
@@ -154,7 +154,7 @@ USDC_MINT="Es9vMFrzxxxxxxxxxxxxxxxxxxxxxxxxxx"
 API Examples
 
 <details>
-<summary>Token Balances API</summary>
+<summary>**Token Balances API**</summary>
 
 
 GET /api/wallet/balances?address=<WALLET_ADDRESS>
@@ -170,7 +170,7 @@ Response:
 
 
 <details>
-<summary>Telemetry API</summary>
+<summary>**Telemetry API**</summary>
 
 
 GET /api/iot/smartbins
@@ -194,7 +194,7 @@ Response:
 Development Setup
 
 <details>
-<summary>Scripts</summary>
+<summary>**Scripts**</summary>
 
 
 npm run dev          # Website + Dashboard
@@ -206,7 +206,7 @@ npm run db:migrate   # Database migrations
 
 
 <details>
-<summary>Environment Variables for Development</summary>
+<summary>**Environment Variables for Development**</summary>
 
 
 NEXT_PUBLIC_WS_URL="ws://localhost:3001"
@@ -227,3 +227,5 @@ ESG & Polymer Impact
 	•	Carbon Offsets: Verified CO₂ savings via blockchain oracles
 	•	Corporate ESG: Companies prove polymer circularity with audit-ready dashboards
 	•	Global Leaderboards: Community competition driving reduction of plastic waste
+
+⸻
