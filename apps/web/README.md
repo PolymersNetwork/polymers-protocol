@@ -55,6 +55,16 @@ A blockchain-powered, AI-driven platform for polymer and e-waste recycling, enab
 - Gamified recycling incentives
 - Audit-ready dashboards and reports
 
+### 8. Helper module:
+	1.	computeIoTAnalytics(history)
+	•	Computes average fill level, average contamination score, min/max fill levels, contamination trend.
+	•	Predicts the next collection time based on the fill level trend.
+	2.	addIoTReading(recycledItem, newReading)
+	•	Adds the new sensor reading to latest and history.
+	•	Automatically updates iotAnalytics for immediate dashboard consumption.
+	3.	Ready for ML & AI pipelines
+	•	The history array and iotAnalytics can now be used directly for trend analysis or predictive modeling.
+
 ---
 
 ## 📋 Core Modules
