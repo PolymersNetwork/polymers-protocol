@@ -4,7 +4,7 @@ Polymers is a modern web33 mobile app that makes it easy to keep your environmen
 
 Designed in Figma, the app features a sleek dark theme with a refreshing green–gray–white palette, Font Awesome icons, and Satoshi + Geist typography for a clean, professional feel.
 
-## Features
+### Features
 
 📅 Schedule Pickups – Book e-waste and recycling pickups with just a few taps.
 
