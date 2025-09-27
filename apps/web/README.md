@@ -1,4 +1,4 @@
-# Polymers - Recycling Dashboard & Website
+Polymers - Recycling Dashboard & Website
 
 A blockchain-powered AI + IoT + AR platform for polymer recycling and ESG tracking.
 Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
@@ -7,20 +7,19 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 	•	NFT Twin tracking
 	•	Gamified ESG rewards
 
-🌐 Website & Dashboard Demo
+Website & Dashboard Demo
 
 ⸻
 
-🔗 Live Token Balances
+Live Token Balances
 
-(Automatically fetch via on-chain queries in production dashboard)
 
 ⸻
 
-🚀 Website + Dashboard Features
+Website + Dashboard Features
 
 <details>
-<summary>**🔬 Polymer Recycling Focus**</summary>
+<summary>Polymer Recycling Focus</summary>
 
 
 	•	SmartBins for Polymers – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics
@@ -32,7 +31,7 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 
 
 <details>
-<summary>**🎯 Role-Based Access**</summary>
+<summary>Role-Based Access</summary>
 
 
 	•	Recycler+ – Gamified plastic recycling with streaks, missions, and Solana rewards
@@ -44,7 +43,7 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 
 
 <details>
-<summary>**🔗 Blockchain Integrations**</summary>
+<summary>Blockchain Integrations</summary>
 
 
 	•	Solana – NFTs, token transfers, staking, Solana Pay, Actions + Blinks
@@ -58,7 +57,7 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 
 
 <details>
-<summary>**📊 Dashboard Context**</summary>
+<summary>Dashboard Context</summary>
 
 
 	•	Website Frontend – Public-facing educational pages + ESG campaign landing pages
@@ -70,7 +69,7 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 
 
 <details>
-<summary>**🎮 Gamification for Polymers**</summary>
+<summary>Gamification for Polymers</summary>
 
 
 	•	Recycling Missions – Target specific polymer categories for streak bonuses
@@ -82,7 +81,7 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 
 
 <details>
-<summary>**📱 AR & Website Features**</summary>
+<summary>AR & Website Features</summary>
 
 
 	•	2D + AR Maps – Navigate to nearest polymer SmartBins
@@ -96,10 +95,10 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 
 ⸻
 
-🖥 Production Dashboard – Build & Features
+Production Dashboard – Build & Features
 
 <details>
-<summary>**🚀 Dashboard Features**</summary>
+<summary>Dashboard Features</summary>
 
 
 	•	User Authentication – Solana wallet login or Privy login (fallback if Privy fails)
@@ -113,7 +112,7 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 
 
 <details>
-<summary>**⚙️ Production Build Commands**</summary>
+<summary>Production Build Commands</summary>
 
 
 npm ci
@@ -121,7 +120,7 @@ npm run build
 npm run start
 npm run api:start # optional backend
 
-Required Environment Variables
+Required Environment Variables:
 
 NEXT_PUBLIC_WS_URL="wss://prod.polymers.io/ws"
 NEXT_PUBLIC_SOLANA_RPC_URL="https://api.mainnet-beta.solana.com"
@@ -138,7 +137,7 @@ USDC_MINT="Es9vMFrzxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 
 <details>
-<summary>**📊 Dashboard Layout**</summary>
+<summary>Dashboard Layout</summary>
 
 
 	•	Sidebar: Navigation – Dashboard, Missions, Wallet, Analytics, ESG Reports
@@ -152,10 +151,10 @@ USDC_MINT="Es9vMFrzxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 ⸻
 
-💾 API Examples
+API Examples
 
 <details>
-<summary>**Token Balances API**</summary>
+<summary>Token Balances API</summary>
 
 
 GET /api/wallet/balances?address=<WALLET_ADDRESS>
@@ -171,7 +170,7 @@ Response:
 
 
 <details>
-<summary>**Telemetry API**</summary>
+<summary>Telemetry API</summary>
 
 
 GET /api/iot/smartbins
@@ -192,10 +191,10 @@ Response:
 
 ⸻
 
-🛠 Development Setup
+Development Setup
 
 <details>
-<summary>**Scripts**</summary>
+<summary>Scripts</summary>
 
 
 npm run dev          # Website + Dashboard
@@ -207,7 +206,7 @@ npm run db:migrate   # Database migrations
 
 
 <details>
-<summary>**Environment Variables for Development**</summary>
+<summary>Environment Variables for Development</summary>
 
 
 NEXT_PUBLIC_WS_URL="ws://localhost:3001"
@@ -223,7 +222,7 @@ CHAINLINK_API_KEY="your_chainlink_key"
 
 ⸻
 
-♻️ ESG & Polymer Impact
+ESG & Polymer Impact
 	•	Polymer Credit System: Tokenized credits for PET, HDPE, LDPE recycling
 	•	Carbon Offsets: Verified CO₂ savings via blockchain oracles
 	•	Corporate ESG: Companies prove polymer circularity with audit-ready dashboards
