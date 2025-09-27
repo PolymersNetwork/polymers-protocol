@@ -1,113 +1,98 @@
-🌐 Polymers – Recycling Dashboard & Website
+# 🌐 Polymers – Recycling Dashboard & Website
 
-Blockchain-powered AI + IoT + AR platform for polymer and e-waste recycling, ESG tracking, and gamified rewards. Built on Solana with DePIN IoT SmartBins and AI-driven routing, it provides:
-	•	Transparent material recovery
-	•	Contamination validation
-	•	NFT Twin tracking
-	•	Gamified ESG rewards
+A blockchain-powered platform leveraging **Solana**, **AI**, **IoT**, and **AR** to revolutionize polymer recycling, e-waste management, and ESG tracking. Using **DePIN IoT SmartBins** and **predictive AI routing**, it enables:
 
-🔗 Live Demo
+- Transparent plastic and e-waste recovery
+- AI-driven contamination validation
+- NFT Twin tracking for recycled batches
+- Gamified ESG rewards
 
+🔗 **[Live Demo](#)** *(Coming soon)*
 
-⸻
+---
 
-✨ Features
+## ✨ Features
 
-Polymer & E-Waste Recycling
+### Polymer & E-Waste Recycling
+- **SmartBins**: IoT-enabled bins for PET, HDPE, LDPE, mixed plastics, and e-waste plastics, using fill-level, weight, and material detection sensors.
+- **AI Contamination Detection**: Spectroscopy and imaging sensors identify impurities (e.g., labels, adhesives, metals) with real-time `contamination_score`.
+- **NFT Twins**: Recycled batches (polymers or e-waste plastics) generate NFTs via **Metaplex**, linked to material type and weight.
+- **E-Waste Extension**: Specialized bins detect plastics vs. hazardous materials (e.g., batteries) for safe recycling.
 
-<details>
-<summary>Click to expand</summary>
+### Role-Based Access
+- **Recycler+**: Gamified recycling with Solana-based rewards and missions for polymers and e-waste.
+- **Company Partner**: ESG dashboards with carbon credit reports and polymer/e-waste offset tracking.
+- **Manufacturer+**: Tracks polymer and e-waste input/output with predictive IoT maintenance.
+- **Admin Auditor**: Validates ESG compliance with audit-ready reporting.
 
+### Blockchain Integrations
+- **Solana**: Powers NFTs, staking, **Solana Pay**, **Actions**, and **Blinks** for fast, low-cost transactions.
+- **Metaplex**: NFT metadata and marketplace for polymer/e-waste credits and badges.
+- **Pyth + Chainlink**: ESG price feeds and commodity oracle data for recycled materials.
+- **Helius**: Indexes on-chain data for recycling history and analytics.
+- **Helium/DePIN**: IoT network for SmartBin telemetry (fill levels, contamination, material type).
+- **Privy.io**: Privacy-preserving identity for recyclers and partners.
 
-	•	SmartBins: IoT-enabled for PET, HDPE, LDPE, mixed plastics, and e-waste plastics
-	•	NFC/QR Validation: Scan to verify recycling actions
-	•	AI Contamination Detection: Detects impurities in real time
-	•	NFT Twins: Each batch generates an NFT linked to type, weight, and ESG compliance
+### IoT & Waste Management
+- **SmartBin Sensors**:
+  - **Fill-Level**: Ultrasonic sensors optimize collection via `fill_level` (e.g., 75%).
+  - **Weight**: Load cells measure recycled material quantities.
+  - **Material Detection**: NIR spectroscopy identifies polymers or e-waste plastics.
+  - **Temperature/Humidity**: Monitors bin conditions to prevent degradation or hazards.
+- **Predictive Routing**: AI optimizes pickup routes, reducing CO₂ emissions.
+- **Real-Time Telemetry**: Sensor data updates dashboards via **Helium/DePIN** and WebSockets.
 
-</details>
+### QR Codes & NFC
+- **Validation**: QR codes and NFC tags on bins or waste items authenticate recycling actions.
+- **Blockchain Triggers**: Scans initiate Solana transactions (e.g., PLY rewards, NFT minting).
+- **E-Waste Use**: Tags on e-waste (e.g., phone casings) ensure traceability and compliance.
 
+### Gamification
+- **Missions**: Target polymer or e-waste categories for streak bonuses.
+- **Rewards**: Cleaner separation earns higher ESG scores and token multipliers.
+- **NFT Badges**: Unlock rare NFTs (e.g., *Polymer Guardian*, *E-Waste Hero*).
+- **Leaderboards**: Rank individuals and companies by recycling impact.
 
-Role-Based Access
+### AR & Website
+- **AR Maps**: Navigate to nearby SmartBins for polymers or e-waste.
+- **Polymer Streams**: Visualize waste flow from user to manufacturer.
+- **Notifications**: Mobile alerts for mission progress and contamination warnings.
+- **AI Assistant**: Guides users on sorting, ESG benefits, and recycling value.
 
-<details>
-<summary>Click to expand</summary>
+### Analytics
+- **ESG Tracking**: Dashboards display carbon credits, recovery stats, and ESG scores.
+- **Real-Time Insights**: IoT telemetry visualized via maps and AR overlays.
+- **AI Analytics**: Predictive models optimize routing and detect contamination.
+- **E-Waste Metrics**: Tracks plastic recovery and hazardous material alerts.
 
+---
 
-	•	Recycler+: Gamified missions, streaks, and token rewards
-	•	Company Partner: ESG dashboards and carbon credit reports
-	•	Manufacturer+: Polymer/e-waste tracking, predictive IoT maintenance
-	•	Admin Auditor: ESG validation and audit-ready reporting
+## 🚀 Production Dashboard
 
-</details>
+### Features
+- **Authentication**: Solana wallet or **Privy.io** login with fallback support.
+- **Wallet Management**: Real-time SOL, PLY, USDC, CARB balances; supports **Solana Pay**.
+- **Telemetry**: SmartBin data, predictive routing, and AR overlays for polymers and e-waste.
+- **Analytics**: Carbon credits, recovery stats, and ESG dashboards, stored via **Supabase**.
+- **AI**: Chat assistant, contamination detection, and ESG insights.
+- **Error Handling**: Robust boundaries for blockchain and IoT APIs.
 
+### Dashboard Layout
+- **Sidebar**: Navigate Dashboard, Missions, Wallet, Analytics, ESG Reports.
+- **Header**: Live token badges, notifications, user profile.
+- **Main Panel**: Telemetry maps, AR overlays, polymer/e-waste streams.
+- **Footer**: ESG metrics and links to website/partner dashboards.
 
-Blockchain Integrations
-
-<details>
-<summary>Click to expand</summary>
-
-
-	•	Solana: NFTs, staking, Solana Pay, Actions, Blinks
-	•	Metaplex: NFT metadata and marketplace for credits
-	•	Pyth + Chainlink: ESG price feeds and commodity data
-	•	Helius: On-chain indexing of polymer/e-waste credits
-	•	Helium/DePIN: IoT telemetry network for SmartBins
-	•	Privy.io: Privacy-preserving identity for recyclers and corporate partners
-
-</details>
-
-
-Dashboard & Analytics
-
-<details>
-<summary>Click to expand</summary>
-
-
-	•	Frontend: Public-facing educational pages & ESG campaigns
-	•	Secure Dashboard: Role-based access, telemetry, AR overlays
-	•	Real-Time Telemetry: SmartBin fill levels, contamination scores, predictive routes
-	•	AI Insights: Contamination detection, predictive routing, ESG analytics
-	•	Gamification: Missions, NFT badges, leaderboards
-
-</details>
-
-
-AR & Mobile Features
-
-<details>
-<summary>Click to expand</summary>
-
-
-	•	2D + AR Maps: Locate nearest SmartBins
-	•	Polymer & E-Waste Streams: Visualize flow from user → recycler → manufacturer
-	•	Notifications: Alerts for missions and contamination issues
-	•	AI Assistant: Guides on sorting, ESG benefits, and material recovery
-
-</details>
-
-
-
-⸻
-
-🚀 Production Dashboard
-
-Features
-	•	Authentication: Solana wallet or Privy.io login with fallback
-	•	Wallet Management: Real-time SOL, PLY, USDC, CARB balances; send/receive; Solana Pay
-	•	Telemetry: SmartBin IoT data and AR overlays
-	•	Analytics: Carbon credits, recovery stats, ESG dashboards
-	•	AI Assistance: Contamination detection and ESG insights
-	•	Error Handling: Robust fallbacks for Privy & blockchain APIs
-
-Build Commands
-
+### Build Commands
+```bash
 npm ci
 npm run build
 npm run start
 npm run api:start  # Optional backend
+```
 
-Environment Variables
-
+### Environment Variables
+```env
 NEXT_PUBLIC_WS_URL="wss://prod.polymers.io/ws"
 NEXT_PUBLIC_SOLANA_RPC_URL="https://api.mainnet-beta.solana.com"
 NEXT_PUBLIC_SUPABASE_URL="https://supabase.polymers.io"
@@ -118,31 +103,32 @@ TOKEN_PROGRAM_ID="TokenkegQfeZyiNwAJbNbGKPFXkQd5J8X8wnF8MPzYx"
 PLY_MINT="PLYKdaCUgxTUw6rSjWbgSN97Qtecb6Fy6SazWf1tvAC"
 CARB_MINT="CARBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 USDC_MINT="Es9vMFrzxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
 
+---
 
-⸻
+## 🛠️ API Examples
 
-🛠️ API Examples
-
-Token Balances
-
+### Token Balances
+```http
 GET /api/wallet/balances?address=<WALLET_ADDRESS>
-
-Response
-
+```
+**Response**:
+```json
 {
   "SOL": 0.123,
   "PLY": 456.789,
   "USDC": 123.45,
   "CARB": 987.654
 }
+```
 
-SmartBin Telemetry
-
+### SmartBin Telemetry
+```http
 GET /api/iot/smartbins
-
-Response
-
+```
+**Response**:
+```json
 [
   {
     "id": "bin-001",
@@ -152,43 +138,97 @@ Response
     "contamination_score": 0.02
   }
 ]
+```
 
+---
 
-⸻
+## ⚙️ Development Setup
 
-⚙️ Development Setup
-
-Scripts
-
+### Scripts
+```bash
 npm run dev        # Website + Dashboard
 npm run api:dev    # APIs
 npm run ws:dev     # WebSocket updates
 npm run db:migrate # Database migrations
+```
 
-Environment Variables (Dev)
-
+### Environment Variables
+```env
 NEXT_PUBLIC_WS_URL="ws://localhost:3001"
 NEXT_PUBLIC_SOLANA_RPC_URL="https://api.devnet.solana.com"
 NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your_supabase_key"
 PRIVY_APP_ID="your_privy_app_id"
 CHAINLINK_API_KEY="your_chainlink_key"
+```
 
+---
 
-⸻
+## 🌍 ESG & Waste Impact
+- **Polymer & E-Waste Credits**: Tokenized credits for PET, HDPE, LDPE, and e-waste plastics via Solana.
+- **Carbon Offsets**: Verified CO₂ savings using **Pyth/Chainlink** oracles.
+- **Corporate ESG**: Audit-ready dashboards for polymer and e-waste circularity.
+- **Global Leaderboards**: Community competition to reduce waste.
 
-🌍 ESG & Material Impact
-	•	Polymer & E-Waste Credits: Tokenized recycling metrics
-	•	Carbon Offsets: Verified CO₂ savings via oracles
-	•	Corporate ESG: Audit-ready dashboards for circularity
-	•	Leaderboards: Community-driven waste reduction
+---
 
-⸻
+## 🔌 IoT Sensors for Waste Management
+- **Fill-Level Sensors**: Ultrasonic sensors optimize collection schedules.
+- **Weight Sensors**: Measure polymer/e-waste quantities for NFT minting.
+- **Material Detection**: NIR spectroscopy identifies plastics and contaminants.
+- **Temperature/Humidity**: Ensures safe storage, especially for e-waste.
+- **NFC/QR**: Validates deposits, triggering Solana transactions.
+- **Integration**: **Helium/DePIN** powers connectivity; data logged on Solana via **Helius**.
 
-🤝 Contributing
+**Example Workflow**:
+1. A SmartBin’s fill-level sensor reports 75% capacity via **Helium/DePIN**.
+2. NFC scan validates a PET deposit, triggering a **Solana Pay** reward:
+   ```javascript
+   const { Connection, Transaction } = require("@solana/web3.js");
+   const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL);
+   async function rewardRecycler(userAddress, amount) {
+     const tx = new Transaction().add(
+       SystemProgram.transfer({
+         fromPubkey: new PublicKey(process.env.REWARD_ACCOUNT),
+         toPubkey: new PublicKey(userAddress),
+         lamports: amount * 1e9
+       })
+     );
+     await connection.sendTransaction(tx, [rewardSigner]);
+   }
+   ```
+3. Analytics update the dashboard with telemetry and ESG metrics.
 
-See Contributing Guidelines and Code of Conduct.
+---
 
-📜 License
+## 🔧 Next Steps for IoT & E-Waste Integration
+1. **Expand Sensor Types**
+   - Integrate spectroscopy (NIR, MIR) and advanced imaging sensors to detect and classify e-waste plastics (ABS, polycarbonate) versus metals or hazardous materials.
+   - Add chemical sensors for batteries, heavy metals, and toxic substances to improve safety and ESG reporting.
+2. **Enhance NFC/QR Integration with Solana Actions/Blinks**
+   - Streamline NFC/QR interactions to trigger Solana blockchain transactions automatically.
+   - Enable instant PLY/CARB token rewards, NFT Twin minting, and mission tracking for both polymers and e-waste items.
+3. **Extend Analytics Dashboards with E-Waste Metrics**
+   - Add e-waste-specific KPIs such as:
+     - Plastic vs. metal recovery rates
+     - Contamination scores
+     - Carbon offset contributions from recycled electronics
+   - Visualize metrics on the main dashboard with AR overlays, maps, and leaderboards.
+4. **Test Sensor-to-Blockchain Workflows on Solana Devnet**
+   - Simulate IoT sensor events (fill-level, contamination, e-waste detection) to verify:
+     - NFT Twin minting
+     - Token reward issuance
+     - Data logging and real-time dashboard updates
+   - Ensure low-latency, high-throughput integration before Mainnet deployment.
+5. **Ensure Robust IoT Connectivity with Helium/DePIN**
+   - Optimize SmartBin network reliability for consistent telemetry.
+   - Implement fallback strategies for 4G/5G connectivity in areas with weak LoRaWAN coverage.
+   - Monitor sensor uptime, data integrity, and error reporting to maintain dashboard accuracy.
 
-MIT License
+---
+
+## 🤝 Contributing
+Contributions are welcome! See our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## 📜 License
+[MIT License](LICENSE).
