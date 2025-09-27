@@ -1,13 +1,4 @@
-Got it! Let’s make the README even cleaner, more professional, and GitHub-ready. I’ll focus on:
-	•	Polished layout & headings
-	•	Consistent collapsible sections
-	•	Code snippets inline where useful
-	•	Better distinction between AI, blockchain, IoT, ESG, dashboard, and mobile features
-	•	Improved clarity for developers
-
-Here’s the refined full README.md:
-
-# Polymers Protocol - Recycling Dashboard & Website
+# Polymers Protocol - Monorepo
 
 A **blockchain-powered AI + IoT + AR platform** for polymer recycling and ESG tracking.  
 Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, enabling **transparent plastic recovery**, **contamination validation**, **NFT Twin tracking**, and **gamified ESG rewards**.
