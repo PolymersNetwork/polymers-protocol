@@ -16,6 +16,6 @@ Designed in Figma, the app features a sleek dark theme with a refreshing green�
 
 🎮 Eco-Gamification – Earn rewards for responsible recycling and sustainable actions.
 
-# Why Polymers?
+## Why Polymers?
 
 Polymers helps ensure your waste is disposed of in the most eco-friendly way possible. By combining technology, design, and sustainability, we make it effortless to manage waste while contributing to a cleaner planet.
