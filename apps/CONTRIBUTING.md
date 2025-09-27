@@ -37,8 +37,8 @@ We encourage contributions in the following areas:
 
 ### Prerequisites
 Before contributing, ensure you have the following installed:
-- **Node.js**: ≥16
-- **npm**: ≥8
+- **Node.js**: ≥20
+- **npm**: ≥9
 - **Solana CLI**: For blockchain development
 - **Supabase**: For transaction logging
 - **Privy.io**: For authentication
