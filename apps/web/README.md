@@ -1,18 +1,24 @@
-# Polymers Platform – Recycling Dashboard & Website
+Polymers Platform – Recycling Dashboard & Website
 
 A blockchain-powered AI + IoT + AR platform for polymer recycling, ESG tracking, and gamified rewards.
 Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and predictive AI routing for transparent plastic recovery, contamination validation, NFT Twin tracking, and ESG gamification.
 
 ⸻
 
-# Website & Dashboard Demo
+🌐 Website & Dashboard Demo
 
 
 ⸻
 
 🔗 Live Token Balances
 
-(Automatically update via on-chain API for production)
+Token	Balance
+SOL	
+PLY	
+USDC	
+CARB	
+
+(Automatically updated via on-chain API in production)
 
 ⸻
 
@@ -21,7 +27,7 @@ Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and p
 🔬 Polymer Recycling Focus
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	SmartBins for Polymers – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics
@@ -35,7 +41,7 @@ Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and p
 🎯 Role-Based Access
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	Recycler+ – Gamified plastic recycling with streaks, missions, and Solana rewards
@@ -49,7 +55,7 @@ Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and p
 🔗 Blockchain Integrations
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	Solana – NFTs, token transfers, staking, Solana Pay, Actions + Blinks
@@ -65,7 +71,7 @@ Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and p
 📊 Dashboard Context
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	Website Frontend – Public-facing educational pages + ESG campaign landing pages
@@ -79,7 +85,7 @@ Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and p
 🎮 Gamification
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	Recycling Missions – Target specific polymer categories for streak bonuses
@@ -93,7 +99,7 @@ Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and p
 📱 AR & Website Features
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	2D + AR Maps – Navigate to nearest polymer SmartBins
@@ -107,7 +113,7 @@ Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and p
 🔧 Development Setup
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 Environment Variables
@@ -132,7 +138,7 @@ npm run db:migrate # Database migrations for polymer recycling
 ♻️ ESG & Polymers Impact
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	Polymer Credit System – Tokenized credits for PET, HDPE, LDPE recycling
@@ -149,7 +155,7 @@ npm run db:migrate # Database migrations for polymer recycling
 💻 API Examples
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 Get Token Balances
@@ -200,7 +206,7 @@ Response:
 📸 Screenshots
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 </details>
@@ -212,7 +218,7 @@ Response:
 ⚡ Mobile App Prompts
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	Mission streak notifications & contamination warnings
@@ -229,7 +235,7 @@ Response:
 🧰 Hardware & IoT
 
 <details>
-<summary>Expand</summary>
+<summary>Click to expand</summary>
 
 
 	•	DePIN-enabled SmartBins with fill-level telemetry
@@ -245,4 +251,4 @@ Response:
 
 📄 License
 
-MIT License.
+MIT License
