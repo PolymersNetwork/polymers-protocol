@@ -1,16 +1,17 @@
-Polymers – Recycling Dashboard & Website
+# Polymers – Recycling Dashboard & Website
 
 A blockchain-powered platform integrating AI, IoT, and AR for polymer recycling and ESG tracking. Built on Solana with DePIN IoT SmartBins and predictive AI routing, the platform enables:
+
 	•	Transparent plastic recovery
 	•	Contamination validation
 	•	NFT Twin tracking
 	•	Gamified ESG rewards
 
-🌐 Website & Dashboard Demo
+# Website & Dashboard Demo
 
 ⸻
 
-Live Token Balances
+### Live Token Balances
 
 <div align="center">
 
@@ -21,7 +22,7 @@ Live Token Balances
 
 ⸻
 
-Features
+## Features
 
 <details>
 <summary>Polymer Recycling Focus</summary>
