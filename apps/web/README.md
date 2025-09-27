@@ -1,56 +1,55 @@
-🌱 Polymers Protocol – Recycling Dashboard & Website
+# Polymers Platform – Recycling Dashboard & Website
 
-A blockchain-powered AI + IoT + AR platform for polymer recycling and ESG tracking.
-Built with Solana, DePIN IoT SmartBins, AI predictive routing, and NFT Twin tracking for gamified ESG rewards.
-
-Website & Dashboard Demo
+A blockchain-powered AI + IoT + AR platform for polymer recycling, ESG tracking, and gamified rewards.
+Built with Solana, DePIN IoT SmartBins, Metaplex, Helius, Pyth, Chainlink, and predictive AI routing for transparent plastic recovery, contamination validation, NFT Twin tracking, and ESG gamification.
 
 ⸻
 
-📌 Table of Contents
-	1.	Features
-	2.	Authentication & Access
-	3.	Wallet & Payments
-	4.	Production Build
-	5.	APIs & AI Providers
-	6.	Hardware & IoT
-	7.	Mobile App Prompts
-	8.	Live Token Balances
-	9.	Example API Responses
-	10.	Screenshots
-	11.	Data & Utilities
-	12.	License
+# Website & Dashboard Demo
+
+
+⸻
+
+🔗 Live Token Balances
+
+(Automatically update via on-chain API for production)
 
 ⸻
 
 🚀 Features
 
+🔬 Polymer Recycling Focus
+
 <details>
-<summary>🔬 Polymer Recycling Focus</summary>
+<summary>Expand</summary>
 
 
 	•	SmartBins for Polymers – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics
 	•	NFC/QR Validation – Scan packaging or polymer products for recycling proof
 	•	AI Contamination Detection – Detect mixed polymers, labels, adhesives, or impurities
-	•	RWA & NFT Twins – Each recycled batch generates an NFT twin linked to polymer type & weight
+	•	RWA & NFT Twins – Each recycled batch generates an NFT twin (linked to polymer type & weight)
 
 </details>
 
 
+🎯 Role-Based Access
+
 <details>
-<summary>🎯 Role-Based Access</summary>
+<summary>Expand</summary>
 
 
-	•	Recycler+ – Gamified recycling with streaks, missions, and Solana rewards
-	•	Company Partner – ESG dashboards, carbon credit reports, and polymer offsets
+	•	Recycler+ – Gamified plastic recycling with streaks, missions, and Solana rewards
+	•	Company Partner – ESG dashboards, carbon credit reports, and supply chain polymer offsets
 	•	Manufacturer+ – Polymer input/output tracking, predictive IoT maintenance for recycling machines
 	•	Admin Auditor – ESG proof validation, compliance, and audit-ready reporting
 
 </details>
 
 
+🔗 Blockchain Integrations
+
 <details>
-<summary>🔗 Blockchain Integrations</summary>
+<summary>Expand</summary>
 
 
 	•	Solana – NFTs, token transfers, staking, Solana Pay, Actions + Blinks
@@ -63,143 +62,83 @@ Website & Dashboard Demo
 </details>
 
 
+📊 Dashboard Context
+
 <details>
-<summary>📊 Dashboard & Web Frontend</summary>
+<summary>Expand</summary>
 
 
-	•	Public-facing educational pages + ESG campaign landing pages
-	•	Secure dashboard with role-based access
-	•	Real-time IoT polymer bin updates on maps + AR overlays
-	•	AI-driven predictive routing for efficient polymer pickups
+	•	Website Frontend – Public-facing educational pages + ESG campaign landing pages
+	•	Secure Dashboard – Role-based access for recyclers, partners, manufacturers, auditors
+	•	Real-Time Telemetry – IoT polymer bin updates on map + AR overlays
+	•	Predictive Routing – AI-driven polymer pickup routes for efficiency & lower CO₂ footprint
 
 </details>
 
 
+🎮 Gamification
+
 <details>
-<summary>🎮 Gamification</summary>
+<summary>Expand</summary>
 
 
-	•	Recycling missions – Target polymer categories for streak bonuses
-	•	Reward multipliers – Cleaner polymer separation = higher ESG score
-	•	NFT badges – Unlock rare NFTs (Polymer Guardian, Circular Hero, etc.)
+	•	Recycling Missions – Target specific polymer categories for streak bonuses
+	•	Reward Multipliers – Cleaner polymer separation = higher ESG score
+	•	NFT Badges – Unlock rare NFTs (Polymer Guardian, Circular Hero, etc.)
 	•	Leaderboards – Individual and company-level polymer recycling rankings
 
 </details>
 
 
+📱 AR & Website Features
+
 <details>
-<summary>📱 Mobile & AR Features</summary>
+<summary>Expand</summary>
 
 
-	•	2D + AR maps to locate nearest SmartBins
-	•	Polymer streams visualization: user → recycler → manufacturer
-	•	Push notifications for mission streaks, contamination alerts, ESG updates
-	•	AI Chat Assistant for plastic sorting, ESG benefits, token rewards
+	•	2D + AR Maps – Navigate to nearest polymer SmartBins
+	•	Polymer Streams Visualization – Show flow of plastics from user → recycler → manufacturer
+	•	Mobile Notifications – Push alerts for mission streaks & polymer contamination warnings
+	•	AI Chat Assistant – Answers about plastic sorting, ESG benefits, and polymer value recovery
 
 </details>
 
 
-
-⸻
-
-🔒 Authentication & Access
+🔧 Development Setup
 
 <details>
-<summary>Auth Methods</summary>
+<summary>Expand</summary>
 
-
-	•	Solana Wallet Login – Phantom, Solflare, Backpack
-	•	Privy.io OAuth2 login – With graceful fallback to wallet login
-	•	Role-based dashboard routes: /dashboard/<user>
-
-Recycler+ | Company Partner | Manufacturer+ | Admin Auditor
-
-</details>
-
-
-<details>
-<summary>Error Handling</summary>
-
-
-	•	Error boundaries around Privy usage
-	•	Fallback to wallet-only access if Privy fails
-	•	Alerts/logging for dashboard monitoring
-
-</details>
-
-
-
-⸻
-
-💳 Wallet & Payments
-	•	Check token balances (SOL, PLY, USDC, CARB)
-	•	Send / receive tokens
-	•	Stake NFTs or PLY tokens
-	•	Solana Pay integration
-
-const sendPayment = async (recipient: PublicKey, amount: number) => {
-  try {
-    const tx = await solanaPay.send(wallet, recipient, amount, mintAddress);
-    console.log('Payment sent:', tx.signature);
-  } catch (err) {
-    console.error('Payment failed', err);
-  }
-};
-
-
-⸻
-
-🖥 Production Build
-
-npm run build           # Next.js production build
-npm run start           # Start production server
-npm run api:prod        # Deploy Polymer API
-npm run ws:prod         # WebSocket updates for SmartBins telemetry
-npm run db:migrate:prod # Database migrations on production
 
 Environment Variables
 
-NEXT_PUBLIC_SOLANA_RPC_URL="https://api.mainnet-beta.solana.com"
-NEXT_PUBLIC_SUPABASE_URL="your_prod_supabase_url"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="your_prod_supabase_key"
+NEXT_PUBLIC_WS_URL="ws://localhost:3001"
+NEXT_PUBLIC_SOLANA_RPC_URL="https://api.devnet.solana.com"
+NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your_supabase_key"
 PRIVY_APP_ID="your_privy_app_id"
-CHAINLINK_API_KEY="your_prod_chainlink_key"
-NEON_DATABASE_URL="your_prod_neon_db_url"
-STRIPE_API_KEY="your_prod_stripe_key"
-METADATA_SERVICE_URL="https://api.example.com/upload-metadata"
-JWT_SECRET="your_jwt_secret_prod"
-NEXT_PUBLIC_WS_URL="wss://prod-server:3001"
+CHAINLINK_API_KEY="your_chainlink_key"
+
+Scripts
+
+npm run dev        # Website + Dashboard
+npm run api:dev    # Polymer recycling APIs
+npm run ws:dev     # WebSocket updates
+npm run db:migrate # Database migrations for polymer recycling
+
+</details>
 
 
-⸻
-
-⚡ APIs & AI Providers
-	•	/ai/providers.tsx – General AI integrations
-	•	/ai/solana/solana.tsx – Solana token/NFT interactions
-	•	/ai/solana/metaplex.ts – NFT metadata & minting
-	•	/ai/hivemapper.tsx – IoT mapping & telemetry
-	•	/ai/jupiter.tsx – Token swaps
-	•	/ai/solanaPay.tsx – Payments & transfers
-	•	/ai/helium.tsx – DePIN telemetry
-	•	/ai/raydium.tsx – AMM swap logic
-	•	/ai/helius.tsx – On-chain indexing
-	•	/ai/polymers.tsx – Recycling analytics
-	•	/ai/dialect.tsx – Chat/LLM integration
-	•	/lib/polymers/api.ts – Polymer data API endpoints
-	•	/swagger.yaml – API specification
-
-⸻
-
-🛠 Hardware & IoT
+♻️ ESG & Polymers Impact
 
 <details>
-<summary>SmartBins & Sensors</summary>
+<summary>Expand</summary>
 
 
-	•	DePIN IoT network for PET, HDPE, LDPE, and mixed plastics
-	•	Raspberry Pi + sensors telemetry
-	•	Types defined in /types/iot.ts
-	•	Backend support in /hardwares/depin and /depin.ts
+	•	Polymer Credit System – Tokenized credits for PET, HDPE, LDPE recycling
+	•	Carbon Offsets – Verified CO₂ savings via blockchain oracles
+	•	Corporate ESG – Companies prove polymer circularity with auditable dashboards
+	•	Global Leaderboards – Driving community competition in reducing plastic waste
 
 </details>
 
@@ -207,66 +146,49 @@ NEXT_PUBLIC_WS_URL="wss://prod-server:3001"
 
 ⸻
 
-📱 Mobile App Prompts
+💻 API Examples
 
 <details>
-<summary>AR & Gamification Prompts</summary>
+<summary>Expand</summary>
 
 
-	•	Find nearest SmartBin
-	•	AI contamination detection
-	•	Track NFT Twin creation
-	•	Mission streak notifications
-	•	ESG score updates
+Get Token Balances
 
-</details>
-
-
-
-⸻
-
-💰 Live Token Balances
-
-import { getTokenBalance } from './ai/solana/solana';
-
-const tokens = ['SOL', 'PLY', 'USDC', 'CARB'];
-tokens.forEach(async (t) => {
-  const balance = await getTokenBalance(wallet.publicKey, t);
-  console.log(`${t} Balance:`, balance);
-});
-
-
-⸻
-
-🛠 Example API Responses
-
-<details>
-<summary>Get Polymer Twin Info</summary>
-
-
-GET /api/polymers/twins/123
+GET /api/token-balances/:wallet
+Response:
 {
-  "id": 123,
-  "polymer_type": "PET",
-  "weight_kg": 4.5,
-  "nft_twin_mint": "PLYKdaCUgxTUw6rSjWbgSN97Qtecb6Fy6SazWf1tvAC",
-  "timestamp": "2025-09-27T10:15:00Z",
-  "recycler": "0xABC123..."
+  "SOL": 12.34,
+  "PLY": 100000,
+  "USDC": 50.75,
+  "CARB": 500
 }
 
-</details>
+Send Tokens
 
-
-<details>
-<summary>Submit Recycling Mission</summary>
-
-
-POST /api/polymers/missions
+POST /api/send
+Body:
 {
-  "mission_id": 7,
-  "user": "0xDEF456...",
-  "completed_polymers": ["HDPE", "LDPE"],
-  "rewards_earned": 125
+  "from": "user-wallet",
+  "to": "recipient-wallet",
+  "token": "PLY",
+  "amount": 100
+}
+Response:
+{
+  "success": true,
+  "txHash": "5gk...abcd"
+}
+
+AI Chat Prompt
+
+POST /api/ai/chat
+Body:
+{
+  "prompt": "How do I recycle HDPE safely?"
+}
+Response:
+{
+  "answer": "You should rinse the HDPE container, remove labels..."
 }
 
 </details>
@@ -275,24 +197,10 @@ POST /api/polymers/missions
 
 ⸻
 
-🖼 Screenshots
+📸 Screenshots
 
 <details>
-<summary>Dashboard Overview</summary>
-
-
-</details>
-
-
-<details>
-<summary>Mobile App AR Map</summary>
-
-
-</details>
-
-
-<details>
-<summary>Polymer NFT Twin Example</summary>
+<summary>Expand</summary>
 
 
 </details>
@@ -301,14 +209,40 @@ POST /api/polymers/missions
 
 ⸻
 
-💾 Data & Utilities
-	•	/data/ – Seed and test data
-	•	/utils/ – Helper functions & types
-	•	/context/ – React context for Auth, Wallet, AI, Dashboard
-	•	/constants/ – Tokens, addresses, roles
+⚡ Mobile App Prompts
+
+<details>
+<summary>Expand</summary>
+
+
+	•	Mission streak notifications & contamination warnings
+	•	AI assistant for sorting guidance
+	•	AR map navigation to nearest SmartBins
+	•	Gamification updates (NFT badges, leaderboards)
+
+</details>
+
+
 
 ⸻
 
-📝 License
+🧰 Hardware & IoT
 
-This project is licensed under MIT.
+<details>
+<summary>Expand</summary>
+
+
+	•	DePIN-enabled SmartBins with fill-level telemetry
+	•	Sensors for polymer type detection & contamination
+	•	Raspberry Pi gateways for edge data processing
+	•	IoT data streamed to /ws for dashboard updates
+
+</details>
+
+
+
+⸻
+
+📄 License
+
+MIT License.
