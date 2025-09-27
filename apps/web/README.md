@@ -1,4 +1,4 @@
-Polymers - Recycling Dashboard & Website
+Polymers – Recycling Dashboard & Website
 
 A blockchain-powered AI + IoT + AR platform for polymer recycling and ESG tracking.
 Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
@@ -7,16 +7,22 @@ Built with Solana, DePIN IoT SmartBins, and predictive AI routing, enabling:
 	•	NFT Twin tracking
 	•	Gamified ESG rewards
 
-Website & Dashboard Demo
+🌐 Website & Dashboard Demo
 
 ⸻
 
 Live Token Balances
 
+<div align="center">
+
+
+</div>
+
+
 
 ⸻
 
-Website + Dashboard Features
+Features
 
 <details>
 <summary>**Polymer Recycling Focus**</summary>
@@ -118,7 +124,7 @@ Production Dashboard – Build & Features
 npm ci
 npm run build
 npm run start
-npm run api:start # optional backend
+npm run api:start   # optional backend
 
 Required Environment Variables:
 
@@ -140,10 +146,10 @@ USDC_MINT="Es9vMFrzxxxxxxxxxxxxxxxxxxxxxxxxxx"
 <summary>**Dashboard Layout**</summary>
 
 
-	•	Sidebar: Navigation – Dashboard, Missions, Wallet, Analytics, ESG Reports
-	•	Header: Live token badges, notifications, user profile
-	•	Main Panel: Telemetry map, AR overlays, polymer streams visualization
-	•	Footer: ESG metrics, links to website & company dashboards
+	•	Sidebar – Navigation: Dashboard, Missions, Wallet, Analytics, ESG Reports
+	•	Header – Live token badges, notifications, user profile
+	•	Main Panel – Telemetry map, AR overlays, polymer streams visualization
+	•	Footer – ESG metrics, links to website & company dashboards
 
 </details>
 
@@ -223,9 +229,7 @@ CHAINLINK_API_KEY="your_chainlink_key"
 ⸻
 
 ESG & Polymer Impact
-	•	Polymer Credit System: Tokenized credits for PET, HDPE, LDPE recycling
-	•	Carbon Offsets: Verified CO₂ savings via blockchain oracles
-	•	Corporate ESG: Companies prove polymer circularity with audit-ready dashboards
-	•	Global Leaderboards: Community competition driving reduction of plastic waste
-
-⸻
+	•	Polymer Credit System – Tokenized credits for PET, HDPE, LDPE recycling
+	•	Carbon Offsets – Verified CO₂ savings via blockchain oracles
+	•	Corporate ESG – Companies prove polymer circularity with audit-ready dashboards
+	•	Global Leaderboards – Community competition driving reduction of plastic waste
