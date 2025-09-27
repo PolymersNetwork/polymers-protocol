@@ -7,8 +7,6 @@ Built with Solana, DePIN IoT SmartBins, predictive AI routing, and NFT Twins, en
 
 🏷 Live Token Balances
 
-Display real-time balances of SOL, PLY, USDC, and CARB tokens for a given wallet directly in the README:
-
 Token	Balance
 SOL	
 PLY	
@@ -22,7 +20,7 @@ CARB
 🚀 Website & Dashboard Features
 
 <details>
-<summary>🔬 Polymer Recycling Focus</summary>
+<summary>**🔬 Polymer Recycling Focus**</summary>
 
 
 	•	SmartBins for Polymers – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics
@@ -34,7 +32,7 @@ CARB
 
 
 <details>
-<summary>🎯 Role-Based Access</summary>
+<summary>**🎯 Role-Based Access**</summary>
 
 
 	•	Recycler+ – Gamified recycling with streaks, missions, and Solana rewards
@@ -46,7 +44,7 @@ CARB
 
 
 <details>
-<summary>🔗 Blockchain Integrations</summary>
+<summary>**🔗 Blockchain Integrations**</summary>
 
 
 	•	Solana – NFTs, token transfers, staking, Solana Pay, Actions + Blinks
@@ -60,7 +58,7 @@ CARB
 
 
 <details>
-<summary>📊 Dashboard Context</summary>
+<summary>**📊 Dashboard Context**</summary>
 
 
 	•	Website Frontend – Public-facing educational pages + ESG campaign landing pages
@@ -72,7 +70,7 @@ CARB
 
 
 <details>
-<summary>🎮 Gamification for Polymers</summary>
+<summary>**🎮 Gamification for Polymers**</summary>
 
 
 	•	Recycling Missions – Target specific polymer categories for streak bonuses
@@ -84,7 +82,7 @@ CARB
 
 
 <details>
-<summary>📱 AR & Website Features</summary>
+<summary>**📱 AR & Website Features**</summary>
 
 
 	•	2D + AR Maps – Navigate to nearest polymer SmartBins
