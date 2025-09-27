@@ -1,3 +1,12 @@
+Got it! Let’s make the README even cleaner, more professional, and GitHub-ready. I’ll focus on:
+	•	Polished layout & headings
+	•	Consistent collapsible sections
+	•	Code snippets inline where useful
+	•	Better distinction between AI, blockchain, IoT, ESG, dashboard, and mobile features
+	•	Improved clarity for developers
+
+Here’s the refined full README.md:
+
 # Polymers Protocol - Recycling Dashboard & Website
 
 A **blockchain-powered AI + IoT + AR platform** for polymer recycling and ESG tracking.  
@@ -5,12 +14,10 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 
 ---
 
-## 🚀 Website + Dashboard Features
+## 🚀 Website & Dashboard Features
 
 <details>
-	
 <summary>🔬 Polymer Recycling Focus</summary>
-
 
 - **SmartBins for Polymers** – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics  
 - **NFC/QR Validation** – Scan packaging or polymer products for recycling proof  
@@ -20,11 +27,9 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
-	
 <summary>🎯 Role-Based Access</summary>
 
-
-- **Recycler+** – Gamified plastic recycling with streaks, missions, and Solana rewards  
+- **Recycler+** – Gamified recycling with streaks, missions, and Solana rewards  
 - **Company Partner** – ESG dashboards, carbon credit reports, and supply chain polymer offsets  
 - **Manufacturer+** – Polymer input/output tracking, predictive IoT maintenance for recycling machines  
 - **Admin Auditor** – ESG proof validation, compliance, and audit-ready reporting  
@@ -32,80 +37,68 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 </details>
 
 <details>
-	
 <summary>🔗 Blockchain Integrations</summary>
-
 
 - **Solana** – NFTs, token transfers, staking, Solana Pay, Actions + Blinks  
 - **Metaplex** – NFT metadata & marketplace for polymer credits  
-- **Pyth + Chainlink** – ESG price feeds, polymer commodity oracle data  
+- **Pyth + Chainlink** – ESG price feeds & polymer commodity oracle data  
 - **Helius** – On-chain indexing & history of polymer credits  
-- **Helium/DePIN** – IoT network for SmartBin telemetry (fill-levels, contamination, polymer type)  
-- **Privy.io** – Privacy-preserving identity for recyclers & corporate partners  
+- **Helium / DePIN** – IoT telemetry for SmartBins (fill-levels, contamination, polymer type)  
+- **Privy.io** – Privacy-preserving identity for recyclers & partners  
 - **Jupiter + Raydium** – Token swaps & liquidity aggregation  
 
 </details>
 
 <details>
-	
 <summary>📊 Dashboard Context</summary>
 
-
-- **Website Frontend** – Public-facing educational pages + ESG campaign landing pages  
+- **Website Frontend** – Public educational pages & ESG campaign landing pages  
 - **Secure Dashboard** – Role-based access for recyclers, partners, manufacturers, auditors  
-- **Real-Time Telemetry** – IoT polymer bin updates on map + AR overlays  
+- **Real-Time Telemetry** – IoT bin updates on map + AR overlays  
 - **Predictive Routing** – AI-driven polymer pickup routes for efficiency & lower CO₂ footprint  
 
 </details>
 
 <details>
-	
-<summary>🎮 Gamification for Polymers</summary>
-
+<summary>🎮 Gamification & Rewards</summary>
 
 - **Recycling Missions** – Target specific polymer categories for streak bonuses  
 - **Reward Multipliers** – Cleaner polymer separation = higher ESG score  
-- **NFT Badges** – Unlock rare NFTs (Polymer Guardian, Circular Hero, etc.)  
-- **Leaderboards** – Individual and company-level polymer recycling rankings  
+- **NFT Badges** – Unlock rare NFTs like Polymer Guardian, Circular Hero  
+- **Leaderboards** – Individual & company-level recycling rankings  
 
 </details>
 
 <details>
-	
-<summary>📱 AR & Website Features</summary>
+<summary>📱 AR & Mobile Features</summary>
 
-
-- **2D + AR Maps** – Navigate to nearest polymer SmartBins  
-- **Polymer Streams Visualization** – Show flow of plastics from user → recycler → manufacturer  
-- **Mobile Notifications** – Push alerts for mission streaks & polymer contamination warnings  
-- **AI Chat Assistant** – Answers about plastic sorting, ESG benefits, and polymer value recovery  
+- **2D + AR Maps** – Navigate to nearest SmartBins  
+- **Polymer Streams Visualization** – Flow of plastics from user → recycler → manufacturer  
+- **Mobile Notifications** – Streaks, contamination alerts, ESG updates  
+- **AI Chat Assistant** – Polymer sorting guidance, ESG impact explanations, reward suggestions  
 
 </details>
 
 ---
 
-## 💻 Mobile App Prompts & Dashboard
+## 💻 Mobile App & Dashboard Prompts
 
 <details>
-	
 <summary>Mobile App Features</summary>
 
-
-- **Sign In / Wallet Login** – Access dashboard via Solana wallet or Privy login  
+- **Sign In / Wallet Login** – Solana wallets or Privy login  
 - **Solana Pay Integration** – Send, receive, check token balances  
 - **Role-Based Dashboard** – `/dashboard/<user>` for recyclers, companies, manufacturers, auditors  
-- **Push Notifications** – Recycling streaks, contamination alerts, ESG updates  
-- **AI Assistance** – Polymer sorting guidance, ESG impact explanations, reward suggestions  
+- **Push Notifications** – Recycling streaks, contamination warnings, ESG updates  
+- **AI Assistance** – Guides for polymer sorting, token rewards, and ESG insights  
 
 </details>
 
 <details>
-	
 <summary>Dashboard Sidebar & Footer</summary>
 
-
-- **Sidebar Navigation** – Home, Missions, NFTs, Token Balances, Analytics, Profile, Settings  
-- **Footer** – ESG impact metrics, recycling leaderboard, blockchain transaction status, privacy links  
+- **Sidebar** – Home, Missions, NFTs, Token Balances, Analytics, Profile, Settings  
+- **Footer** – ESG metrics, recycling leaderboard, blockchain transactions, privacy links  
 
 </details>
 
@@ -114,7 +107,6 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 ## ⚙️ Development Setup
 
 <details>
-	
 <summary>Environment Variables</summary>
 
 ```bash
@@ -133,7 +125,6 @@ STRIPE_API_KEY="your_stripe_key"
 
 
 <details>
-
 <summary>Scripts</summary>
 
 
@@ -151,24 +142,22 @@ npm run db:migrate   # Database migrations for polymer recycling
 🧩 APIs & Libraries
 
 <details>
-
 <summary>AI Providers</summary>
 
 
-	•	Grok, Deepseek, Blob, Gemini, Dialect – AI chat, prompts, and analysis
-	•	File references: /ai/providers.tsx, /ai/solana/solana.tsx, /ai/solana/metaplex.ts, hivemapper.tsx, jupiter.tsx, solana pay.tsx, helium.tsx, raydium.tsx, helius.tsx, polymers.tsx, dialect.tsx
+	•	Grok, Deepseek, Blob, Gemini, Dialect – AI chat, analysis, & prompts
+	•	File references: /ai/providers.tsx, /ai/solana/solana.tsx, /ai/solana/metaplex.ts, /hivemapper.tsx, /jupiter.tsx, /solana pay.tsx, /helium.tsx, /raydium.tsx, /helius.tsx, /polymers.tsx, /dialect.tsx
 
 </details>
 
 
 <details>
-
 <summary>Blockchain & Token Libraries</summary>
 
 
 	•	Solana Wallets – Phantom, Solflare, Backpack
 	•	Token Programs – SPL, PLY, USDC, SOL, CARB mint addresses (Mainnet & Devnet)
-	•	Metaplex – NFT metadata & marketplaces
+	•	Metaplex – NFT metadata & marketplace
 	•	Raydium / Jupiter – Swap & liquidity
 	•	Solana Pay – Token send/receive & payment verification
 
@@ -176,8 +165,7 @@ npm run db:migrate   # Database migrations for polymer recycling
 
 
 <details>
-
-<summary>Backend, Hooks, & Utilities</summary>
+<summary>Backend, Hooks & Utilities</summary>
 
 
 	•	/context/ – Auth & AppContext
@@ -193,7 +181,6 @@ npm run db:migrate   # Database migrations for polymer recycling
 
 
 <details>
-
 <summary>Swagger / API Docs</summary>
 
 
@@ -208,7 +195,6 @@ npm run db:migrate   # Database migrations for polymer recycling
 ♻️ ESG & Polymer Impact
 
 <details>
-
 <summary>Recycling Credits & Carbon Offsets</summary>
 
 
@@ -226,7 +212,7 @@ npm run db:migrate   # Database migrations for polymer recycling
 🔗 Demo & Screenshots
 
 Website & Dashboard Demo: https://poiymers-website.vercel.app
-	•	Screenshots, AR visualizations, and mobile app flows available in /public/images/screenshots/
+	•	Screenshots, AR visualizations, and mobile app flows in /public/images/screenshots/
 
 ⸻
 
