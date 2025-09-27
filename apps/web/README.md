@@ -1,4 +1,4 @@
-# Polymers Protocol - Monorepo
+# Polymers Protocol
 
 A **blockchain-powered AI + IoT + AR platform** for polymer recycling and ESG tracking.  
 Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, enabling **transparent plastic recovery**, **contamination validation**, **NFT Twin tracking**, and **gamified ESG rewards**.
