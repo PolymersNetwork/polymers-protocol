@@ -25,6 +25,7 @@ Check out the live **Website & Dashboard Demo** here: [https://poiymers-website.
 Polymers Protocol is a blockchain-as-a-service platform integrating Solana blockchain, IoT, DePin, and ESG solutions. It is a blockchain-powered, AI-driven platform for polymer and e-waste recycling, enabling supply chain transparency, ESG tracking, and gamified incentives.
 
 **The BaaS platform provides seamless solutions for:**
+
 	•	Wallet Management – Easy token swaps, balance tracking, and Solana Pay integration
 	•	NFT Twins – Blockchain-based batch tracking for materials and ESG compliance
 	•	Payments & Rewards – Instant token rewards for recycling activities
