@@ -1,9 +1,9 @@
-# Polymers Protocol – Recycling Dashboard & Website
+🌱 Polymers Protocol – Recycling Dashboard & Website
 
 A blockchain-powered AI + IoT + AR platform for polymer recycling and ESG tracking.
 Built with Solana, DePIN IoT SmartBins, AI predictive routing, and NFT Twin tracking for gamified ESG rewards.
 
-Website and Dashboard Demo
+Website & Dashboard Demo
 
 ⸻
 
@@ -15,8 +15,11 @@ Website and Dashboard Demo
 	5.	APIs & AI Providers
 	6.	Hardware & IoT
 	7.	Mobile App Prompts
-	8.	Data & Utilities
-	9.	License
+	8.	Live Token Balances
+	9.	Example API Responses
+	10.	Screenshots
+	11.	Data & Utilities
+	12.	License
 
 ⸻
 
@@ -38,9 +41,9 @@ Website and Dashboard Demo
 <summary>🎯 Role-Based Access</summary>
 
 
-	•	Recycler+ – Gamified recycling with streaks, missions, Solana rewards
-	•	Company Partner – ESG dashboards, carbon credit reports, polymer offsets
-	•	Manufacturer+ – Input/output tracking, predictive IoT maintenance for recycling machines
+	•	Recycler+ – Gamified recycling with streaks, missions, and Solana rewards
+	•	Company Partner – ESG dashboards, carbon credit reports, and polymer offsets
+	•	Manufacturer+ – Polymer input/output tracking, predictive IoT maintenance for recycling machines
 	•	Admin Auditor – ESG proof validation, compliance, and audit-ready reporting
 
 </details>
@@ -78,7 +81,7 @@ Website and Dashboard Demo
 
 	•	Recycling missions – Target polymer categories for streak bonuses
 	•	Reward multipliers – Cleaner polymer separation = higher ESG score
-	•	NFT badges – Unlock rare NFTs (Polymer Guardian, Circular Hero)
+	•	NFT badges – Unlock rare NFTs (Polymer Guardian, Circular Hero, etc.)
 	•	Leaderboards – Individual and company-level polymer recycling rankings
 
 </details>
@@ -90,7 +93,7 @@ Website and Dashboard Demo
 
 	•	2D + AR maps to locate nearest SmartBins
 	•	Polymer streams visualization: user → recycler → manufacturer
-	•	Push notifications: streaks, contamination alerts, ESG updates
+	•	Push notifications for mission streaks, contamination alerts, ESG updates
 	•	AI Chat Assistant for plastic sorting, ESG benefits, token rewards
 
 </details>
@@ -105,9 +108,9 @@ Website and Dashboard Demo
 <summary>Auth Methods</summary>
 
 
-	•	Solana Wallet Login (Phantom, Solflare, Backpack)
-	•	Privy.io OAuth2 login with graceful fallback to wallet login
-	•	Role-based access for /dashboard/<user> routes:
+	•	Solana Wallet Login – Phantom, Solflare, Backpack
+	•	Privy.io OAuth2 login – With graceful fallback to wallet login
+	•	Role-based dashboard routes: /dashboard/<user>
 
 Recycler+ | Company Partner | Manufacturer+ | Admin Auditor
 
@@ -132,7 +135,7 @@ Recycler+ | Company Partner | Manufacturer+ | Admin Auditor
 	•	Check token balances (SOL, PLY, USDC, CARB)
 	•	Send / receive tokens
 	•	Stake NFTs or PLY tokens
-	•	Solana Pay integration for token transfers
+	•	Solana Pay integration
 
 const sendPayment = async (recipient: PublicKey, amount: number) => {
   try {
@@ -196,7 +199,7 @@ NEXT_PUBLIC_WS_URL="wss://prod-server:3001"
 	•	DePIN IoT network for PET, HDPE, LDPE, and mixed plastics
 	•	Raspberry Pi + sensors telemetry
 	•	Types defined in /types/iot.ts
-	•	Backend support in /hardwares/depin, /depin.ts
+	•	Backend support in /hardwares/depin and /depin.ts
 
 </details>
 
@@ -215,6 +218,82 @@ NEXT_PUBLIC_WS_URL="wss://prod-server:3001"
 	•	Track NFT Twin creation
 	•	Mission streak notifications
 	•	ESG score updates
+
+</details>
+
+
+
+⸻
+
+💰 Live Token Balances
+
+import { getTokenBalance } from './ai/solana/solana';
+
+const tokens = ['SOL', 'PLY', 'USDC', 'CARB'];
+tokens.forEach(async (t) => {
+  const balance = await getTokenBalance(wallet.publicKey, t);
+  console.log(`${t} Balance:`, balance);
+});
+
+
+⸻
+
+🛠 Example API Responses
+
+<details>
+<summary>Get Polymer Twin Info</summary>
+
+
+GET /api/polymers/twins/123
+{
+  "id": 123,
+  "polymer_type": "PET",
+  "weight_kg": 4.5,
+  "nft_twin_mint": "PLYKdaCUgxTUw6rSjWbgSN97Qtecb6Fy6SazWf1tvAC",
+  "timestamp": "2025-09-27T10:15:00Z",
+  "recycler": "0xABC123..."
+}
+
+</details>
+
+
+<details>
+<summary>Submit Recycling Mission</summary>
+
+
+POST /api/polymers/missions
+{
+  "mission_id": 7,
+  "user": "0xDEF456...",
+  "completed_polymers": ["HDPE", "LDPE"],
+  "rewards_earned": 125
+}
+
+</details>
+
+
+
+⸻
+
+🖼 Screenshots
+
+<details>
+<summary>Dashboard Overview</summary>
+
+
+</details>
+
+
+<details>
+<summary>Mobile App AR Map</summary>
+
+
+</details>
+
+
+<details>
+<summary>Polymer NFT Twin Example</summary>
+
 
 </details>
 
