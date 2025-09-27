@@ -10,7 +10,7 @@ A blockchain-powered, AI-driven platform for polymer and e-waste recycling, enab
 - **Solana Pay**: Instant rewards and token swaps
 - **AI/LLM Assistants**: Operational and ESG guidance
 
-🔗 **Live Demo**: [demo.polymersnetwork.org](https://poiymers-website.vercel.app))
+🔗 **Live Demo**: [demo.polymersnetwork.org](https://poiymers-website.vercel.app)
 
 ---
 
