@@ -22,12 +22,15 @@ Check out the live **Website & Dashboard Demo** here: [https://poiymers-website.
 | ![Web Dashboard](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/smartbin-map.png) |
 | Analytics, NFT Twins, ESG | Wallet, AI Chat, Scan-to-Pay | Real-time AR navigation |
 
-**Polymers Protocol** is a production-ready platform integrating **blockchain**, **IoT**, and **ESG** solutions. It provides seamless wallet management, NFT Twins, payments, recycling analytics, AI assistance, and SmartBin integration.
+Polymers Protocol is a blockchain-as-a-service platform integrating Solana blockchain, IoT, DePin, and ESG solutions. It is a blockchain-powered, AI-driven platform for polymer and e-waste recycling, enabling supply chain transparency, ESG tracking, and gamified incentives.
 
-This repository is a **monorepo** housing the **Web Dashboard**, **Mobile App**, and **Backend APIs**.
-
-Got it! We can add a “Website & Dashboard Demo” link prominently in the README right after the title or in the Screenshots section so developers and users can access it quickly. Here’s an example update:
-
+**The BaaS platform provides seamless solutions for:**
+	•	Wallet Management – Easy token swaps, balance tracking, and Solana Pay integration
+	•	NFT Twins – Blockchain-based batch tracking for materials and ESG compliance
+	•	Payments & Rewards – Instant token rewards for recycling activities
+	•	Recycling Analytics – Predictive insights using AI and LSTM models
+	•	AI Assistance – Chat-based operational and ESG guidance
+	•	SmartBin Integration – IoT-enabled bins with real-time telemetry and automated rewards
 
 ---
 
