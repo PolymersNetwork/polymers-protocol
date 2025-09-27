@@ -11,6 +11,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 	
 <summary>🔬 Polymer Recycling Focus</summary>
 
+
 - **SmartBins for Polymers** – IoT-enabled bins for PET, HDPE, LDPE, and mixed plastics  
 - **NFC/QR Validation** – Scan packaging or polymer products for recycling proof  
 - **AI Contamination Detection** – Detect mixed polymers, labels, adhesives, or impurities  
@@ -22,6 +23,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 	
 <summary>🎯 Role-Based Access</summary>
 
+
 - **Recycler+** – Gamified plastic recycling with streaks, missions, and Solana rewards  
 - **Company Partner** – ESG dashboards, carbon credit reports, and supply chain polymer offsets  
 - **Manufacturer+** – Polymer input/output tracking, predictive IoT maintenance for recycling machines  
@@ -32,6 +34,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 <details>
 	
 <summary>🔗 Blockchain Integrations</summary>
+
 
 - **Solana** – NFTs, token transfers, staking, Solana Pay, Actions + Blinks  
 - **Metaplex** – NFT metadata & marketplace for polymer credits  
@@ -47,6 +50,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 	
 <summary>📊 Dashboard Context</summary>
 
+
 - **Website Frontend** – Public-facing educational pages + ESG campaign landing pages  
 - **Secure Dashboard** – Role-based access for recyclers, partners, manufacturers, auditors  
 - **Real-Time Telemetry** – IoT polymer bin updates on map + AR overlays  
@@ -58,6 +62,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 	
 <summary>🎮 Gamification for Polymers</summary>
 
+
 - **Recycling Missions** – Target specific polymer categories for streak bonuses  
 - **Reward Multipliers** – Cleaner polymer separation = higher ESG score  
 - **NFT Badges** – Unlock rare NFTs (Polymer Guardian, Circular Hero, etc.)  
@@ -68,6 +73,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 <details>
 	
 <summary>📱 AR & Website Features</summary>
+
 
 - **2D + AR Maps** – Navigate to nearest polymer SmartBins  
 - **Polymer Streams Visualization** – Show flow of plastics from user → recycler → manufacturer  
@@ -84,6 +90,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 	
 <summary>Mobile App Features</summary>
 
+
 - **Sign In / Wallet Login** – Access dashboard via Solana wallet or Privy login  
 - **Solana Pay Integration** – Send, receive, check token balances  
 - **Role-Based Dashboard** – `/dashboard/<user>` for recyclers, companies, manufacturers, auditors  
@@ -95,6 +102,7 @@ Built with **Solana**, **DePIN IoT SmartBins**, and **predictive AI routing**, e
 <details>
 	
 <summary>Dashboard Sidebar & Footer</summary>
+
 
 - **Sidebar Navigation** – Home, Missions, NFTs, Token Balances, Analytics, Profile, Settings  
 - **Footer** – ESG impact metrics, recycling leaderboard, blockchain transaction status, privacy links  
