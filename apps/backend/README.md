@@ -1,158 +1,622 @@
-# Polymers Protocol – Developer Package
+# Polymers Protocol Backend Developer Guide
 
-This repository/package provides everything developers need to run, test, and integrate with the Polymers Protocol backend API, including:
-	•	Backend setup (Node.js + TypeScript + Express)
-	•	API endpoints & Swagger documentation
-	•	TypeScript SDK types
-	•	Postman collection
-	•	Flowcharts and playground guidance
+**Version**: 1.0.0  
+**Date**: September 28, 2025
 
-⸻
+---
 
-1. Overview
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Prerequisites](#prerequisites)
+3. [Environment Setup](#environment-setup)
+4. [Database Models](#database-models)
+5. [Backend Services](#backend-services)
+6. [Carbon Offset & ESG Integration](#carbon-offset--esg-integration)
+7. [NFT Twin Staking & Rewards](#nft-twin-staking--rewards)
+8. [Solana Program Details](#solana-program-details)
+9. [API Endpoints](#api-endpoints)
+10. [Developer Tools](#developer-tools)
+11. [Flowcharts & Architecture](#flowcharts--architecture)
+12. [Testing](#testing)
+13. [Best Practices](#best-practices)
+14. [Next Steps](#next-steps)
 
-The Polymers Protocol API enables developers to interact with:
-	•	Users (wallet/email auth)
-	•	Token transactions (PLY, SOL)
-	•	NFT Twins & staking
-	•	Payments (Solana Pay / Jupiter / Raydium)
-	•	ESG metrics & SmartBins telemetry
-	•	AI Chat powered by GPT
-	•	Additional endpoints: donations, recycling, swaps, settings, messages
+---
 
-Domains
-	•	Frontend/Dashboard: https://polymersprotocol.org
-	•	API Base: https://api.polymersprotocol.org
-	•	Swagger / Playground: https://api.polymersprotocol.org/swagger
+## Project Overview
 
-All endpoints require Authorization: Bearer <JWT>.
+The **Polymers Protocol** is a Solana-based backend service that tracks recycling contributions via SmartBins, calculates carbon offsets and ESG points, and integrates them with NFT Twin staking rewards.
 
-⸻
+**Key Components**:
+- **SmartBins**: IoT devices reporting recycled material and weight.
+- **ESG Service**: Calculates carbon offsets and ESG points from recycling data.
+- **NFT Twins**: Solana-based NFTs (using Metaplex) that accrue rewards based on staking duration and ESG points.
+- **Database**: Stores SmartBin submissions, ESG data, and staking history using Prisma ORM.
+- **Blockchain**: Solana for NFT management and optional ESG data logging.
 
-2. Backend Setup
+**Tech Stack**:
+- Backend: Node.js, TypeScript, Express
+- Database: PostgreSQL with Prisma
+- Blockchain: Solana, Metaplex, `@solana/web3.js`, `@metaplex-foundation/js`
 
-Clone & Install
+---
 
-git clone https://github.com/PolymersNetwork/polymers-protocol.git
-cd polymers-protocol
-npm install
+## Prerequisites
 
-Environment Variables
+- **Node.js** ≥ 20
+- **npm** ≥ 9 (or Yarn)
+- **PostgreSQL** ≥ 15 (or compatible database)
+- **Solana CLI**: For local validator or Devnet testing
+- **Optional**: Mermaid CLI for diagram rendering (`npm install -g @mermaid-js/mermaid-cli`)
 
-Create .env:
+---
 
-NODE_ENV=development
-PORT=3001
-JWT_SECRET=your-jwt-secret
-SOLANA_RPC_URL=https://api.devnet.solana.com
-DATABASE_URL=postgres://user:password@localhost:5432/polymers
+## Environment Setup
 
-Run Backend Locally
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/polymers-protocol/backend.git
+   cd backend
+   ```
 
-npm run dev:backend
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-	•	Swagger Docs: http://localhost:3001/swagger
-	•	API Root: http://localhost:3001
+3. **Configure `.env`**:
+   Create a `.env` file in the project root with:
+   ```env
+   DATABASE_URL=postgresql://user:password@localhost:5432/polymers
+   SOLANA_RPC_URL=https://api.devnet.solana.com
+   NFT_PROGRAM_ID=metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s
+   TOKEN_PROGRAM_ID=TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+   ESG_PROGRAM_ID=<Custom ESG Program ID>
+   STAKING_PROGRAM_ID=<Custom Staking Program ID>
+   DEFAULT_WALLET_ADDRESS=<Your Wallet Public Key>
+   SECRET_KEY=<Your Secret Key>
+   JWT_SECRET=<Your JWT Secret>
+   NODE_ENV=development
+   ```
 
-⸻
+4. **Initialize the Database**:
+   ```bash
+   npx prisma migrate dev --name init
+   ```
 
-3. API Endpoints
+5. **Start the Backend**:
+   ```bash
+   npm run dev:backend
+   ```
+   - Backend runs at `http://localhost:3001`.
+   - Swagger UI available at `http://localhost:3001/swagger`.
 
-Category	Endpoint	Method	Description
-Users	/users	GET	Retrieve user details
-Transactions	/transactions	POST	Token transfers
-NFT Twins	/nft-twins	GET	NFT staking & rewards
-Payments	/payments	POST	Solana Pay & swaps
-ESG Metrics	/esg	GET	Environmental tracking
-SmartBins	/smartbins	GET	IoT bin data
-AI Chat	/ai-agents	POST	GPT-powered messaging
-Additional	/donations, /recycling, /swap, /settings, /messages	GET/POST	Various utility endpoints
+---
 
-Example cURL Requests:
+## Database Models
 
-# Get users
-curl -X GET "https://api.polymersprotocol.org/users?wallet=5Hb...xYz&limit=10" \
-  -H "Authorization: Bearer <token>"
+**Prisma Schema** (in `prisma/schema.prisma`):
 
-# Create transaction
-curl -X POST "https://api.polymersprotocol.org/transactions" \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{"wallet":"5Hb...xYz","amount":100,"token":"PLY","recipient":"7Jk...aBc"}'
-
-Use Swagger or Postman to explore full request/response flows.
-
-⸻
-
-4. TypeScript SDK
-
-Shared types are available in /apps/shared:
-
-import { User, Transaction, NFTTwin, Payment, ESG, SmartBin, AIMessage } from '../shared/types';
-
-Generate SDK types from Swagger:
-
-npx openapi-typescript http://localhost:3001/swagger -o src/shared/types/api.ts
-
-Use these types for frontend integration, backend services, or automated testing.
-
-⸻
-
-5. Postman Collection
-	1.	Import docs/postman/polymers-protocol-api.json
-	2.	Set Authorization: Bearer <JWT> in the collection
-	3.	Test full flows:
-Users → Transactions → NFT Twins → Payments → ESG → SmartBins → AI Chat
-
-⸻
-
-6. Flowchart Guidance
-
-flowchart TD
-    A[Start Backend & Auth] --> B[Simulate SmartBins & NFT Twins]
-    B --> C[Check Rewards & ESG Metrics]
-    C --> D[Process Transactions & Payments]
-    D --> E[AI Chat & Logs]
-    E --> F[Test Postman/Swagger]
-
-	•	A: Start backend, connect wallet, generate JWT
-	•	B: Query NFT Twins & SmartBins endpoints
-	•	C: Validate ESG metrics & reward points
-	•	D: Execute token transfers and payments
-	•	E: Test AI chat & logs
-	•	F: Explore API fully via Postman or Swagger
-
-⸻
-
-7. Integration Notes
-	•	Blockchain Ops: All Solana interactions (transactions, NFTs via Metaplex) use SOLANA_RPC_URL from .env.
-	•	Error Handling:
-
-{
-  "status": "error",
-  "error": {
-    "code": 401,
-    "message": "Unauthorized"
-  }
+```prisma
+model SmartBin {
+  id        Int     @id @default(autoincrement())
+  binId     String
+  user      String  // Solana wallet public key
+  weight    Float   // kg of recycled material
+  material  String  // e.g., "plastic", "glass"
+  timestamp Int     // Unix timestamp
 }
 
-	•	401 – Unauthorized
-	•	429 – Rate limited
-	•	500 – Internal server error
-	•	Webhooks: For real-time updates, subscribe via /webhooks/register.
+model ESG {
+  user         String   @id // Solana wallet public key
+  points       Int      // Total ESG points
+  carbonOffset Float    // Total kg CO₂e offset
+  updatedAt    DateTime
+}
 
-⸻
+model Staking {
+  id          Int     @id @default(autoincrement())
+  user        String  // Solana wallet public key
+  nftMint     String  // NFT Twin mint address
+  stakedAt    Int     // Unix timestamp
+  rewards     Int     // Accumulated PLY tokens
+}
+```
 
-8. Testing & Linting
+---
 
-npm run test        # Unit tests
-npm run lint        # Lint code
-npm run type-check  # TypeScript checks
+## Backend Services
 
+### 1. SmartBin Service
+- **Purpose**: Processes telemetry data from IoT SmartBins.
+- **Functions**: Validates weight/material, stores data, triggers ESG calculations.
+- **Location**: `/services/smartbins.ts`
 
-⸻
+### 2. ESG Service
+- **Purpose**: Calculates carbon offsets and ESG points from recycling data.
+- **Formula**:
+  ```
+  Carbon Offset (kg CO₂e) = Weight Recycled (kg) × Emission Factor (kg CO₂e/kg)
+  ESG Points = Carbon Offset × 10
+  ```
+- **Emission Factors**:
+  | Material  | kg CO₂e/kg |
+  |-----------|------------|
+  | Plastic   | 1.5        |
+  | Glass     | 0.3        |
+  | Paper     | 0.9        |
+  | Aluminum  | 9.0        |
+- **Location**: `/services/esg.ts`
 
-9. References
-	•	Swagger UI
-	•	GitHub Repo
-	•	Polymers Protocol Frontend
+### 3. NFT Twin Staking Service
+- **Purpose**: Manages NFT Twin staking and reward calculations.
+- **Reward Formula**:
+  ```
+  Total Reward = (Base Rate × Staking Days) + (floor(ESG Points / 100) × 5 PLY)
+  ```
+  - Base Rate: 10 PLY/day
+  - ESG Reward: 5 PLY per 100 ESG points
+- **Location**: `/services/staking.ts`
+
+---
+
+## Carbon Offset & ESG Integration
+
+### 1. SmartBin Data Processing
+Records telemetry data and triggers carbon offset calculations.
+
+**Example** (in `/services/smartbins.ts`):
+```typescript
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+interface SmartBinData {
+  binId: string;
+  user: string;
+  weight: number;
+  material: string;
+  timestamp: number;
+}
+
+async function recordSmartBinData(data: SmartBinData) {
+  if (data.weight < 0) throw new Error('Invalid weight');
+  await prisma.smartBin.create({ data });
+  await calculateCarbonOffset(data.user, data.weight, data.material);
+}
+```
+
+### 2. Carbon Offset Calculation
+Converts recycling data to carbon offsets and ESG points.
+
+**Example** (in `/services/esg.ts`):
+```typescript
+const emissionFactors = {
+  plastic: 1.5,
+  glass: 0.3,
+  paper: 0.9,
+  aluminum: 9.0,
+};
+
+async function calculateCarbonOffset(user: string, weight: number, material: string) {
+  const emissionFactor = emissionFactors[material] || 0.5;
+  const carbonOffset = weight * emissionFactor;
+  const esgPoints = Math.floor(carbonOffset * 10);
+
+  const existing = await prisma.esg.findUnique({ where: { user } });
+  if (existing) {
+    await prisma.esg.update({
+      where: { user },
+      data: { points: existing.points + esgPoints, carbonOffset: existing.carbonOffset + carbonOffset, updatedAt: new Date() },
+    });
+  } else {
+    await prisma.esg.create({
+      data: { user, points: esgPoints, carbonOffset, updatedAt: new Date() },
+    });
+  }
+
+  return { carbonOffset, esgPoints };
+}
+```
+
+### 3. On-Chain Logging (Optional)
+Logs ESG data to a Solana program for transparency.
+
+**Example** (in `/services/esg.ts`):
+```typescript
+import { Connection, PublicKey, Keypair, Transaction } from '@solana/web3.js';
+
+async function logCarbonOffsetOnChain(connection: Connection, user: PublicKey, carbonOffset: number, programId: PublicKey, payer: Keypair) {
+  const [esgPDA] = await PublicKey.findProgramAddress([Buffer.from('esg'), user.toBuffer()], programId);
+  const instruction = createUpdateESGInstruction(esgPDA, user, carbonOffset, programId); // Custom instruction
+  const transaction = new Transaction().add(instruction);
+  const signature = await connection.sendTransaction(transaction, [payer]);
+  await connection.confirmTransaction(signature);
+  return signature;
+}
+```
+
+### 4. Staking Integration
+ESG points boost NFT Twin staking rewards.
+
+**Example** (in `/services/staking.ts`):
+```typescript
+async function calculateRewards(connection: Connection, user: PublicKey, nftMint: PublicKey, stakingProgramId: PublicKey) {
+  const [stakingPDA] = await PublicKey.findProgramAddress([Buffer.from('staking'), nftMint.toBuffer(), user.toBuffer()], stakingProgramId);
+  const accountInfo = await connection.getAccountInfo(stakingPDA);
+  if (!accountInfo) throw new Error('NFT not staked');
+
+  const stakingAccount = deserializeAccount(accountInfo.data);
+  const esgData = await prisma.esg.findUnique({ where: { user: user.toString() } });
+  const esgPoints = esgData?.points || 0;
+
+  const durationDays = Math.floor((Date.now() / 1000 - stakingAccount.stakedAt) / (24 * 60 * 60));
+  const baseReward = 10 * durationDays;
+  const esgReward = Math.floor(esgPoints / 100) * 5;
+  const totalReward = baseReward + esgReward;
+
+  return { totalReward, baseReward, esgReward, carbonOffset: esgData?.carbonOffset || 0, stakingDuration: durationDays };
+}
+```
+
+---
+
+## NFT Twin Staking & Rewards
+
+- **Mechanism**: Users stake NFT Twins (Metaplex NFTs) in a Solana program vault.
+- **Rewards**: Calculated daily, combining base PLY tokens and ESG-based bonuses.
+- **Endpoints**:
+  - `GET /nft-twins`: View staked NFTs and rewards.
+  - `POST /nft-twins/stake`: Stake an NFT Twin.
+
+**Example Response** (GET `/nft-twins`):
+```json
+{
+  "status": "success",
+  "data": {
+    "user": "<USER_PUBLIC_KEY>",
+    "nftMint": "<NFT_MINT_ADDRESS>",
+    "stakedAt": 1698585600,
+    "rewards": 85, // 70 base + 15 ESG
+    "carbonOffset": 7.5
+  }
+}
+```
+
+---
+
+## Solana Program Details
+
+The Polymers Protocol leverages Solana programs for NFT Twin staking and optional ESG data logging. Below are the key programs, their account structures, and backend interactions.
+
+### 1. Metaplex Token Metadata Program
+- **Program ID**: `metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s`
+- **Purpose**: Manages NFT Twin metadata (e.g., name, URI, collection).
+- **Usage**:
+  - Fetches NFT Twin details for staking and reward calculations.
+  - Verifies NFT ownership and collection.
+- **Backend Interaction** (in `/services/nft.ts`):
+  ```typescript
+  import { Metaplex } from '@metaplex-foundation/js';
+
+  async function getNFTTwins(connection: Connection, wallet: Keypair, owner: PublicKey) {
+    const metaplex = Metaplex.make(connection).use(keypairIdentity(wallet));
+    const nfts = await metaplex.nfts().findAllByOwner({ owner });
+    return nfts.filter(nft => nft.collection?.address.toString() === '<NFT_TWIN_COLLECTION_ADDRESS>');
+  }
+  ```
+
+### 2. Staking Program
+- **Program ID**: `<STAKING_PROGRAM_ID>` (configured in `.env`)
+- **Purpose**: Manages NFT Twin staking and reward calculations on-chain.
+- **Account Structure** (Rust, for reference):
+  ```rust
+  use anchor_lang::prelude::*;
+
+  #[account]
+  pub struct StakingAccount {
+      pub owner: Pubkey,      // User wallet
+      pub nft_mint: Pubkey,   // NFT Twin mint address
+      pub staked_at: i64,     // Unix timestamp
+      pub esg_points: u64,    // ESG points for reward calculation
+      pub last_claimed: i64,  // Last reward claim timestamp
+  }
+  ```
+- **Instructions**:
+  - `stake_nft`: Locks NFT in a vault PDA and initializes `StakingAccount`.
+  - `claim_rewards`: Calculates and transfers PLY tokens based on staking duration and ESG points.
+  - `unstake_nft`: Releases NFT from vault and updates rewards.
+- **Backend Interaction** (in `/services/staking.ts`):
+  ```typescript
+  async function stakeNFT(connection: Connection, user: Keypair, nftMint: PublicKey, stakingProgramId: PublicKey) {
+    const [stakingPDA] = await PublicKey.findProgramAddress(
+      [Buffer.from('staking'), nftMint.toBuffer(), user.publicKey.toBuffer()],
+      stakingProgramId
+    );
+    const instruction = createStakeInstruction(stakingPDA, user.publicKey, nftMint, stakingProgramId); // Custom instruction
+    const transaction = new Transaction().add(instruction);
+    const signature = await connection.sendTransaction(transaction, [user]);
+    await connection.confirmTransaction(signature);
+    return signature;
+  }
+  ```
+
+### 3. ESG Logging Program (Optional)
+- **Program ID**: `<ESG_PROGRAM_ID>` (configured in `.env`)
+- **Purpose**: Logs carbon offsets and ESG points on-chain for transparency.
+- **Account Structure** (Rust, for reference):
+  ```rust
+  use anchor_lang::prelude::*;
+
+  #[account]
+  pub struct ESGAccount {
+      pub owner: Pubkey,        // User wallet
+      pub points: u64,          // Total ESG points
+      pub carbon_offset: f64,   // Total kg CO₂e
+      pub last_updated: i64,    // Unix timestamp
+  }
+  ```
+- **Instructions**:
+  - `update_esg`: Updates `ESGAccount` with new points and carbon offsets.
+  - `initialize_esg`: Creates a new `ESGAccount` for a user.
+- **Backend Interaction** (in `/services/esg.ts`):
+  ```typescript
+  async function logCarbonOffsetOnChain(connection: Connection, user: PublicKey, carbonOffset: number, programId: PublicKey, payer: Keypair) {
+    const [esgPDA] = await PublicKey.findProgramAddress([Buffer.from('esg'), user.toBuffer()], programId);
+    const instruction = createUpdateESGInstruction(esgPDA, user, carbonOffset, programId);
+    const transaction = new Transaction().add(instruction);
+    const signature = await connection.sendTransaction(transaction, [payer]);
+    await connection.confirmTransaction(signature);
+    return signature;
+  }
+  ```
+
+### 4. Key Considerations
+- **Security**: Use Anchor framework for Solana programs to ensure safe PDA derivation and instruction validation.
+- **Performance**: Minimize on-chain writes by batching ESG updates or caching locally.
+- **Deployment**: Deploy programs to Devnet for testing, then Mainnet. Use `solana program deploy`.
+- **Dependencies**:
+  - `@solana/web3.js`: For blockchain interactions.
+  - `@metaplex-foundation/js`: For NFT operations.
+  - `anchor-lang` (Rust): For program development (if using Anchor).
+
+---
+
+## API Endpoints
+
+| Endpoint          | Method | Description                          |
+|-------------------|--------|--------------------------------------|
+| `/smartbins`      | POST   | Submit SmartBin telemetry data       |
+| `/smartbins`      | GET    | Retrieve SmartBin data for user      |
+| `/esg`            | GET    | Retrieve ESG points & carbon offsets |
+| `/nft-twins`      | GET    | View staked NFTs & rewards           |
+| `/nft-twins/stake`| POST   | Stake an NFT Twin                    |
+| `/staking`        | GET    | Calculate staking rewards            |
+
+**Example Request** (POST `/smartbins`):
+```json
+{
+  "binId": "BIN123",
+  "user": "<USER_PUBLIC_KEY>",
+  "weight": 5,
+  "material": "plastic",
+  "timestamp": 1698585600
+}
+```
+
+**Example Response** (GET `/esg`):
+```json
+{
+  "status": "success",
+  "data": {
+    "user": "<USER_PUBLIC_KEY>",
+    "points": 250,
+    "carbonOffset": 7.5,
+    "contributions": [
+      { "binId": "BIN123", "weight": 5, "material": "plastic", "carbonOffset": 7.5, "points": 75, "timestamp": 1698585600 }
+    ]
+  }
+}
+```
+
+---
+
+## Developer Tools
+
+### 1. Swagger UI
+- **URL**: `http://localhost:3001/swagger`
+- Interactive API playground for testing endpoints.
+
+### 2. Postman Collection
+- **File**: `docs/postman/polymers-protocol-api.json`
+- Includes preconfigured requests for all endpoints.
+- Add `Authorization: Bearer <JWT>` to headers.
+
+### 3. TypeScript SDK
+- Generate from Swagger:
+  ```bash
+  npx openapi-typescript http://localhost:3001/swagger -o src/shared/types/api.ts
+  ```
+- **Example Usage**:
+  ```typescript
+  import { PolymersSDK } from 'polymers-sdk';
+
+  const sdk = new PolymersSDK({ rpcUrl: process.env.SOLANA_RPC_URL });
+  const esg = await sdk.getESGPoints('<USER_PUBLIC_KEY>');
+  console.log(esg.points, esg.carbonOffset);
+
+  await sdk.stakeNFT('<USER_PUBLIC_KEY>', '<NFT_MINT_ADDRESS>');
+  ```
+
+---
+
+## Flowcharts & Architecture
+
+### Developer Workflow
+![Developer Workflow](diagrams/workflow.png)
+
+```mermaid
+flowchart TD
+    A[SmartBin Submission] --> B[POST /smartbins]
+    B --> C[ESG Calculation]
+    C --> D[Update DB]
+    D --> E{On-Chain Logging?}
+    E -->|Yes| F[Solana Program]
+    E -->|No| G[Calculate Staking Rewards]
+    F --> G
+    G --> H[POST /nft-twins/stake]
+    H --> I[GET /nft-twins: Rewards]
+```
+
+### Architecture Diagram
+![Architecture Diagram](diagrams/architecture.png)
+
+```mermaid
+graph TD
+    A[User Wallet] --> B[Backend: Node.js/Express]
+    B --> C[SmartBins: IoT Devices]
+    C --> D[Database: Prisma]
+    B --> D
+    D --> E[Staking Service]
+    B --> F[Swagger UI / Postman]
+    E --> G[Solana Blockchain]
+    G --> H[Metaplex NFT Program]
+    G --> I[Custom ESG Program]
+    G --> J[Custom Staking Program]
+```
+
+### Database Schema
+![Database Schema](diagrams/schema.png)
+
+```mermaid
+erDiagram
+    ESG ||--o{ SmartBin : tracks
+    ESG ||--o{ Staking : influences
+    ESG {
+        string user PK
+        int points
+        float carbonOffset
+        datetime updatedAt
+    }
+    SmartBin {
+        int id PK
+        string binId
+        string user
+        float weight
+        string material
+        int timestamp
+    }
+    Staking {
+        int id PK
+        string user
+        string nftMint
+        int stakedAt
+        int rewards
+    }
+```
+
+---
+
+## Testing
+
+### 1. Unit Tests
+Run unit tests to verify calculations:
+```bash
+npm run test
+```
+
+**Example Test**:
+```typescript
+test('Carbon offset calculation', async () => {
+  await recordSmartBinData({
+    binId: 'BIN123',
+    user: '<USER_PUBLIC_KEY>',
+    weight: 5,
+    material: 'plastic',
+    timestamp: Math.floor(Date.now() / 1000),
+  });
+  const esg = await prisma.esg.findUnique({ where: { user: '<USER_PUBLIC_KEY>' } });
+  expect(esg.carbonOffset).toBe(7.5); // 5 kg * 1.5 kg CO₂e/kg
+  expect(esg.points).toBe(75); // 7.5 * 10 points
+});
+```
+
+### 2. Swagger/Postman
+- Test endpoints via Swagger (`http://localhost:3001/swagger`) or Postman.
+- Import `docs/postman/polymers-protocol-api.json` and add JWT.
+
+### 3. Local Solana Validator
+```bash
+solana-test-validator --reset
+solana airdrop 2 <WALLET_ADDRESS> --url http://localhost:8899
+npm run dev:backend
+```
+
+---
+
+## Best Practices
+
+- **Validation**: Ensure SmartBin data has non-negative weights and valid materials.
+- **Security**: Require wallet signatures for SmartBin submissions, staking, and ESG updates.
+- **Accuracy**: Use EPA/IPCC emission factors for carbon offsets.
+- **Scalability**: Batch process SmartBin data; cache ESG queries.
+- **Auditing**: Regularly audit ESG points, offsets, and Solana program accounts.
+- **Solana Programs**: Use Anchor for secure PDA derivation and instruction validation.
+
+---
+
+## Next Steps
+
+1. **Validate Configuration**: Ensure `.env` settings for `DATABASE_URL`, `SOLANA_RPC_URL`, and program IDs.
+2. **Test End-to-End**: Submit SmartBin data, verify ESG points, and check staking rewards.
+3. **Deploy Solana Programs**: Deploy staking and ESG programs to Devnet, then Mainnet:
+   ```bash
+   solana program deploy <program.so> --url https://api.devnet.solana.com
+   ```
+4. **Generate PDF**: Create a visually rich PDF with embedded diagrams (see below).
+
+---
+
+## Generating the PDF Guide
+
+To create a visually rich PDF with embedded diagrams:
+
+1. **Save Diagrams**:
+   - Use Mermaid CLI to generate images:
+     ```bash
+     npm install -g @mermaid-js/mermaid-cli
+     mmdc -i README.md -o diagrams/workflow.png --scale 2
+     ```
+   - Alternatively, use `mermaid.live` to export PNGs/SVGs for `workflow.png`, `architecture.png`, and `schema.png`.
+   - Save images in a `diagrams/` folder.
+
+2. **Convert to PDF**:
+   - **Pandoc**:
+     ```bash
+     pandoc README.md -o README.pdf --pdf-engine=xelatex -V geometry:margin=1in
+     ```
+   - **MkDocs**:
+     - Install: `pip install mkdocs mkdocs-material mkdocs-pdf-export-plugin`
+     - Create `mkdocs.yml`:
+       ```yaml
+       site_name: Polymers Protocol Developer Guide
+       theme: material
+       plugins:
+         - pdf-export
+       ```
+     - Build and export: `mkdocs build && mkdocs serve`
+   - **Typora**: Open `README.md`, render Mermaid diagrams, and export to PDF.
+
+3. **Polish**:
+   - Add a cover page with title, version, and date.
+   - Ensure diagrams are high-resolution and text is readable (e.g., Arial, 12pt).
+
+---
+
+**References**:
+- Solana: https://docs.solana.com
+- Metaplex: https://docs.metaplex.com
+- Anchor: https://www.anchor-lang.com
+- Prisma: https://www.prisma.io/docs
+- GitHub: https://github.com/polymers-protocol/backend
+- Swagger: http://localhost:3001/swagger
