@@ -1,157 +1,76 @@
-Polymers Protocol – Helium DePIN Integration Guide
+# Helium DePIN Integration with Polymers Protocol
 
-Version: 1.0
-Authors: Polymers Core Team
+This guide describes end-to-end integration of **Helium DePIN** with **Polymers SmartBins** on Solana, including telemetry ingestion, OTA updates, predictive analytics, and rewards.
 
-This guide provides an end-to-end reference for integrating Helium’s Solana-based DePIN with the Polymers Protocol, focusing on SmartBin telemetry, rewards, OTA firmware, predictive analytics, and Hivemapper location mapping. It is designed for developers and DevOps teams to deploy, test, and maintain a fully operational SmartBin network.
+## Overview
 
-⸻
+- **Scalability**: Solana 65k+ TPS supports millions of SmartBin events.
+- **Low Costs**: $0.000005 per transaction (Data Credits, rewards).
+- **Long-Range IoT**: Helium LoRaWAN up to 10 km.
+- **Composability**: Works with Solana Pay, Metaplex, Pyth oracles.
+- **Rewards Synergy**: HNT/IOT + PLY/CARB/EWASTE for gamification.
 
-Table of Contents
-	1.	Introduction
-	2.	Architecture Overview
-	3.	Prerequisites
-	4.	Wallet Setup
-	5.	Helium Program Library (HPL) Setup
-	6.	SmartBin Hardware Setup
-	7.	Telemetry Transmission & Validation
-	8.	Rewards Integration
-	9.	OTA Firmware with Staged Deployment & Rollback
-	10.	Hivemapper Location Mapping
-	11.	Predictive Analytics & LSTM Models
-	12.	Dashboard Integration
-	13.	Devnet Testing & Simulation
-	14.	CI/CD Pipeline Integration
-	15.	Troubleshooting & Best Practices
-	16.	Resources
-
-⸻
-
-Introduction
-
-Polymers Protocol integrates Helium’s LoRaWAN network to provide SmartBins with scalable telemetry reporting, tokenized rewards, and ESG metrics tracking. This guide shows how to:
-	•	Connect SmartBins to Helium’s Solana DePIN
-	•	Collect telemetry and anchor data on Solana
-	•	Automate OTA firmware updates with staged deployment and rollback
-	•	Map bins with Hivemapper
-	•	Perform predictive analytics using LSTM models
-	•	Integrate all features with Polymers’ dashboard and mobile app
-
-⸻
-
-Architecture Overview
-
-System Components
-	•	SmartBin Sensors: Fill level, weight, temperature, contamination
-	•	Helium LoRaWAN Network: Transmits telemetry to blockchain and APIs
-	•	Polymers Telemetry API: Stores telemetry in Supabase / TimescaleDB
-	•	Solana Blockchain: Rewards, NFT Twins, SubDAO distributions
-	•	Predictive Analytics: LSTM models for fill-level predictions and ESG metrics
-	•	Hivemapper: Visualizes bin locations and supports AR navigation
-
-Integration Flow
-
-flowchart TD
+## Architecture Flow
+```mermaid
+graph TD
     A[SmartBin Sensors] --> B[Helium LoRaWAN]
-    B --> C[Polymers Telemetry API / Supabase]
-    C --> D[Solana Blockchain]
-    D --> E[Rewards (HNT, PLY, CARB)]
-    E --> F[Wallet Updates & NFT Twins]
-    F --> G[Dashboard & Mobile App]
-    C --> H[Predictive Analytics (LSTM)]
-    C --> I[Hivemapper Location Mapping]
-    I --> J{Telemetry OK?}
-    J -- Yes --> K[Continue OTA Deployment]
-    J -- No --> L[Rollback Firmware]
+    B --> C[Telemetry API (/api/iot/smartbins.ts)]
+    C --> D[Supabase / TimescaleDB]
+    D --> E[Solana Rewards & NFT Twins]
+    E --> F[Dashboard & Mobile App]
+    D --> G[LSTM Predictive Analytics (/lib/lstm_model.ts)]
+    F --> G
 
 
 ⸻
 
-Prerequisites
+Setup
+	1.	Install Dependencies
 
-Hardware
-	•	LoRaWAN-enabled sensors for SmartBins (RAK Wireless, Dragino, etc.)
-	•	Optional: temperature, contamination, weight sensors
+npm install @helium/sdk @solana/web3.js @solana/spl-token @solana/pay @supabase/supabase-js @tensorflow/tfjs-node
 
-Software & Tools
-	•	Node.js ≥18, TypeScript
-	•	Rust & Anchor for Solana programs
-	•	Helium CLI: cargo install --git https://github.com/helium/helium-cli
-	•	Solana Wallet (Phantom or Helium Wallet)
-	•	Supabase for telemetry logging
-	•	TensorFlow.js for predictive analytics
+	2.	Environment Variables (.env)
 
-Accounts & Tokens
-	•	Devnet SOL for testing (solana airdrop 1)
-	•	HNT/IOT for Data Credits (~$0.00001/byte)
-	•	Polymers PLY/CARB/EWASTE tokens for rewards
+NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
+HELIUM_HOTSPOT_ADDRESS=<your_hotspot>
+PLY_MINT=<ply_mint>
+CARB_MINT=<carb_mint>
+EWASTE_MINT=<ewaste_mint>
+REWARD_WALLET_ADDRESS=<reward_wallet>
+NEXT_PUBLIC_SUPABASE_URL=<supabase_url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase_key>
 
-⸻
-
-Wallet Setup
-	1.	Create or Import Solana Wallet
-	•	Use Phantom or Helium Wallet.
-	•	Fund with Devnet SOL.
-	2.	Integrate Helium Wallet
-
-helium wallet export --key-type solana > solana_wallet.json
-
-	•	Import to Phantom: Settings → Import Private Key → Paste base58 key
-
-	3.	Setup ATAs for Polymers Tokens
-
-import { getOrCreateAssociatedTokenAccount } from '@solana/spl-token';
-const ata = await getOrCreateAssociatedTokenAccount(connection, payer, mint, owner);
-
-
-⸻
-
-Helium Program Library (HPL) Setup
+	3.	HPL Deployment
 
 git clone https://github.com/helium/helium-program-library
 cd helium-program-library
 anchor build
+anchor test
 anchor deploy --provider.cluster devnet
 
-Key Programs
-	•	Hotspot Manager: Mint NFTs for SmartBins
-	•	SubDAOs: Reward telemetry contributions
-	•	Lazy Distributor: Oracle-triggered batch rewards
 
 ⸻
 
-SmartBin Hardware Setup
+SmartBin Telemetry
 
-Onboarding
-	1.	Connect SmartBin to LoRaWAN via Helium Hotspot App
-	2.	Mint SmartBin NFT (~0.002 SOL)
-	3.	Configure /lib/helium.ts for telemetry routing
-
-OTA Firmware
-	•	Use Helium Console for LoRaWAN-compliant updates
-	•	Ensure LoRaWAN 1.0.3 compliance
-
-⸻
-
-Telemetry Transmission & Validation
-
-Telemetry Example (/api/iot/smartbins.ts)
+File: /api/iot/smartbins.ts
 
 import { Helium, Wallet } from '@helium/sdk';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { createClient } from '@supabase/supabase-js';
 
 const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL);
-const wallet = new Wallet(new PublicKey(process.env.HELIUM_HOTSPOT_ADDRESS));
+const wallet = new Wallet(new PublicKey(process.env.REWARD_WALLET_ADDRESS));
 const helium = new Helium(connection, wallet);
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
-async function sendSmartBinTelemetry(binId, telemetry) {
-  const tx = await helium.hotspots.submitPayload({
-    payload: Buffer.from(JSON.stringify({ binId, ...telemetry })),
-    hotspot: new PublicKey(process.env.HELIUM_HOTSPOT_ADDRESS),
+export async function sendSmartBinTelemetry(binId: string, telemetry: any) {
+  const payload = Buffer.from(JSON.stringify({ binId, ...telemetry }));
+  const submitTx = await helium.hotspots.submitPayload({
+    payload,
+    hotspot: new PublicKey(process.env.HELIUM_HOTSPOT_ADDRESS)
   });
-  const sig = await connection.sendTransaction(tx, [wallet.payer]);
+  const sig = await connection.sendTransaction(submitTx, [wallet.payer]);
   await supabase.from('telemetry').insert({ binId, ...telemetry, tx: sig });
   return sig;
 }
@@ -159,152 +78,96 @@ async function sendSmartBinTelemetry(binId, telemetry) {
 
 ⸻
 
-Rewards Integration
+OTA Firmware Updates
 
-Distribute HNT/IOT & Polymers Tokens
+File: /scripts/ota_utils.ts
 
-async function issueRewards(binId, userWallet) {
-  const rewardTx = await helium.rewards.distribute({
-    hotspot: new PublicKey(process.env.HELIUM_HOTSPOT_ADDRESS),
-    amount: { iot: 0.01, hnt: 0.001 },
-    recipient: new PublicKey(userWallet),
+import { exec } from 'child_process';
+
+export async function deployFirmware(binId: string, firmwarePath: string) {
+  return new Promise((resolve, reject) => {
+    exec(`helium ota deploy --hotspot ${process.env.HELIUM_HOTSPOT_ADDRESS} --bin ${binId} --file ${firmwarePath}`, (err, stdout, stderr) => {
+      if (err) return reject(stderr);
+      console.log(`OTA Update Success: ${stdout}`);
+      resolve(stdout);
+    });
   });
+}
 
-  const plyTx = await solanaPay.transfer({
-    mint: new PublicKey(process.env.PLY_MINT),
-    amount: 10,
-    recipient: new PublicKey(userWallet),
+// Rollback helper
+export async function rollbackFirmware(binId: string) {
+  return new Promise((resolve, reject) => {
+    exec(`helium ota rollback --hotspot ${process.env.HELIUM_HOTSPOT_ADDRESS} --bin ${binId}`, (err, stdout, stderr) => {
+      if (err) return reject(stderr);
+      console.log(`Rollback Success: ${stdout}`);
+      resolve(stdout);
+    });
   });
-
-  console.log('Rewards issued:', { rewardTx, plyTx });
 }
 
 
 ⸻
 
-OTA Firmware with Staged Deployment & Rollback
+Predictive Analytics
 
-Script (/scripts/ota_firmware_staged.ts)
+File: /lib/lstm_model.ts
 
-import { submitFirmware, validateTelemetry, rollbackFirmware } from './ota_utils';
+import * as tf from '@tensorflow/tfjs-node';
+import { createClient } from '@supabase/supabase-js';
 
-async function stagedDeployment(firmwareVersion: string, bins: string[]) {
-  const canary = bins.slice(0, Math.ceil(bins.length * 0.2));
-  const remaining = bins.slice(Math.ceil(bins.length * 0.2));
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
-  await submitFirmware(firmwareVersion, canary);
-  if (!(await validateTelemetry(canary))) {
-    await rollbackFirmware(canary);
-    throw new Error('Canary failed, rollback executed.');
-  }
+// Example: LSTM for fill level prediction
+export async function predictFillLevel(binId: string) {
+  const { data } = await supabase.from('telemetry').select('fill').eq('binId', binId).order('created_at', { ascending: true });
+  const values = data.map(d => d.fill / 100); // normalize
 
-  await submitFirmware(firmwareVersion, remaining);
-  if (!(await validateTelemetry(remaining))) {
-    await rollbackFirmware(remaining);
-    console.warn('Partial rollback executed.');
-  }
-}
+  const model = tf.sequential();
+  model.add(tf.layers.lstm({ units: 10, inputShape: [values.length, 1] }));
+  model.add(tf.layers.dense({ units: 1 }));
+  model.compile({ loss: 'meanSquaredError', optimizer: 'adam' });
 
-	•	Canary rollout → validate telemetry/Hivemapper → full deployment → rollback if failure
+  const inputTensor = tf.tensor3d([values], [1, values.length, 1]);
+  const prediction = model.predict(inputTensor) as tf.Tensor;
+  const predictedFill = (await prediction.array()) as number[][];
 
-⸻
-
-Hivemapper Location Mapping
-	•	Update bin GPS coordinates to Hivemapper
-	•	Supports AR navigation in Polymers mobile app
-
-import axios from 'axios';
-
-async function updateBinLocation(binId, coordinates) {
-  await axios.post(process.env.HIVEMAPPER_API, { binId, coordinates });
+  await supabase.from('predictions').insert({ binId, predictedFill: predictedFill[0][0] });
+  return predictedFill[0][0];
 }
 
 
 ⸻
-
-Predictive Analytics & LSTM Models
-
-Telemetry Preprocessing
-
-function preprocessData(data) {
-  // normalize, pad, and format for LSTM
-  return data.map(d => [d.fill, d.contamination]);
-}
-
-Prediction Script (/lib/lstm_model.ts)
-
-import { supabase } from './supabase';
-import { lstmModel, preprocessData } from './lstm_utils';
-
-async function predictFillLevel(binId: string) {
-  const { data } = await supabase.from('telemetry').select('fill, contamination').eq('binId', binId);
-  const input = preprocessData(data);
-  const prediction = await lstmModel.predict(input);
-  await supabase.from('predictions').insert({ binId, prediction });
-}
-
-
-⸻
-
-Dashboard Integration
-	•	Display Helium coverage maps
-	•	Hivemapper bin locations
-	•	Predicted fill levels / ESG metrics
-	•	Real-time updates via Supabase Realtime channels
-
-⸻
-
-Devnet Testing & Simulation
 
 Simulate IoT Telemetry
+
+File: /scripts/simulate_iot.ts
 
 import { sendSmartBinTelemetry } from '../api/iot/smartbins';
 
 async function simulate() {
-  await sendSmartBinTelemetry('test_bin', { fill: 80, contamination: 0.05, weight: 15, temp: 20 });
+  const telemetrySamples = [
+    { fill: 80, contamination: 0.05, weight: 15, temp: 22 },
+    { fill: 40, contamination: 0.02, weight: 10, temp: 20 },
+    { fill: 95, contamination: 0.1, weight: 18, temp: 25 },
+  ];
+
+  for (const t of telemetrySamples) {
+    const sig = await sendSmartBinTelemetry('test_bin', t);
+    console.log('Telemetry sent:', sig);
+  }
 }
+
 simulate();
 
-	•	Test OTA deployment → telemetry → rewards → analytics → Hivemapper
 
 ⸻
 
-CI/CD Pipeline Integration
+Testing on Devnet
 
-GitHub Actions
+solana-test-validator --rpc-port 8899
+npm run simulate_iot
+npm run test:lstm
 
-jobs:
-  staged-ota:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - run: npm ci
-      - run: ts-node ./scripts/ota_firmware_staged.ts
-        env:
-          OTA_KEY: ${{ secrets.OTA_KEY }}
-          OTA_ENDPOINT: 'https://ota.helium.com/upload'
-          TELEMETRY_API: 'https://api.polymers.io/telemetry'
-          HIVEMAPPER_API: 'https://api.hivemapper.com/update'
-
-
-⸻
-
-Troubleshooting & Best Practices
-
-Challenge	Solution
-LoRaWAN Range	Verify coverage in Helium Explorer; add repeaters
-Transaction Costs	Batch telemetry, optimize payload size
-OTA Firmware Failures	Use staged rollout; rollback on telemetry/Hivemapper failure
-Predictive Analytics	Offload heavy LSTM computation to dedicated ML services
-
-
-⸻
-
-Resources
-	•	Helium Docs: docs.helium.com/solana
-	•	HPL GitHub: helium/helium-program-library
-	•	Solana Tools: Helius.dev, Solana Cookbook
-	•	Community: X @helium, Reddit r/HeliumNetwork
+	•	Ensure .env points to devnet.
+	•	Monitor Supabase for telemetry inserts.
+	•	Validate Helium explorer for OTA updates.
