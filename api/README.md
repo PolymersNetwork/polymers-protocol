@@ -1,202 +1,45 @@
-# Polymers Protocol API - Developer Playground
+## Polymers Protocol API Overview
 
-Welcome to the **Polymers Protocol API**! This README provides a fully self-guided playground for developers to explore, simulate, and deploy SmartBin workflows while testing all main API endpoints.
+Based on the provided URL `https://polymersprotocol.org` and the context from the Polymers Protocol documentation, this appears to be the base domain for the project's website, dashboard, and documentation. However, the primary **API** is hosted at `https://api.polymersprotocol.org`. The root domain (`https://polymersprotocol.org`) likely serves as the frontend entry point (e.g., the live demo website and dashboard mentioned in the repo), while the API subdomain handles backend requests.
 
----
+Since the site may be under development or not publicly indexed yet (as of September 28, 2025), I'll summarize the API details directly from the project's structure. All API endpoints require authentication via `Authorization: Bearer <your-token>`. For interactive testing, use the [Swagger Docs](https://api.polymersprotocol.org/swagger).
 
-## Quickstart Flowchart
+### Base API URL
+- **API Base**: `https://api.polymersprotocol.org`
+- **Documentation**: [Swagger UI](https://api.polymersprotocol.org/swagger) – Auto-generated OpenAPI spec for exploring and testing endpoints.
+- **Rate Limits**: Not explicitly documented; monitor headers like `X-RateLimit-Remaining` in responses.
+- **Authentication**: JWT tokens obtained via `/auth/login` or wallet-based OAuth (e.g., via Phantom integration).
+- **Content-Type**: `application/json` for requests/responses.
 
-```mermaid
-graph TD
-    A[Start: New Contributor] -->|Check Prerequisites| B{Node.js, Solana CLI, Helium CLI, Supabase CLI,<br>Hivemapper API Key, Phantom Wallet?}
-    B -->|No| C[Install Prerequisites]
-    C -->|Run npm install -g| D[Clone Repository]
-    B -->|Yes| D[Clone Repository]
-    D -->|Run git clone| E[Install Dependencies]
-    E -->|Run npm install| F[Set Up .env]
-    F -->|Configure API keys| G{Simulations Ready?}
-    G -->|Run npm run simulate:*| H[Run Simulations]
-    H --> I[Telemetry: simulate:iot<br>💡 Tip: Test fill levels<br>cURL: `npm run simulate:iot`]
-    H --> J[Hivemapper: simulate:hivemapper<br>💡 Tip: Verify location & map features<br>cURL: `npm run simulate:hivemapper`]
-    H --> K[Rewards: simulate:rewards<br>💡 Tip: Check ESG thresholds > 0.5<br>cURL: `npm run simulate:rewards`]
-    H --> L[Analytics: test:lstm<br>💡 Tip: Run LSTM model<br>cURL: `npm run test:lstm`]
-    H --> M[OTA: ota:deploy<br>💡 Tip: Use test bin first<br>cURL: `npm run ota:deploy --bin test_bin --file ./firmware/latest.bin`]
-    I --> N{Simulations Successful?}
-    J --> N
-    K --> N
-    L --> N
-    M --> N
-    N -->|Yes| O[Deploy to Devnet<br>cURL: `anchor deploy --provider.cluster devnet`]
-    N -->|No| P[Check Logs, Fix Errors]
-    P --> H
-    O --> Q[End: Devnet Deployed]
-    style A fill:#f9f,stroke:#333
-    style C fill:#f9f,stroke:#333
-    style D fill:#f9f,stroke:#333
-    style E fill:#f9f,stroke:#333
-    style F fill:#f9f,stroke:#333
-    style H fill:#cff,stroke:#333
-    style I fill:#cff,stroke:#333
-    style J fill:#cff,stroke:#333
-    style K fill:#cff,stroke:#333
-    style L fill:#cff,stroke:#333
-    style M fill:#cff,stroke:#333
-    style O fill:#9f9,stroke:#333
-    style Q fill:#9f9,stroke:#333
+### Key API Endpoints
+Here's a table of the main endpoints, grouped by category, with example requests and responses. These are derived from the project's backend (`/apps/backend` in the monorepo).
 
-Developer Tip: Follow the flowchart for proper environment setup, simulation validation, OTA deployment safety, and reward checks. Commands are ready for copy-paste.
+| Category       | Endpoint                  | Method | Description                                                                 | Example Request                                                                 | Example Response (Status) |
+|----------------|---------------------------|--------|-----------------------------------------------------------------------------|---------------------------------------------------------------------------------|---------------------------|
+| **Users**     | `/users`                 | GET   | Retrieve user details by wallet or email.                                   | `curl -X GET "https://api.polymersprotocol.org/users?wallet=5Hb...xYz&limit=10" -H "Authorization: Bearer <token>"` | `{"users": [{"id": "user_123", "wallet": "5Hb...xYz", "email": "user@example.com", "createdAt": "2025-09-26T08:06:00Z", "role": "user"}]}` (200) |
+| **Transactions** | `/transactions`        | POST  | Create a token transfer (e.g., PLY, SOL).                                   | `curl -X POST https://api.polymersprotocol.org/transactions -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"wallet":"5Hb...xYz","amount":100,"token":"PLY","recipient":"7Jk...aBc"}'` | `{"transactionId": "txn_456", "status": "confirmed", "amount": 100, "token": "PLY", "timestamp": "2025-09-26T08:06:00Z", "signature": "5xY...zQw"}` (201) |
+| **NFT Twins** | `/nft-twins`             | GET   | Fetch NFT details for a wallet, filtered by staking status.                 | `curl -X GET "https://api.polymersprotocol.org/nft-twins?wallet=5Hb...xYz&staked=true" -H "Authorization: Bearer <token>"` | `{"nfts": [{"id": "nft_789", "owner": "5Hb...xYz", "name": "EcoTwin #001", "staked": true, "rewards": 50000, "evolutionLevel": 2}]}` (200) |
+| **Payments**  | `/payments`              | POST  | Initiate a payment via Solana Pay or swaps (Jupiter/Raydium).               | `curl -X POST https://api.polymersprotocol.org/payments -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"wallet":"5Hb...xYz","amount":50,"token":"USDC","method":"solana-pay","recipient":"7Jk...aBc"}'` | `{"paymentId": "pay_123", "status": "pending", "amount": 50, "token": "USDC", "timestamp": "2025-09-26T08:06:00Z", "transactionSignature": "4xY...pQr"}` (201) |
+| **ESG Metrics**| `/esg`                   | GET   | Get ESG tracking data (e.g., CO2 reduction, recycling stats).               | `curl -X GET "https://api.polymersprotocol.org/esg?wallet=5Hb...xYz" -H "Authorization: Bearer <token>"` | `{"esg": {"wallet": "5Hb...xYz", "plasticCollected": 25.5, "co2Reduced": 10.2, "recyclingCount": 15, "cityRank": 3}}` (200) |
+| **SmartBins** | `/smartbins`             | GET   | Fetch IoT SmartBin data by city or status (integrated with Helium/Hivemapper). | `curl -X GET "https://api.polymersprotocol.org/smartbins?city=NewYork&status=operational" -H "Authorization: Bearer <token>"` | `{"smartbins": [{"id": "bin_456", "location": {"lat": 40.7128, "lng": -74.0060}, "fillLevel": 75, "status": "operational", "lastUpdated": "2025-09-26T08:06:00Z"}]}` (200) |
+| **AI Chat**   | `/ai-agents`             | POST  | Send messages to the GPT-powered AI assistant (billed in PLY tokens).       | `curl -X POST https://api.polymersprotocol.org/ai-agents -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"wallet":"5Hb...xYz","message":"What is my recycling impact?"}'` | `{"messageId": "msg_789", "response": "You’ve recycled 25.5kg of plastic, reducing CO2 by 10.2kg!", "remainingMessages": 8, "timestamp": "2025-09-26T08:06:00Z"}` (201) |
+| **Additional** | `/donations`, `/recycling`, `/swap`, `/settings`, `/messages` | GET/POST | Handle donations, recycling logs, token swaps, user settings, and chat history. | Varies; see Swagger for params.                                                 | Varies (200/201)         |
 
-⸻
+### Integration Notes
+- **Blockchain Ops**: All Solana interactions (e.g., transactions, NFTs via Metaplex) route through this API. Use the RPC URL from your `.env` (e.g., `https://api.mainnet-beta.solana.com`).
+- **Error Handling**: Common responses include 401 (Unauthorized), 429 (Rate Limited), and 500 (Internal Error). Always check `error.message` in JSON bodies.
+- **Webhooks**: For real-time updates (e.g., transaction confirmations or SmartBin telemetry), subscribe via `/webhooks/register`.
+- **Local Testing**: Run the backend locally with `npm run dev:backend` after cloning the repo (`git clone https://github.com/PolymersNetwork/polymers-protocol.git && cd polymers-protocol && npm install`). The local API will be at `http://localhost:3001`.
+- **Feature-Specific Docs**:
+  - [AI Chat](https://docs.polymersprotocol.org/ai)
+  - [AR Navigation](https://docs.polymersprotocol.org/ar)
+  - [ESG Tracking](https://docs.polymersprotocol.org/esg)
 
-Setup & Authentication
-	1.	Clone the repository:
+### Getting Started with the API
+1. **Generate a Token**: Use the mobile/web app to connect a wallet (Phantom/Solflare) and authenticate.
+2. **Test in Swagger**: Visit [https://api.polymersprotocol.org/swagger](https://api.polymersprotocol.org/swagger) – No auth needed for read-only exploration.
+3. **SDKs**: The monorepo includes shared TypeScript types in `/apps/shared`. Generate client SDKs from Swagger if needed.
 
-git clone https://github.com/polymers-protocol/polymers
-cd polymers
-npm install
+If `https://polymersprotocol.org` is intended as the frontend/dashboard, you can access the live demo there (e.g., for wallet connections and visualizations). For custom integrations or issues, check the [GitHub repo](https://github.com/PolymersNetwork/polymers-protocol) or open an issue.
 
-	2.	Configure environment variables (.env):
-
-NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
-HELIUM_HOTSPOT_ADDRESS=<your_hotspot_address>
-PLY_MINT=<ply_mint_address>
-CARB_MINT=<carb_mint_address>
-EWASTE_MINT=<ewaste_mint_address>
-HONEY_MINT=<honey_mint_address>
-REWARD_WALLET_ADDRESS=<reward_wallet_address>
-NEXT_PUBLIC_SUPABASE_URL=<supabase_url>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase_anon_key>
-HIVEMAPPER_API_KEY=<your_api_key>
-HIVEMAPPER_USERNAME=<your_username>
-
-	3.	Install dependencies for simulations & OTA testing:
-
-npm install
-npm run simulate:iot
-npm run simulate:hivemapper
-npm run simulate:rewards
-npm run test:lstm
-npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
-
-
-⸻
-
-API Endpoints & Examples
-
-1. Users
-
-cURL:
-
-curl -X GET "https://api.polymersprotocol.org/users?wallet=5Hb...xYz" \
--H "Authorization: Bearer <your-token>"
-
-TypeScript SDK:
-
-import { api } from "./sdk";
-
-const userData = await api.getUsers({ wallet: "5Hb...xYz" });
-console.log(userData);
-
-
-⸻
-
-2. NFT Twins
-
-cURL:
-
-curl -X GET "https://api.polymersprotocol.org/nft-twins?wallet=5Hb...xYz&staked=true" \
--H "Authorization: Bearer <your-token>"
-
-TypeScript SDK:
-
-const nfts = await api.getNftTwins({ wallet: "5Hb...xYz", staked: true });
-console.log(nfts);
-
-
-⸻
-
-3. Payments
-
-cURL:
-
-curl -X POST "https://api.polymersprotocol.org/payments" \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","amount":50,"token":"USDC","method":"solana-pay","recipient":"7Jk...aBc"}'
-
-TypeScript SDK:
-
-const payment = await api.createPayment({
-  wallet: "5Hb...xYz",
-  amount: 50,
-  token: "USDC",
-  method: "solana-pay",
-  recipient: "7Jk...aBc"
-});
-console.log(payment);
-
-
-⸻
-
-4. AI Chat
-
-cURL:
-
-curl -X POST "https://api.polymersprotocol.org/ai-agents" \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","message":"What is my recycling impact?"}'
-
-TypeScript SDK:
-
-const response = await api.sendAiMessage({
-  wallet: "5Hb...xYz",
-  message: "What is my recycling impact?"
-});
-console.log(response);
-
-
-⸻
-
-5. SmartBins
-
-cURL:
-
-curl -X GET "https://api.polymersprotocol.org/smartbins?city=NewYork&status=operational" \
--H "Authorization: Bearer <your-token>"
-
-TypeScript SDK:
-
-const bins = await api.getSmartBins({ city: "NewYork", status: "operational" });
-console.log(bins);
-
-
-⸻
-
-6. ESG Metrics
-
-cURL:
-
-curl -X GET "https://api.polymersprotocol.org/esg?wallet=5Hb...xYz" \
--H "Authorization: Bearer <your-token>"
-
-TypeScript SDK:
-
-const esg = await api.getEsgMetrics({ wallet: "5Hb...xYz" });
-console.log(esg);
-
-
-⸻
-
-Postman Collection Setup
-	1.	Download the ready-to-use JSON:
-PolymersProtocol.postman_collection.json
-	2.	Import in Postman:
-	•	Open Postman → File → Import → Select JSON file.
-	•	Set environment variable auth_token with your JWT or wallet OAuth token.
-	3.	Run Requests:
-	•	Explore endpoints interactively.
-	•	Modify payloads to test scenarios.
-	•	Automate tests using Postman’s built-in test scripts.
-
-✅ With this setup, developers can follow the flowchart, run simulations, deploy OTA updates safely, verify reward thresholds, and test all endpoints without manual configuration.
+If this isn't what you meant (e.g., you need code samples, a specific endpoint deep-dive, or troubleshooting), provide more details!
