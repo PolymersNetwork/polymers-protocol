@@ -15,13 +15,13 @@ The **Polymers Protocol** is a **Blockchain-as-a-Service (BaaS)** platform built
 
 🌐 **Live Demo**: Check out the [Website & Dashboard](https://polymers-website.vercel.app).
 
-This repository contains the code, scripts, and documentation for developing, testing, and deploying the Polymers Protocol. For a detailed introduction, see [/docs/introduction.md](./docs/introduction.md). For advanced setup and integration, see [/docs/helium-integration.md](./docs/helium-integration.md).
+This repository contains the code, scripts, and documentation for developing, testing, and deploying the Polymers Network. For a detailed introduction, see [/docs/introduction.md](./docs/introduction.md). For advanced setup and integration, see [/docs/helium-integration.md](./docs/helium-integration.md).
 
 ### Screenshots
 
 | **Web Dashboard** | **Mobile App** | **SmartBin Map / AR** |
 |--------------------|----------------|-----------------------|
-| ![Web Dashboard](https://raw.githubusercontent.com/polymers-protocol/polymers/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/polymers-protocol/polymers/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/polymers-protocol/polymers/main/public/images/smartbin-map.png) |
+| ![Web Dashboard](https://raw.githubusercontent.com/PolymersNetwork/polymers-protocol/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/PolymersNetwork/polymers-protocol/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/PolymersNetwork/polymers-protocol/main/public/images/smartbin-map.png) |
 | Analytics, NFT Twins, ESG | Wallet, AI Chat, Scan-to-Pay | Real-time AR navigation |
 
 ## Table of Contents
@@ -47,7 +47,7 @@ This repository contains the code, scripts, and documentation for developing, te
 - **AR Navigation**: Hivemapper and Mapbox-powered AR for SmartBin location, with offline caching and static image fallback.
 - **Analytics**: LSTM models for predictive fill level forecasting and route optimization, integrated with Supabase.
 
-For details, see [AI Chat](https://docs.polymers.io/ai), [AR Navigation](https://docs.polymers.io/ar), and [ESG Tracking](https://docs.polymers.io/esg).
+For details, see [AI Chat](https://docs.polymersnetwork.org/ai), [AR Navigation](https://docs.polymersnetwork.org/ar), and [ESG Tracking](https://docs.polymersnetwork.org/esg).
 
 ## Quickstart
 
