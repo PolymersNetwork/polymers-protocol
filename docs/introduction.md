@@ -31,6 +31,29 @@ graph TD
     style H fill:#9f9,stroke:#333
 ```
 
+### Telemetry Flow
+```mermaid
+graph LR
+    S[SmartBin Sensor Data] --> H[Helium LoRaWAN Network]
+    H --> T[Telemetry API]
+    T --> D[Supabase Database]
+    D --> A[Analytics Engine / LSTM Model]
+    A --> U[Dashboard & Notifications]
+    style S fill:#ffcccb,stroke:#333
+    style U fill:#cce5ff,stroke:#333
+```
+
+### Reward Calculation Flow
+```mermaid
+graph TD
+    V[Validated Telemetry] --> E[ESG Scoring Engine]
+    E --> R[Reward Tokens Calculation]
+    R --> W[Wallet / NFT Twin Update]
+    W --> U[User Dashboard]
+    style V fill:#ffe4b5,stroke:#333
+    style U fill:#cce5ff,stroke:#333
+```
+
 ## SmartBin Use Case
 
 SmartBins are IoT-enabled waste bins that:
@@ -40,6 +63,12 @@ SmartBins are IoT-enabled waste bins that:
 - **Reward**: Issue tokens for user participation and data contributions.
 - **Analyze**: Predict fill schedules and optimize collection routes using LSTM models.
 - **Update**: Support OTA firmware updates with staged deployment and rollback.
+
+> **Developer Note**: For OTA updates, always test on a simulated bin first using:
+> ```bash
+> npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
+> ```
+> Use staged deployments to prevent downtime on live bins. See [/docs/helium-integration.md#ota-firmware-management](./helium-integration.md#ota-firmware-management) for details.
 
 **Benefits**:
 - **Scalability**: Handles millions of bins with Solana’s high TPS.
@@ -57,6 +86,8 @@ SmartBins are IoT-enabled waste bins that:
 - **Hivemapper Account**: API keys from [hivemapper.com/map-data-console](https://hivemapper.com/map-data-console).
 - **Phantom Wallet**: For Solana transactions.
 
+> **Developer Note**: Ensure all prerequisites are installed before cloning. Missing dependencies (e.g., Solana CLI) can cause simulation failures. Run `npm install -g @solana/cli @helium/cli supabase` to set up your environment.
+
 ### Quickstart
 1. **Clone Repository**:
    ```bash
@@ -64,6 +95,7 @@ SmartBins are IoT-enabled waste bins that:
    cd polymers
    npm install
    ```
+
 2. **Set Up Environment**:
    Create `.env` with:
    ```env
@@ -79,6 +111,7 @@ SmartBins are IoT-enabled waste bins that:
    HIVEMAPPER_API_KEY=<your_api_key>
    HIVEMAPPER_USERNAME=<your_username>
    ```
+
 3. **Run Local Simulations**:
    Test the full SmartBin lifecycle without hardware:
    ```bash
@@ -88,30 +121,74 @@ SmartBins are IoT-enabled waste bins that:
    npm run test:lstm
    npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
    ```
-   See [/docs/helium-integration.md#local-simulation-and-testing](./helium-integration.md#local-simulation-and-testing) for details.
+   See [/docs/helium-integration.md#local-simulation-and-testing](./helium-integration.md#local-simulation-and-testing) for full instructions.
 
 4. **Deploy to Devnet**:
    ```bash
    anchor deploy --provider.cluster devnet
    ```
 
+> **Developer Note**: Before deploying to Devnet or Mainnet, verify token mint addresses and Solana Pay wallet configurations in `/api/wallet/swap.ts`. Ensure reward thresholds (e.g., ESG score > 0.5, Hivemapper coverage > 0.8) are tested locally using `/scripts/simulate_rewards.ts`. See [/docs/helium-integration.md#rewards-integration](./helium-integration.md#rewards-integration) for details.
+
+### Quickstart Flowchart
+```mermaid
+graph TD
+    A[Start: New Contributor] -->|Check Prerequisites| B{Node.js, Solana CLI, <br>Helium CLI, Supabase CLI, <br>Hivemapper Account, Phantom Wallet?}
+    B -->|No| C[Install Prerequisites]
+    C -->|Run npm install -g| D[Clone Repository]
+    B -->|Yes| D[Clone Repository]
+    D -->|Run git clone| E[Install Dependencies]
+    E -->|Run npm install| F[Set Up .env]
+    F -->|Configure API keys| G{Simulations Ready?}
+    G -->|Run npm run simulate:*| H[Run Simulations]
+    H --> I[Telemetry: simulate:iot]
+    H --> J[Hivemapper: simulate:hivemapper]
+    H --> K[Rewards: simulate:rewards]
+    H --> L[Analytics: test:lstm]
+    H --> M[OTA: ota:deploy]
+    I --> N{Simulations Successful?}
+    J --> N
+    K --> N
+    L --> N
+    M --> N
+    N -->|Yes| O[Deploy to Devnet]
+    N -->|No| P[Check Logs, Fix Errors]
+    P --> H
+    O -->|Run anchor deploy| Q[End: Devnet Deployed]
+    style A fill:#f9f,stroke:#333
+    style C fill:#f9f,stroke:#333
+    style D fill:#f9f,stroke:#333
+    style E fill:#f9f,stroke:#333
+    style F fill:#f9f,stroke:#333
+    style H fill:#cff,stroke:#333
+    style I fill:#cff,stroke:#333
+    style J fill:#cff,stroke:#333
+    style K fill:#cff,stroke:#333
+    style L fill:#cff,stroke:#333
+    style M fill:#cff,stroke:#333
+    style O fill:#9f9,stroke:#333
+    style Q fill:#9f9,stroke:#333
+```
+
+> **Developer Note**: Run simulations before Devnet deployment to validate telemetry, Hivemapper validation, rewards, analytics, and OTA workflows. Use `/scripts/sample_data/sample_telemetry.json` for reproducible test cases. If simulations fail, check logs in Supabase or console output and refer to [/docs/helium-integration.md#troubleshooting-and-best-practices](./helium-integration.md#troubleshooting-and-best-practices) for fixes.
+
 ### Key Files
 - `/lib/helium.ts`, `/lib/hivemapper.ts`: Configure Helium and Hivemapper APIs.
-- `/api/iot/smartbins.ts`: Handles telemetry with Hivemapper validation.
-- `/api/wallet/swap.ts`: Manages rewards.
+- `/api/iot/smartbins.ts`: Handles telemetry with Hivemapper validation ([Helium Integration: Telemetry Transmission](./helium-integration.md#telemetry-transmission)).
+- `/api/wallet/swap.ts`: Manages rewards ([Helium Integration: Rewards Integration](./helium-integration.md#rewards-integration)).
 - `/programs/src/nft_mint.ts`: Mints NFT Twins.
-- `/lib/lstm_model.ts`: Runs predictive analytics.
-- `/scripts/ota_utils.ts`: Manages OTA updates.
+- `/lib/lstm_model.ts`: Runs predictive analytics ([Helium Integration: Predictive Analytics](./helium-integration.md#predictive-analytics)).
+- `/scripts/ota_utils.ts`: Manages OTA updates ([Helium Integration: OTA Firmware Management](./helium-integration.md#ota-firmware-management)).
 - `/scripts/sample_data/sample_telemetry.json`: Sample dataset for testing.
 - `/scripts/simulate_*.ts`: Simulation scripts for local testing.
 
 ## Next Steps
 - **Detailed Integration**: Follow [/docs/helium-integration.md](./helium-integration.md) for setup, hardware onboarding, telemetry, rewards, analytics, OTA, and testing.
-- **Contribute**: Submit issues or PRs on GitHub.
+- **Contribute**: Submit issues or PRs on [GitHub](https://github.com/PolymersNetwork/polymers-protocol).
 - **Community**: Join discussions on X (search “Polymers Protocol” or “Helium IoT”) or Hivemapper’s Discord ([discord.com/invite/FRWMKyy5v2](https://discord.com/invite/FRWMKyy5v2)).
 
 ## Resources
-- **Polymers Protocol**: [github.com/polymers-protocol/polymers](https://github.com/polymers-protocol/polymers)
+- **Polymers Protocol**: [github.com/PolymersNetwork/polymers-protocol](https://github.com/PolymersNetwork/polymers-protocol)
 - **Helium Docs**: [docs.helium.com/solana](https://docs.helium.com/solana)
 - **Hivemapper Docs**: [docs.hivemapper.com](https://docs.hivemapper.com)
 - **Solana Cookbook**: [solanacookbook.com](https://solanacookbook.com)
