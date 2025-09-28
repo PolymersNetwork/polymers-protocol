@@ -13,7 +13,7 @@
 
 The **Polymers Protocol** is a **Blockchain-as-a-Service (BaaS)** platform built on **Solana**, powering **SmartBin**, a next-generation waste management system. It integrates **Helium’s Decentralized Physical Infrastructure Network (DePIN)** for IoT connectivity, **Hivemapper’s Map Data APIs** for real-time geospatial validation, and **AI-driven analytics** for ESG tracking and predictive insights. The protocol incentivizes sustainable waste management through token rewards (HNT, IOT, PLY, CARB, EWASTE, HONEY) and provides ESG analytics for municipalities and enterprises.
 
-🌐 **Live Demo**: Check out the [Website & Dashboard](https://poiymers-website.vercel.app).
+🌐 **Live MVP / Demo**: Check out the [Website & Dashboard](https://poiymers-website.vercel.app).
 
 This repository contains the code, scripts, and documentation for developing, testing, and deploying the Polymers Network. For a detailed introduction, see [/docs/introduction.md](./docs/introduction.md). For advanced setup and integration, see [/docs/helium-integration.md](./docs/helium-integration.md).
 
