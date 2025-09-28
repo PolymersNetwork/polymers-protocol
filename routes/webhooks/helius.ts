@@ -1,7 +1,7 @@
 // routes/webhooks/helius.ts (Express route)
 
 import express from 'express';
-import { PolymersRewardsDistributor } from '../../lib/solana/PolymersRewardsDistributor';
+import { PolymersRewardsDistributor } from '../../lib/polymers/RewardsDistributor';
 import { Keypair } from '@solana/web3.js';
 
 const router = express.Router();
