@@ -1,187 +1,192 @@
-import { Connection, PublicKey, Keypair, Transaction, sendAndConfirmTransaction } from '@solana/web3.js';
-import { Liquidity, Token, TokenAmount, Percent, MAINNET_PROGRAM_ID_AMM, LIQUIDITY_STATE_LAYOUT_V4 } from '@raydium-io/raydium-sdk-v2';
-import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { NATIVE_MINT } from '@solana/spl-token';
+import {
+  Connection,
+  PublicKey,
+  Keypair,
+  TransactionInstruction,
+  sendAndConfirmTransaction,
+  VersionedTransaction,
+  TransactionMessage
+} from '@solana/web3.js';
+import { Token, getAssociatedTokenAddress, TOKEN_PROGRAM_ID, NATIVE_MINT } from '@solana/spl-token';
+import { Liquidity, TokenAmount, Percent, LIQUIDITY_STATE_LAYOUT_V4 } from '@raydium-io/raydium-sdk-v2';
 import BN from 'bn.js';
-import Decimal from 'decimal.js';
-import fetch from 'node-fetch'; // For pool data fetch
+import fetch from 'node-fetch';
+import PolymersSolanaClient from './PolymersSolanaClient';
 
-// Environment setup
-const connection = new Connection(process.env.SOLANA_RPC_URL || 'https://api.devnet.solana.com', 'confirmed');
-const RAYDIUM_LIQUIDITY_API = 'https://api.raydium.io/v2/sdk/liquidity/mainnet.json'; // Fetch pool keys
+const RAYDIUM_LIQUIDITY_API = 'https://api.raydium.io/v2/sdk/liquidity/mainnet.json';
+const STAKING_PROGRAM_ID = process.env.STAKING_PROGRAM_ID || '';
+const PLY_MINT_ADDRESS = process.env.PLY_MINT_ADDRESS || '';
 
-/**
- * Polymers Protocol Raydium Swap Client for AMM swaps.
- */
-export class PolymersRaydiumClient {
-  private wallet: Keypair;
-
-  constructor(wallet: Keypair) {
-    this.wallet = wallet;
-  }
-
-  /**
-   * Fetches liquidity pool keys for a token pair.
-   * @param baseMint Input token mint.
-   * @param quoteMint Output token mint.
-   * @returns Pool keys or null if not found.
-   */
-  async fetchPoolKeys(baseMint: PublicKey, quoteMint: PublicKey): Promise<any | null> {
-    try {
-      const response = await fetch(RAYDIUM_LIQUIDITY_API);
-      const pools = await response.json();
-      const officialPool = pools.official.find((pool: any) => 
-        pool.baseMint === baseMint.toString() && pool.quoteMint === quoteMint.toString()
-      );
-      if (officialPool) {
-        return {
-          id: new PublicKey(officialPool.id),
-          baseMint: new PublicKey(officialPool.baseMint),
-          quoteMint: new PublicKey(officialPool.quoteMint),
-          lpMint: new PublicKey(officialPool.lpMint),
-          version: officialPool.version,
-          programId: new PublicKey(officialPool.programId),
-          authority: new PublicKey(officialPool.authority),
-          openOrders: new PublicKey(officialPool.openOrders),
-          targetOrders: new PublicKey(officialPool.targetOrders),
-          baseVault: new PublicKey(officialPool.baseVault),
-          quoteVault: new PublicKey(officialPool.quoteVault),
-          withdrawQueue: new PublicKey(officialPool.withdrawQueue),
-          lpVault: new PublicKey(officialPool.lpVault),
-          marketVersion: officialPool.marketVersion,
-          marketProgramId: new PublicKey(officialPool.marketProgramId),
-          marketId: new PublicKey(officialPool.marketId),
-          marketAuthority: new PublicKey(officialPool.marketAuthority),
-          marketBaseVault: new PublicKey(officialPool.marketBaseVault),
-          marketQuoteVault: new PublicKey(officialPool.marketQuoteVault),
-          marketBids: new PublicKey(officialPool.marketBids),
-          marketAsks: new PublicKey(officialPool.marketAsks),
-          marketEventQueue: new PublicKey(officialPool.marketEventQueue),
-        };
-      }
-      return null;
-    } catch (error) {
-      throw new Error(`Failed to fetch pool keys: ${error.message}`);
-    }
-  }
-
-  /**
-   * Computes swap quote (expected output amount).
-   * @param poolKeys Pool keys.
-   * @param inputAmount Input amount (TokenAmount).
-   * @param slippageBps Slippage tolerance (default: 50 = 0.5%).
-   * @returns Expected output amount.
-   */
-  async computeAmountOut(
-    poolKeys: any,
-    inputAmount: TokenAmount,
-    slippageBps: number = 50
-  ): Promise<TokenAmount> {
-    try {
-      const { amountOut, minAmountOut } = await Liquidity.computeAmountOut({
-        poolKeys,
-        amountIn: inputAmount,
-        currencyOut: inputAmount.token, // Assume same token type
-        slippage: new Percent(slippageBps, 10000),
-      });
-      return new TokenAmount(inputAmount.token, minAmountOut);
-    } catch (error) {
-      throw new Error(`Failed to compute amount out: ${error.message}`);
-    }
-  }
-
-  /**
-   * Executes a token swap using Raydium AMM.
-   * @param inputMint Input token mint.
-   * @param outputMint Output token mint.
-   * @param inputAmount Input amount (raw, e.g., lamports).
-   * @param slippageBps Slippage tolerance.
-   * @returns Transaction signature.
-   */
-  async executeSwap(
-    inputMint: string,
-    outputMint: string,
-    inputAmount: string,
-    slippageBps: number = 50
-  ): Promise<string> {
-    try {
-      const inputToken = new Token(TOKEN_PROGRAM_ID, new PublicKey(inputMint), 9); // Assume 9 decimals; adjust per token
-      const outputToken = new Token(TOKEN_PROGRAM_ID, new PublicKey(outputMint), 6); // e.g., USDC 6 decimals
-      const inputAmountObj = new TokenAmount(inputToken, new BN(inputAmount));
-
-      // Fetch pool keys
-      const poolKeys = await this.fetchPoolKeys(new PublicKey(inputMint), new PublicKey(outputMint));
-      if (!poolKeys) {
-        throw new Error('Pool not found');
-      }
-
-      // Compute output amount
-      const outputAmount = await this.computeAmountOut(poolKeys, inputAmountObj, slippageBps);
-
-      // Get associated token accounts
-      const inputTokenAccount = await getAssociatedTokenAddress(inputToken.mint, this.wallet.publicKey);
-      const outputTokenAccount = await getAssociatedTokenAddress(outputToken.mint, this.wallet.publicKey);
-
-      // Fetch pool state
-      const poolState = await connection.getAccountInfo(poolKeys.id);
-      if (!poolState) throw new Error('Pool state not found');
-      const liquidityState = LIQUIDITY_STATE_LAYOUT_V4.decode(poolState.data);
-
-      // Make swap transaction
-      const { transaction, signers } = await Liquidity.makeSwapTransaction({
-        connection,
-        poolKeys,
-        userKeys: {
-          tokenAccountIn: inputTokenAccount,
-          tokenAccountOut: outputTokenAccount,
-          owner: this.wallet.publicKey,
-        },
-        amountIn: inputAmountObj,
-        amountOut: outputAmount,
-        fixedSide: 'in', // Fixed input amount
-        makeTxVersion: 0, // Legacy transaction
-      });
-
-      // Sign and send
-      transaction.sign([this.wallet, ...signers]);
-      const signature = await sendAndConfirmTransaction(connection, transaction, [this.wallet, ...signers], {
-        commitment: 'confirmed',
-        maxRetries: 3,
-      });
-
-      return signature;
-    } catch (error) {
-      throw new Error(`Swap execution failed: ${error.message}`);
-    }
-  }
-
-  /**
-   * Convenience method for PLY to SOL swap.
-   * @param plyAmount PLY amount (raw).
-   * @param slippageBps Slippage tolerance.
-   * @returns Transaction signature.
-   */
-  async swapPlyToSol(plyAmount: string, slippageBps: number = 50): Promise<string> {
-    if (!process.env.PLY_MINT_ADDRESS) {
-      throw new Error('PLY_MINT_ADDRESS not configured');
-    }
-    const solMint = NATIVE_MINT.toString();
-    return this.executeSwap(process.env.PLY_MINT_ADDRESS, solMint, plyAmount, slippageBps);
-  }
-
-  /**
-   * Convenience method for SOL to PLY swap.
-   * @param solAmount SOL amount (lamports).
-   * @param slippageBps Slippage tolerance.
-   * @returns Transaction signature.
-   */
-  async swapSolToPly(solAmount: string, slippageBps: number = 50): Promise<string> {
-    if (!process.env.PLY_MINT_ADDRESS) {
-      throw new Error('PLY_MINT_ADDRESS not configured');
-    }
-    const solMint = NATIVE_MINT.toString();
-    return this.executeSwap(solMint, process.env.PLY_MINT_ADDRESS, solAmount, slippageBps);
-  }
+interface RewardClaimSwapDistribution {
+  user: Keypair;
+  nftMint: string;
+  swapInputMint?: string;  // Token to swap to PLY (optional)
+  swapSlippageBps?: number;
+  payoutAmount?: bigint;   // Will be computed from claim if not provided
 }
 
-export default PolymersRaydiumClient;
+interface PoolAggregate {
+  totalInput: bigint;
+  recipients: { address: string; amount: bigint }[];
+}
+
+export class PolymersRewardsDistributor {
+  private connection: Connection;
+  private wallet: Keypair;
+  private stakingClient: PolymersSolanaClient;
+
+  constructor(connection: Connection, wallet: Keypair, stakingClient: PolymersSolanaClient) {
+    this.connection = connection;
+    this.wallet = wallet;
+    this.stakingClient = stakingClient;
+  }
+
+  /** Fetch Raydium pool keys for a token pair */
+  private async fetchPoolKeys(baseMint: PublicKey, quoteMint: PublicKey): Promise<any | null> {
+    const response = await fetch(RAYDIUM_LIQUIDITY_API);
+    const pools = await response.json();
+    const pool = pools.official.find((p: any) =>
+      (p.baseMint === baseMint.toString() && p.quoteMint === quoteMint.toString()) ||
+      (p.baseMint === quoteMint.toString() && p.quoteMint === baseMint.toString())
+    );
+    if (!pool) return null;
+    return {
+      id: new PublicKey(pool.id),
+      baseMint: new PublicKey(pool.baseMint),
+      quoteMint: new PublicKey(pool.quoteMint),
+      lpMint: new PublicKey(pool.lpMint),
+      version: pool.version,
+      programId: new PublicKey(pool.programId),
+      authority: new PublicKey(pool.authority),
+      openOrders: new PublicKey(pool.openOrders),
+      targetOrders: new PublicKey(pool.targetOrders),
+      baseVault: new PublicKey(pool.baseVault),
+      quoteVault: new PublicKey(pool.quoteVault),
+      withdrawQueue: new PublicKey(pool.withdrawQueue),
+      lpVault: new PublicKey(pool.lpVault),
+      marketVersion: pool.marketVersion,
+      marketProgramId: new PublicKey(pool.marketProgramId),
+      marketId: new PublicKey(pool.marketId),
+      marketAuthority: new PublicKey(pool.marketAuthority),
+      marketBaseVault: new PublicKey(pool.marketBaseVault),
+      marketQuoteVault: new PublicKey(pool.marketQuoteVault),
+      marketBids: new PublicKey(pool.marketBids),
+      marketAsks: new PublicKey(pool.marketAsks),
+      marketEventQueue: new PublicKey(pool.marketEventQueue),
+    };
+  }
+
+  /** Compute swap output for a given input */
+  private async computeAmountOut(poolKeys: any, inputAmount: TokenAmount, slippageBps: number = 50): Promise<TokenAmount> {
+    const { minAmountOut } = await Liquidity.computeAmountOut({
+      poolKeys,
+      amountIn: inputAmount,
+      currencyOut: inputAmount.token,
+      slippage: new Percent(slippageBps, 10000),
+    });
+    return new TokenAmount(inputAmount.token, minAmountOut);
+  }
+
+  /** Create SPL token transfer instruction */
+  private createTransferInstruction(from: PublicKey, to: PublicKey, owner: PublicKey, amount: BN) {
+    return Token.createTransferInstruction(TOKEN_PROGRAM_ID, from, to, owner, [], amount);
+  }
+
+  /**
+   * Main method: claim rewards → swap → distribute PLY
+   * All in a single atomic transaction
+   */
+  async claimSwapDistribute(claims: RewardClaimSwapDistribution[]): Promise<string> {
+    const allInstructions: TransactionInstruction[] = [];
+    const allSigners: Keypair[] = [];
+
+    // 1️⃣ Claim rewards for each user
+    for (const claim of claims) {
+      const stakingPDA = await PublicKey.findProgramAddress(
+        [Buffer.from('staking'), new PublicKey(claim.nftMint).toBuffer(), claim.user.publicKey.toBuffer()],
+        new PublicKey(STAKING_PROGRAM_ID)
+      );
+
+      const claimIx = await this.stakingClient.stakingProgram.instruction.claimRewards(new BN(0), {
+        accounts: {
+          stakingAccount: stakingPDA[0],
+          user: claim.user.publicKey,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        },
+        signers: [claim.user],
+      });
+
+      allInstructions.push(claimIx);
+      allSigners.push(claim.user);
+    }
+
+    // 2️⃣ Aggregate swaps per input token
+    const poolMap = new Map<string, PoolAggregate>();
+    for (const claim of claims) {
+      const inputMint = claim.swapInputMint || PLY_MINT_ADDRESS;
+      if (!poolMap.has(inputMint)) {
+        poolMap.set(inputMint, { totalInput: BigInt(0), recipients: [] });
+      }
+      const pool = poolMap.get(inputMint)!;
+      const payout = claim.payoutAmount || BigInt(0);
+      pool.totalInput += payout;
+      pool.recipients.push({ address: claim.user.publicKey.toString(), amount: payout });
+    }
+
+    // 3️⃣ Swap + distribute per pool
+    for (const [inputMint, poolData] of poolMap.entries()) {
+      if (poolData.totalInput === BigInt(0)) continue;
+
+      const inputPub = new PublicKey(inputMint);
+      const outputPub = new PublicKey(PLY_MINT_ADDRESS);
+
+      const inputTokenAccount = await getAssociatedTokenAddress(inputPub, this.wallet.publicKey);
+      const outputTokenAccount = await getAssociatedTokenAddress(outputPub, this.wallet.publicKey);
+
+      const poolKeys = await this.fetchPoolKeys(inputPub, outputPub);
+      if (!poolKeys) throw new Error(`Pool not found for ${inputMint}/PLY`);
+
+      const inputAmountObj = new TokenAmount(new Token(TOKEN_PROGRAM_ID, inputPub, 9), new BN(poolData.totalInput.toString()));
+      const outputAmountObj = await this.computeAmountOut(poolKeys, inputAmountObj, 50);
+
+      // Raydium swap instruction
+      const { innerTransaction: swapTx } = await Liquidity.makeSwapInstructionSimple({
+        connection: this.connection,
+        poolKeys,
+        userKeys: { tokenAccountIn: inputTokenAccount, tokenAccountOut: outputTokenAccount, owner: this.wallet.publicKey },
+        amountIn: inputAmountObj,
+        amountOut: outputAmountObj,
+        fixedSide: 'in',
+        makeTxVersion: 0,
+      });
+
+      allInstructions.push(...swapTx.instructions);
+      allSigners.push(...swapTx.signers);
+
+      // Distribute PLY to recipients
+      for (const recipient of poolData.recipients) {
+        const recipientAccount = await getAssociatedTokenAddress(outputTokenAccount.mint, new PublicKey(recipient.address));
+        allInstructions.push(this.createTransferInstruction(outputTokenAccount, recipientAccount, this.wallet.publicKey, new BN(recipient.amount)));
+      }
+    }
+
+    // 4️⃣ Build VersionedTransaction
+    const recentBlockhash = await this.connection.getLatestBlockhash('confirmed');
+    const txMessage = new TransactionMessage({
+      payerKey: this.wallet.publicKey,
+      recentBlockhash: recentBlockhash.blockhash,
+      instructions: allInstructions,
+    });
+
+    const versionedTx = new VersionedTransaction(txMessage);
+    versionedTx.sign([this.wallet, ...allSigners]);
+
+    // 5️⃣ Send & confirm
+    const signature = await sendAndConfirmTransaction(this.connection, versionedTx, [this.wallet, ...allSigners], {
+      maxRetries: 3,
+      preflightCommitment: 'confirmed',
+    });
+
+    return signature;
+  }
+}
