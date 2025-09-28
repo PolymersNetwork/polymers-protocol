@@ -54,7 +54,7 @@ graph TD
 - `/lib/lstm_model.ts`: Runs predictive analytics.
 - `/scripts/ota_utils.ts`: Manages OTA firmware updates.
 - `/scripts/sample_data/sample_telemetry.json`: Sample dataset for testing.
-- `/scripts/simulate_iot.ts`, `/scripts/simulate_rewards.ts`, `/scripts/test_lstm.ts`: Simulation scripts.
+- `/scripts/simulate_iot.ts`, `/scripts/simulate_rewards.ts`, `/scripts/simulate_hivemapper.ts`, `/scripts/test_lstm.ts`: Simulation scripts.
 
 ---
 
@@ -69,6 +69,7 @@ graph TD
 - **Supabase CLI**: For telemetry database.
 - **Axios**: For Hivemapper API calls (`npm install axios`).
 - **TypeScript**: For scripts and APIs.
+- **MSW**: For mocking Hivemapper APIs (`npm install msw`).
 
 ### Hardware
 - **LoRaWAN Devices**: RAK Wireless or Dragino modules with GPS.
@@ -622,7 +623,7 @@ Update `package.json`:
 
 ## Local Simulation and Testing
 
-Test telemetry, rewards, and analytics without physical SmartBins or hotspots.
+Test telemetry, rewards, analytics, and Hivemapper features without physical SmartBins or hotspots.
 
 ### Sample Dataset
 File: `/scripts/sample_data/sample_telemetry.json`
@@ -679,7 +680,34 @@ File: `/scripts/sample_data/sample_telemetry.json`
    ```
    Run: `npm run simulate:rewards`
 
-3. **Predictive Analytics Testing**:
+3. **Hivemapper Simulation**:
+   File: `/scripts/simulate_hivemapper.ts`
+   ```typescript
+   import { hivemapperClient } from '../lib/hivemapper';
+   import { setupServer } from 'msw/node';
+   import { rest } from 'msw';
+
+   const server = setupServer(
+     rest.get('https://bee.hivemapper.com/v1/devices/:deviceId', (req, res, ctx) => {
+       return res(ctx.json({ lastUpdate: new Date().toISOString() }));
+     }),
+     rest.get('https://bee.hivemapper.com/v1/coverage', (req, res, ctx) => {
+       return res(ctx.json({ coverage: 0.9 }));
+     })
+   );
+
+   async function simulateHivemapper() {
+     server.listen();
+     const isValid = await hivemapperClient.get('/devices/hm_bin_test').then(() => true).catch(() => false);
+     console.log('Hivemapper validation:', isValid);
+     server.close();
+   }
+
+   simulateHivemapper();
+   ```
+   Run: `npm run simulate:hivemapper`
+
+4. **Predictive Analytics Testing**:
    File: `/scripts/test_lstm.ts`
    ```typescript
    import { predictFillLevel } from '../lib/lstm_model';
@@ -700,36 +728,178 @@ File: `/scripts/sample_data/sample_telemetry.json`
    ```
    Run: `npm run test:lstm`
 
-4. **OTA Testing**:
+5. **OTA Testing**:
    - Use `/scripts/ota_utils.ts` for staged deployment simulation.
    - Run: `npm run ota:deploy --bin test_bin --file ./firmware/latest.bin`
 
-**Benefits**:
-- Test dashboards, analytics, and rewards without hardware.
-- Validate Supabase schema and API flows.
-- Enable CI/unit tests for SmartBin features.
+### Full Local Simulation Workflow
+```mermaid
+graph LR
+    A[Sample Telemetry JSON] --> B[Telemetry Simulation (/simulate_iot.ts)]
+    B --> C[Supabase Storage & Logs]
+    C --> D[Hivemapper Simulation (/simulate_hivemapper.ts)]
+    D --> E[Rewards Simulation (/simulate_rewards.ts)]
+    E --> F[LSTM Prediction (/test_lstm.ts)]
+    F --> G[Dashboard Update]
+    G --> H[OTA Deployment Simulation (/ota_utils.ts)]
+    H --> C
+    style A fill:#f9f,stroke:#333,stroke-width:1px
+    style H fill:#9f9,stroke:#333,stroke-width:1px
+```
 
-**Tip**: Chain `simulate:iot`, `simulate:rewards`, and `test:lstm` to emulate the full SmartBin lifecycle locally.
+### CI/Local Workflow
+Chain simulations to emulate the full SmartBin lifecycle:
+```bash
+npm run simulate:iot
+npm run simulate:hivemapper
+npm run simulate:rewards
+npm run test:lstm
+npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
+```
+
+**Benefits**:
+- Enables full local testing of telemetry, rewards, analytics, and OTA updates.
+- Works without hardware or live API keys.
+- Provides reproducible scenarios for CI pipelines and developer onboarding.
+- Validates Supabase schema, API flows, and dashboard integrations.
 
 ---
 
 ## Troubleshooting and Best Practices
 
-### Common Issues
-- **RPC Latency**: Use [Helius.dev](https://helius.dev) for stable RPC.
-- **Hivemapper 401/429**: Regenerate API key or implement backoff:
-  ```typescript
-  import { setTimeout } from 'timers/promises';
-  // In catch: await setTimeout(1000 * Math.pow(2, retryCount));
-  ```
-- **OTA Failures**: Test in sandbox; log to Supabase.
-- **Supabase Errors**: Check query limits.
+This section addresses common issues in the Helium, Hivemapper, and Polymers integration, with a focus on local simulation, Hivemapper edge cases, and OTA rollback testing to ensure a robust development and deployment experience.
+
+### Common Issues and Fixes
+
+1. **Solana RPC Latency**:
+   - **Symptom**: Slow or failed transactions in `/api/iot/smartbins.ts` or `/api/wallet/swap.ts`.
+   - **Fix**: Use a premium RPC provider like [Helius.dev](https://helius.dev) for stable devnet access. Alternatively, run a local validator:
+     ```bash
+     solana-test-validator --rpc-port 8899
+     ```
+   - **Tip**: Set `maxRetries: 3` in `connection.sendTransaction` to handle transient failures.
+
+2. **Hivemapper API Errors**:
+   - **401 Unauthorized**: Regenerate API key in [Map Data Console](https://hivemapper.com/map-data-console).
+   - **429 Rate Limit Exceeded**: Implement exponential backoff:
+     ```typescript
+     import { setTimeout } from 'timers/promises';
+     async function retryHivemapper(fn: () => Promise<any>, retries = 3) {
+       for (let i = 0; i < retries; i++) {
+         try {
+           return await fn();
+         } catch (e) {
+           if (e.message.includes('429')) await setTimeout(1000 * Math.pow(2, i));
+           else throw e;
+         }
+       }
+       throw new Error('Max retries exceeded');
+     }
+     ```
+   - **No Coverage**: Fallback to Helium-only validation and log to Supabase:
+     ```typescript
+     await supabase.from('validation_logs').insert({ binId, status: 'no_coverage' });
+     ```
+
+3. **Supabase Query Failures**:
+   - **Symptom**: Errors in `/api/iot/smartbins.ts` or `/lib/lstm_model.ts` due to query limits or timeouts.
+   - **Fix**: Check Supabase connection limits and increase timeouts:
+     ```typescript
+     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+       db: { queryTimeout: 10000 },
+     });
+     ```
+   - **Tip**: Shard telemetry data for large datasets using TimescaleDB or Supabase partitioning.
+
+4. **Hivemapper Simulation Edge Cases**:
+   - **No Recent Device Update**: Mock `/scripts/simulate_hivemapper.ts` to test stale updates:
+     ```typescript
+     import { hivemapperClient } from '../lib/hivemapper';
+     async function simulateHivemapperEdgeCases() {
+       const mock = require('msw').setupServer({
+         '/devices/hm_bin_test': { lastUpdate: '2023-01-01T00:00:00Z' }, // Stale
+       });
+       const isValid = await hivemapperClient.get('/devices/hm_bin_test').catch(() => false);
+       console.log('Stale update test:', !isValid);
+     }
+     ```
+   - **Low Coverage**: Simulate low coverage areas (e.g., rural):
+     ```typescript
+     const mock = require('msw').setupServer({
+       '/coverage': { coverage: 0.1 },
+     });
+     ```
+   - **Fix**: Log edge cases to Supabase and fallback to Helium telemetry:
+     ```typescript
+     await supabase.from('validation_logs').insert({ binId, status: 'low_coverage_simulation' });
+     ```
+
+5. **OTA Rollback Failures**:
+   - **Symptom**: Rollback in `/scripts/ota_utils.ts` fails due to network issues or invalid firmware.
+   - **Fix**: Test rollback locally with a mock firmware file:
+     ```typescript
+     async function testOTARollback(binId: string) {
+       const result = await sendOTAUpdate(binId, './firmware/test.bin');
+       if (!result.success) await rollbackFirmware(binId);
+       await supabase.from('ota_logs').insert({ binId, status: result.success ? 'success' : 'rollback' });
+       console.log('OTA rollback test:', result);
+     }
+     ```
+   - **Tip**: Simulate failed telemetry or Hivemapper validation post-OTA:
+     ```typescript
+     const mockTelemetry = { fill: -1, weight: -1 }; // Invalid
+     await supabase.from('telemetry').insert({ binId, ...mockTelemetry });
+     ```
+
+6. **LSTM Prediction Errors**:
+   - **Symptom**: `/scripts/test_lstm.ts` fails due to insufficient data or ML service errors.
+   - **Fix**: Ensure `/scripts/sample_data/sample_telemetry.json` has at least 100 records. Mock ML service responses:
+     ```typescript
+     const mock = require('msw').setupServer({
+       'https://ml-service/predict': { prediction: { fill: 0.75 } },
+     });
+     ```
 
 ### Best Practices
-- **Security**: Use secrets manager; validate hotspot/device IDs.
-- **Scalability**: Shard telemetry data; cache Hivemapper results.
-- **Monitoring**: Use Solana Explorer, Supabase logs, and Hivemapper console.
-- **Cost Optimization**: Monitor Data Credits and HONEY credits.
+
+- **Security**:
+  - Store `.env` in a secrets manager (e.g., Doppler).
+  - Validate hotspot and Hivemapper device IDs:
+    ```typescript
+    const isValidHotspot = await helium.hotspots.isValid(process.env.HELIUM_HOTSPOT_ADDRESS);
+    ```
+  - Rate-limit APIs:
+    ```typescript
+    import rateLimit from 'express-rate-limit';
+    app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+    ```
+
+- **Scalability**:
+  - Shard telemetry data for large fleets.
+  - Cache Hivemapper coverage and LSTM preprocessed data in Supabase:
+    ```typescript
+    const cacheKey = `coverage_${binId}`;
+    await supabase.from('cache').upsert({ key: cacheKey, value: coverage });
+    ```
+
+- **Monitoring**:
+  - Use Solana Explorer for transaction debugging.
+  - Log Hivemapper and OTA events to Supabase for audit trails.
+  - Monitor Data Credits (~$0.00001 per 24KB) and HONEY credits.
+
+- **CI Integration**:
+  - Add simulation scripts to CI pipeline (e.g., GitHub Actions):
+    ```yaml
+    jobs:
+      test:
+        runs-on: ubuntu-latest
+        steps:
+          - run: npm run simulate:iot
+          - run: npm run simulate:hivemapper
+          - run: npm run simulate:rewards
+          - run: npm run test:lstm
+          - run: npm run ota:deploy --bin test_bin --file ./firmware/test.bin
+    ```
 
 ---
 
@@ -748,4 +918,4 @@ File: `/scripts/sample_data/sample_telemetry.json`
 
 ---
 
-This guide ensures contributors can set up, test, and deploy the Helium-Hivemapper-Polymers integration locally or on devnet. For support, use GitHub issues or the Polymers communities on X and Discord.
+This guide ensures contributors can set up, test, and deploy the Helium-Hivemapper-Polymers integration locally or on devnet. For support, use GitHub issues or the Polymers/Hivemapper communities on X and
