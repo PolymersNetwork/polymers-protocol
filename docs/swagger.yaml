@@ -1,1 +1,372 @@
-
+openapi: 3.0.3
+info:
+  title: Polymers Protocol API
+  description: API for interacting with Polymers Protocol including users, transactions, NFT twins, payments, ESG metrics, SmartBins, AI chat, and more.
+  version: 1.0.0
+servers:
+  - url: https://api.polymersprotocol.org
+    description: Production server
+  - url: http://localhost:3001
+    description: Local development server
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        wallet:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        role:
+          type: string
+    Transaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+        status:
+          type: string
+        amount:
+          type: number
+        token:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        signature:
+          type: string
+    NFT:
+      type: object
+      properties:
+        id:
+          type: string
+        owner:
+          type: string
+        name:
+          type: string
+        staked:
+          type: boolean
+        rewards:
+          type: number
+        evolutionLevel:
+          type: integer
+    Payment:
+      type: object
+      properties:
+        paymentId:
+          type: string
+        status:
+          type: string
+        amount:
+          type: number
+        token:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        transactionSignature:
+          type: string
+    ESG:
+      type: object
+      properties:
+        wallet:
+          type: string
+        plasticCollected:
+          type: number
+        co2Reduced:
+          type: number
+        recyclingCount:
+          type: integer
+        cityRank:
+          type: integer
+    SmartBin:
+      type: object
+      properties:
+        id:
+          type: string
+        location:
+          type: object
+          properties:
+            lat:
+              type: number
+            lng:
+              type: number
+        fillLevel:
+          type: number
+        status:
+          type: string
+        lastUpdated:
+          type: string
+          format: date-time
+    AIMessage:
+      type: object
+      properties:
+        messageId:
+          type: string
+        response:
+          type: string
+        remainingMessages:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+security:
+  - BearerAuth: []
+paths:
+  /users:
+    get:
+      summary: Retrieve user details by wallet or email
+      parameters:
+        - name: wallet
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+  /transactions:
+    post:
+      summary: Create a token transfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wallet:
+                  type: string
+                amount:
+                  type: number
+                token:
+                  type: string
+                recipient:
+                  type: string
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /nft-twins:
+    get:
+      summary: Fetch NFT details for a wallet
+      parameters:
+        - name: wallet
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: staked
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of NFTs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nfts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NFT'
+  /payments:
+    post:
+      summary: Initiate a payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wallet:
+                  type: string
+                amount:
+                  type: number
+                token:
+                  type: string
+                method:
+                  type: string
+                recipient:
+                  type: string
+      responses:
+        '201':
+          description: Payment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+  /esg:
+    get:
+      summary: Retrieve ESG metrics for a wallet
+      parameters:
+        - name: wallet
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ESG data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  esg:
+                    $ref: '#/components/schemas/ESG'
+  /smartbins:
+    get:
+      summary: Fetch IoT SmartBin data
+      parameters:
+        - name: city
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of SmartBins
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  smartbins:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SmartBin'
+  /ai-agents:
+    post:
+      summary: Send message to AI assistant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wallet:
+                  type: string
+                message:
+                  type: string
+      responses:
+        '201':
+          description: AI response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIMessage'
+  /donations:
+    get:
+      summary: Retrieve donations
+      responses:
+        '200':
+          description: List of donations
+    post:
+      summary: Create a donation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Donation created
+  /recycling:
+    get:
+      summary: Retrieve recycling logs
+      responses:
+        '200':
+          description: List of recycling entries
+    post:
+      summary: Create a recycling log
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Recycling log created
+  /swap:
+    post:
+      summary: Swap tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Swap successful
+  /settings:
+    get:
+      summary: Retrieve user settings
+      responses:
+        '200':
+          description: User settings
+    post:
+      summary: Update user settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Settings updated
+  /messages:
+    get:
+      summary: Retrieve chat messages
+      responses:
+        '200':
+          description: List of messages
+    post:
+      summary: Send a message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Message sent
