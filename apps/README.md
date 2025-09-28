@@ -1,56 +1,53 @@
-# Polymers Protocol – E-Waste & Waste Management Platform
+# Polymers Protocol – E-Waste & Waste Management
 
 **Version 1.0 Beta**
 
-Polymers Protocol is a **blockchain-as-a-service platform** integrating **Solana blockchain**, **IoT/DePin**, and **ESG solutions**. It enables polymer and e-waste recycling with **supply chain transparency**, **tokenized rewards**, **predictive analytics**, and **gamified engagement**.
+Polymers Protocol is a **blockchain-as-a-service platform** integrating **Solana**, **IoT/DePin**, and **ESG solutions** for polymer and e-waste recycling. Features include **supply chain transparency**, **tokenized rewards**, **predictive analytics**, and **gamified engagement**.
 
 ---
 
 ## 🔹 Key Features
 
-### 1. Polymers Dashboard
-- Real-time **IoT SmartBin telemetry**: fill level, contamination, weight, temperature  
-- **NFT Twins** for batch tracking on Solana  
-- ESG & carbon footprint monitoring  
-- Predictive analytics and contamination forecasting  
-- Gamified missions, leaderboards, and tokenized incentives  
+### Dashboard
+- Real-time SmartBin telemetry (fill, contamination, weight, temperature)
+- NFT Twins for batch tracking on Solana
+- ESG and carbon footprint monitoring
+- Predictive analytics for supply and contamination
+- Gamified missions, leaderboards, tokenized incentives
 
-### 2. Mobile App
-- **React Native + Expo**, OTA updates supported  
-- Dark theme, green-gray-white palette, Font Awesome icons  
-- Font support: Satoshi + Geist  
-- Schedule pickups, track recycling history, get reminders  
-- Real-time reward updates from Solana  
-- Eco-gamification with token incentives  
+### Mobile App
+- React Native + Expo (OTA updates)
+- Dark theme, green-gray-white palette, Satoshi + Geist fonts
+- Schedule pickups, track recycling, reminders
+- Real-time Solana rewards and gamification
 
-### 3. IoT Telemetry & SmartBins
-- Historical + real-time sensor data logging  
-- Automated analytics: avg. fill level, contamination trends, predicted collection times  
-- AI helpers auto-calculate metrics on new IoT readings  
+### IoT & SmartBins
+- Log real-time and historical sensor data
+- Auto-analyze fill levels, contamination, and collection times
+- AI-driven metric updates on new readings
 
-### 4. NFT Twins
-- Metaplex-based NFT minting per batch  
-- Tracks polymer type, weight, contamination, ESG metrics  
-- Traceable recycling for users & enterprises  
+### NFT Twins
+- Metaplex NFT minting per batch
+- Tracks polymer type, weight, contamination, ESG metrics
 
-### 5. Analytics & AI Helpers
-- LSTM predictive models for supply/demand and contamination  
-- ESG score forecasts & carbon offsets  
-- Helper functions auto-update metrics when IoT readings are added  
+### Analytics & AI
+- LSTM models for supply/demand and contamination forecasts
+- ESG scores and carbon offset calculations
+- Auto-updated metrics from IoT data
 
-### 6. Gamification & Rewards
-- Tokenized system: **PLY**, **CARB**, **EWASTE**  
-- Leaderboards for users & enterprises  
-- Reward missions integrated into dashboard and mobile app  
+### Rewards & Gamification
+- Tokens: **PLY** (recycling), **CARB** (carbon offsets), **EWASTE**
+- Leaderboards for users and enterprises
+- Reward missions integrated in dashboard and mobile app
 
 ---
 
 ## 📂 Project Structure
 
-/app                   # Frontend dashboard & website
+/app                   # Frontend dashboard
 /api                   # Backend APIs
 /components            # React components
-/lib                   # AI & utilities
+/lib                   # AI and utilities
 /programs/src          # Solana programs
 /scripts               # Simulation scripts
 /tests                 # Unit & integration tests
@@ -61,11 +58,11 @@ Polymers Protocol is a **blockchain-as-a-service platform** integrating **Solana
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js ≥16, npm ≥8  
-- Solana CLI, Solana Pay SDK  
-- Supabase project for transaction logging  
-- TensorFlow.js for ML inference  
-- Expo CLI for mobile development  
+- Node.js ≥16, npm ≥8
+- Solana CLI, Solana Pay SDK
+- Supabase for transaction logging
+- TensorFlow.js for ML
+- Expo CLI for mobile app
 
 ### Installation
 ```bash
@@ -73,39 +70,47 @@ git clone https://github.com/PolymersNetwork/polymers-recycling-platform.git
 cd polymers-recycling-platform
 npm ci
 cp .env.example .env
-# configure environment variables
-npm run dev          # start dashboard
-expo start           # start mobile app
+# Configure .env
+npm run dev       # Dashboard
+npx expo start    # Mobile app
+
+Environment Variables
+
+NEXT_PUBLIC_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_KEY
+PLY_MINT=PLY_TOKEN_MINT
+CARB_MINT=CARB_TOKEN_MINT
+EWASTE_MINT=EWASTE_TOKEN_MINT
+REWARD_WALLET_ADDRESS=REWARD_WALLET
+REWARD_WALLET_TOKEN_ACCOUNT=REWARD_WALLET_TOKEN
 
 
 ⸻
 
-💰 Tokenized Rewards System
-	•	PLY – Polymer recycling points
-	•	CARB – Carbon offset points
-	•	EWASTE – E-Waste token rewards
+💰 Tokenized Rewards
+	•	PLY: Polymer recycling points
+	•	CARB: Carbon offset points
+	•	EWASTE: E-waste rewards
 
-Tokenomics Flow (Mermaid)
+Tokenomics Flow
 
-flowchart LR
-    U[User Deposit] --> R[Reward Calculation API]
-    R --> S[Solana Transaction]
-    S --> W[Wallet Updates]
-    W --> D[Dashboard]
-    D --> M[Mobile App]
-    R --> L[Leaderboards & Gamification]
-    E[Enterprise SmartBins] --> R
+graph LR
+    A[User Deposit] --> B[Reward API]
+    B --> C[Solana Transaction]
+    C --> D[Wallet Updates]
+    D --> E[Dashboard & Mobile App]
+    B --> F[Leaderboards]
+    G[Enterprise SmartBins] --> B
 
-Callout: Pre-funded enterprise SmartBins credit bonus tokens automatically.
+Pre-funded enterprise SmartBins auto-credit bonus tokens.
 
 ⸻
 
 🧪 Testnet Rewards Sandbox
 
-Simulate end-to-end rewards on Solana Devnet.
-
-Setup Guide
-	1.	Fund Devnet wallets via Solana Devnet faucet
+Simulate rewards on Solana Devnet:
+	1.	Fund Devnet wallets via faucet
 	2.	Pre-fund SmartBins for test deposits
 	3.	Configure .env for Devnet:
 
@@ -119,88 +124,62 @@ REWARD_WALLET_TOKEN_ACCOUNT=DEV_REWARD_WALLET_TOKEN
 	4.	Run:
 
 npm run dev       # Dashboard
-expo start        # Mobile app (OTA enabled)
+npx expo start    # Mobile app
 
 
 ⸻
 
-ASCII Flow Diagram
+Rewards Flow
 
-  Deposit Material
-         │
-         ▼
-   IoT SmartBin
-         │
-         ▼
-  Telemetry API
-         │
-         ├─► Dashboard & Mobile
-         │
-         ▼
-  Solana Devnet
-         │
-         ▼
-      Wallet Updates
-         │
-         ▼
-  Leaderboards / Rewards
-
-Callout: IoT telemetry + rewards calculations are automatically logged.
-
-⸻
-
-Mermaid Flow Diagram
-
-flowchart LR
-    A[Deposit Material] --> B[IoT SmartBin]
+graph LR
+    A[Deposit] --> B[SmartBin]
     B --> C[Telemetry API]
     C --> D[Solana Devnet]
     D --> E[Wallet Updates]
-    E --> F[Dashboard]
-    F --> G[Mobile App]
-    C --> F[Analytics + Reward Points]
+    E --> F[Dashboard & Mobile App]
+    C --> F[Analytics & Rewards]
 
-Callout: Telemetry feeds pre-computed analytics to dashboard charts.
+Telemetry auto-feeds analytics to dashboard charts.
 
 ⸻
 
-Predictive Rewards Simulation Chart
+Predictive Rewards Simulation
 
 gantt
-    title Predictive Rewards Simulation
+    title Rewards Simulation
     dateFormat  YYYY-MM-DD
     axisFormat  %d-%m
-
     section Deposits
-    User Deposits       :active, des1, 2025-10-01, 10d
-    Enterprise Batches  :des2, 2025-10-05, 8d
+    User Deposits      :active, des1, 2025-10-01, 10d
+    Enterprise Batches :des2, 2025-10-05, 8d
+    section Tokens
+    PLY Tokens         :dist1, after des1, 10d
+    CARB Tokens        :dist2, after des2, 8d
+    EWASTE Tokens      :dist3, after des1, 12d
+    section Gamification
+    Points Updated     :points1, after dist1, 12d
+    Leaderboards       :points2, after dist2, 10d
 
-    section Token Distribution
-    PLY Tokens Credited   :dist1, after des1, 10d
-    CARB Tokens Credited  :dist2, after des2, 8d
-    EWASTE Tokens Credited:dist3, after des1, 12d
-
-    section Gamification & Leaderboards
-    Points Updated        :points1, after dist1, 12d
-    Leaderboards Updated  :points2, after dist2, 10d
-
-Callout: Auditable simulation of token distribution vs. actual deposits.
+Simulates token distribution vs. deposits for auditing and gamification.
 
 ⸻
 
-📦 Unit & Integration Tests
-	•	IoT ingestion + analytics helpers
+🧪 Tests
+	•	IoT ingestion & analytics
 	•	Solana program interactions
 	•	Wallet & token transactions
 	•	Mobile prompts & reward flows
+
+npm run test
+
 
 ⸻
 
 🛠 Deployment
 	•	Dashboard: Vercel
-	•	Mobile App: Expo (OTA updates enabled)
+	•	Mobile App: Expo (OTA updates)
 	•	Solana Programs: CI/CD with rollback strategy
-	•	Error Monitoring: Telemetry, blockchain, and mobile apps
+	•	Monitoring: Sentry for telemetry & error tracking
 
 ⸻
 
