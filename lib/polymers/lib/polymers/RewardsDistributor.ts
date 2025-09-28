@@ -1,5 +1,5 @@
 import { Connection, Keypair, PublicKey, Transaction } from "@solana/web3.js";
-import { PolymersRaydiumClient } from "../solana/raydiumClient";
+import { PolymersRaydiumClient } from "../polymers/raydiumClient";
 import { HeliusClient, WebhookConfig } from "../solana/helius";
 
 // ---------------- Types ----------------
