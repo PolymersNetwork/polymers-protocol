@@ -161,7 +161,7 @@ graph TD
 
 ## API Examples
 
-All requests require `Authorization: Bearer <your-token>`. Test endpoints via [Swagger Docs](https://api.polymers.io/swagger).
+All requests require `Authorization: Bearer <your-token>`. Test endpoints via [Swagger Docs](https://api.polymersprotocol.org/swagger).
 
 ### GET /users
 Retrieve user details.
@@ -301,7 +301,7 @@ For additional endpoints (`/donations`, `/recycling`, `/swap`, `/settings`, `/me
   /mobile       # React Native/Expo Mobile App
   /backend      # Fastify/MCP Backend API
   /shared       # Shared components, hooks, types
-/app/data       # Sample data and seeding
+/data           # Sample data and seeding
 /lib            # Solana, Helium, Hivemapper, Metaplex, Jupiter, Raydium
 /hooks          # React hooks for dashboard/mobile
 /context        # WalletContext, UserContext, AIProvider, ESGContext
@@ -313,8 +313,10 @@ For additional endpoints (`/donations`, `/recycling`, `/swap`, `/settings`, `/me
   introduction.md
   helium-integration.md
   swagger.yaml  # API documentation
+/pages/
 /public
   /images       # Logos, screenshots
+/storage
 /scripts
   deploy.ts     # Deployment scripts
   simulate_*.ts # Simulation scripts
