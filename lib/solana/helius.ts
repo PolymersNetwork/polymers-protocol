@@ -1,5 +1,3 @@
-// lib/solana/helius.ts
-
 import fetch from 'node-fetch';
 import { Connection } from '@solana/web3.js';
 
@@ -158,3 +156,4 @@ export class HeliusClient {
     return this.connection;
   }
 }
+
