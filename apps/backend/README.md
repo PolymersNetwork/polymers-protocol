@@ -1,6 +1,6 @@
 # Polymers Protocol Backend Developer Guide
 
-**Version**: 1.0.0  
+**Version**: 1.0.0 beta
 **Date**: September 28, 2025
 
 ---
@@ -19,7 +19,8 @@
 11. [Flowcharts & Architecture](#flowcharts--architecture)
 12. [Testing](#testing)
 13. [Best Practices](#best-practices)
-14. [Next Steps](#next-steps)
+14. [Quick Action Checklist](#quick-action-checklist)
+15. [Next Steps](#next-steps)
 
 ---
 
@@ -45,7 +46,7 @@ The **Polymers Protocol** is a Solana-based backend service that tracks recyclin
 
 - **Node.js** ≥ 20
 - **npm** ≥ 9 (or Yarn)
-- **PostgreSQL** ≥ 15 (or compatible database)
+- **PostgreSQL** ≥ 15 (supports JSON/array fields if needed)
 - **Solana CLI**: For local validator or Devnet testing
 - **Optional**: Mermaid CLI for diagram rendering (`npm install -g @mermaid-js/mermaid-cli`)
 
@@ -147,6 +148,7 @@ model Staking {
   | Paper     | 0.9        |
   | Aluminum  | 9.0        |
 - **Location**: `/services/esg.ts`
+- **Tip**: Cache emission factors to reduce lookups.
 
 ### 3. NFT Twin Staking Service
 - **Purpose**: Manages NFT Twin staking and reward calculations.
@@ -265,6 +267,7 @@ async function calculateRewards(connection: Connection, user: PublicKey, nftMint
 
 - **Mechanism**: Users stake NFT Twins (Metaplex NFTs) in a Solana program vault.
 - **Rewards**: Calculated daily, combining base PLY tokens and ESG-based bonuses.
+- **Security**: Validate staking requests with wallet signatures.
 - **Endpoints**:
   - `GET /nft-twins`: View staked NFTs and rewards.
   - `POST /nft-twins/stake`: Stake an NFT Twin.
@@ -287,14 +290,12 @@ async function calculateRewards(connection: Connection, user: PublicKey, nftMint
 
 ## Solana Program Details
 
-The Polymers Protocol leverages Solana programs for NFT Twin staking and optional ESG data logging. Below are the key programs, their account structures, and backend interactions.
+The Polymers Protocol leverages Solana programs for NFT Twin staking and optional ESG data logging.
 
 ### 1. Metaplex Token Metadata Program
 - **Program ID**: `metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s`
 - **Purpose**: Manages NFT Twin metadata (e.g., name, URI, collection).
-- **Usage**:
-  - Fetches NFT Twin details for staking and reward calculations.
-  - Verifies NFT ownership and collection.
+- **Usage**: Fetches NFT details for staking and verifies ownership/collection.
 - **Backend Interaction** (in `/services/nft.ts`):
   ```typescript
   import { Metaplex } from '@metaplex-foundation/js';
@@ -309,7 +310,7 @@ The Polymers Protocol leverages Solana programs for NFT Twin staking and optiona
 ### 2. Staking Program
 - **Program ID**: `<STAKING_PROGRAM_ID>` (configured in `.env`)
 - **Purpose**: Manages NFT Twin staking and reward calculations on-chain.
-- **Account Structure** (Rust, for reference):
+- **Account Structure** (Rust, Anchor framework):
   ```rust
   use anchor_lang::prelude::*;
 
@@ -324,8 +325,8 @@ The Polymers Protocol leverages Solana programs for NFT Twin staking and optiona
   ```
 - **Instructions**:
   - `stake_nft`: Locks NFT in a vault PDA and initializes `StakingAccount`.
-  - `claim_rewards`: Calculates and transfers PLY tokens based on staking duration and ESG points.
-  - `unstake_nft`: Releases NFT from vault and updates rewards.
+  - `claim_rewards`: Calculates and transfers PLY tokens.
+  - `unstake_nft`: Releases NFT and updates rewards.
 - **Backend Interaction** (in `/services/staking.ts`):
   ```typescript
   async function stakeNFT(connection: Connection, user: Keypair, nftMint: PublicKey, stakingProgramId: PublicKey) {
@@ -344,7 +345,7 @@ The Polymers Protocol leverages Solana programs for NFT Twin staking and optiona
 ### 3. ESG Logging Program (Optional)
 - **Program ID**: `<ESG_PROGRAM_ID>` (configured in `.env`)
 - **Purpose**: Logs carbon offsets and ESG points on-chain for transparency.
-- **Account Structure** (Rust, for reference):
+- **Account Structure** (Rust, Anchor framework):
   ```rust
   use anchor_lang::prelude::*;
 
@@ -357,8 +358,8 @@ The Polymers Protocol leverages Solana programs for NFT Twin staking and optiona
   }
   ```
 - **Instructions**:
-  - `update_esg`: Updates `ESGAccount` with new points and carbon offsets.
-  - `initialize_esg`: Creates a new `ESGAccount` for a user.
+  - `initialize_esg`: Creates a new `ESGAccount`.
+  - `update_esg`: Updates points and carbon offsets.
 - **Backend Interaction** (in `/services/esg.ts`):
   ```typescript
   async function logCarbonOffsetOnChain(connection: Connection, user: PublicKey, carbonOffset: number, programId: PublicKey, payer: Keypair) {
@@ -372,13 +373,13 @@ The Polymers Protocol leverages Solana programs for NFT Twin staking and optiona
   ```
 
 ### 4. Key Considerations
-- **Security**: Use Anchor framework for Solana programs to ensure safe PDA derivation and instruction validation.
+- **Security**: Use Anchor for safe PDA derivation and instruction validation.
 - **Performance**: Minimize on-chain writes by batching ESG updates or caching locally.
-- **Deployment**: Deploy programs to Devnet for testing, then Mainnet. Use `solana program deploy`.
-- **Dependencies**:
-  - `@solana/web3.js`: For blockchain interactions.
-  - `@metaplex-foundation/js`: For NFT operations.
-  - `anchor-lang` (Rust): For program development (if using Anchor).
+- **Deployment**: Deploy programs to Devnet, then Mainnet:
+  ```bash
+  solana program deploy <program.so> --url https://api.devnet.solana.com
+  ```
+- **Dependencies**: `@solana/web3.js`, `@metaplex-foundation/js`, `anchor-lang` (Rust).
 
 ---
 
@@ -515,6 +516,27 @@ erDiagram
     }
 ```
 
+### Solana Program Interaction
+![Solana Program Interaction](diagrams/solana.png)
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Backend
+    participant Database
+    participant Solana
+    User->>Backend: POST /smartbins
+    Backend->>Database: Store SmartBin data
+    Backend->>Database: Calculate & store carbon offset
+    Backend->>Solana: Log ESG data (optional)
+    User->>Backend: GET /esg
+    Backend->>Database: Fetch ESG points & offsets
+    Backend-->>User: Return ESG data
+    User->>Backend: POST /nft-twins/stake
+    Backend->>Solana: Stake NFT Twin
+    Backend->>Database: Update staking rewards with ESG
+```
+
 ---
 
 ## Testing
@@ -565,51 +587,75 @@ npm run dev:backend
 
 ---
 
+## Quick Action Checklist
+
+- [ ] Confirm `.env` variables and program IDs.
+- [ ] Run database migrations: `npx prisma migrate dev --name init`
+- [ ] Start backend: `npm run dev:backend`
+- [ ] Test SmartBin submission → ESG points → staking rewards.
+- [ ] Deploy Solana programs (Devnet → Mainnet):
+  ```bash
+  solana program deploy <program.so> --url https://api.devnet.solana.com
+  ```
+- [ ] Generate PDF guide with embedded diagrams.
+
+---
+
 ## Next Steps
 
 1. **Validate Configuration**: Ensure `.env` settings for `DATABASE_URL`, `SOLANA_RPC_URL`, and program IDs.
 2. **Test End-to-End**: Submit SmartBin data, verify ESG points, and check staking rewards.
-3. **Deploy Solana Programs**: Deploy staking and ESG programs to Devnet, then Mainnet:
-   ```bash
-   solana program deploy <program.so> --url https://api.devnet.solana.com
-   ```
+3. **Deploy**: Test on Solana Devnet, then deploy to Mainnet.
 4. **Generate PDF**: Create a visually rich PDF with embedded diagrams (see below).
 
 ---
 
 ## Generating the PDF Guide
 
-To create a visually rich PDF with embedded diagrams:
+To create a presentation-ready PDF with embedded diagrams:
 
 1. **Save Diagrams**:
-   - Use Mermaid CLI to generate images:
+   - Install Mermaid CLI:
      ```bash
      npm install -g @mermaid-js/mermaid-cli
-     mmdc -i README.md -o diagrams/workflow.png --scale 2
      ```
-   - Alternatively, use `mermaid.live` to export PNGs/SVGs for `workflow.png`, `architecture.png`, and `schema.png`.
+   - Generate images for each diagram:
+     ```bash
+     mmdc -i workflow.mmd -o diagrams/workflow.png --scale 2
+     mmdc -i architecture.mmd -o diagrams/architecture.png --scale 2
+     mmdc -i schema.mmd -o diagrams/schema.png --scale 2
+     mmdc -i solana.mmd -o diagrams/solana.png --scale 2
+     ```
+   - Alternatively, use `mermaid.live` to export PNGs/SVGs.
    - Save images in a `diagrams/` folder.
 
 2. **Convert to PDF**:
-   - **Pandoc**:
+   - **Pandoc** (simple):
      ```bash
      pandoc README.md -o README.pdf --pdf-engine=xelatex -V geometry:margin=1in
      ```
-   - **MkDocs**:
+   - **MkDocs** (professional styling):
      - Install: `pip install mkdocs mkdocs-material mkdocs-pdf-export-plugin`
      - Create `mkdocs.yml`:
        ```yaml
        site_name: Polymers Protocol Developer Guide
-       theme: material
+       theme:
+         name: material
+         palette:
+           primary: teal
        plugins:
          - pdf-export
        ```
      - Build and export: `mkdocs build && mkdocs serve`
-   - **Typora**: Open `README.md`, render Mermaid diagrams, and export to PDF.
+   - **Typora** (quick export):
+     - Open `README.md` in Typora.
+     - Render Mermaid diagrams (built-in support).
+     - Export to PDF via `File > Export > PDF`.
 
 3. **Polish**:
-   - Add a cover page with title, version, and date.
+   - Add a cover page with title, version, date, and optional logo.
    - Ensure diagrams are high-resolution and text is readable (e.g., Arial, 12pt).
+   - Include a table of contents (auto-generated by Pandoc/MkDocs).
 
 ---
 
@@ -620,3 +666,161 @@ To create a visually rich PDF with embedded diagrams:
 - Prisma: https://www.prisma.io/docs
 - GitHub: https://github.com/polymers-protocol/backend
 - Swagger: http://localhost:3001/swagger
+```
+
+---
+
+### LaTeX Template for Polished PDF
+
+For a professional PDF, you can use LaTeX to combine the Markdown content (converted to LaTeX via Pandoc) with a custom cover page and styling. Below is a sample LaTeX template to wrap the README content.
+
+```latex
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tocloft}
+\usepackage{titling}
+\usepackage{xcolor}
+
+\geometry{a4paper, margin=1in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={Polymers Protocol Backend Developer Guide},
+    pdfauthor={Polymers Protocol Team}
+}
+
+\title{Polymers Protocol Backend Developer Guide}
+\author{Polymers Protocol Team}
+\date{September 28, 2025}
+
+\begin{document}
+
+% Cover Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    % Optional: Add logo
+    % \includegraphics[width=0.5\textwidth]{logo.png}
+    \vspace{1cm}
+    {\Huge \textbf{\thetitle}\par}
+    \vspace{0.5cm}
+    {\Large Version 1.0.0\par}
+    \vspace{0.5cm}
+    {\large \thedate\par}
+    \vspace{1cm}
+    {\large \theauthor\par}
+    \vfill
+\end{titlepage}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Content (generated from Markdown)
+\section{Project Overview}
+% Paste Pandoc-converted LaTeX content here or include as a separate file
+% Example: \input{readme_content.tex}
+
+\section{Prerequisites}
+% Add sections manually or via Pandoc conversion
+
+% Include Diagrams
+\section{Flowcharts \& Architecture}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{diagrams/workflow.png}
+    \caption{Developer Workflow}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{diagrams/architecture.png}
+    \caption{Architecture Diagram}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{diagrams/schema.png}
+    \caption{Database Schema}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{diagrams/solana.png}
+    \caption{Solana Program Interaction}
+\end{figure}
+
+\end{document}
+```
+
+**Steps to Use LaTeX Template**:
+1. Save the LaTeX code as `guide.tex`.
+2. Convert `README.md` to LaTeX using Pandoc:
+   ```bash
+   pandoc README.md -o readme_content.tex
+   ```
+3. Include `readme_content.tex` in the LaTeX template (replace comment in `\section{Project Overview}`).
+4. Generate diagram images using Mermaid CLI and save in `diagrams/`.
+5. Compile the PDF:
+   ```bash
+   xelatex guide.tex
+   ```
+6. Add a logo (optional) by uncommenting the `\includegraphics` line and providing `logo.png`.
+
+---
+
+### Instructions for PDF Generation
+
+1. **Save the Markdown**:
+   - Copy the Markdown content into `README.md`.
+   - Create a `diagrams/` folder for images (`workflow.png`, `architecture.png`, `schema.png`, `solana.png`).
+
+2. **Generate Diagram Images**:
+   - Install Mermaid CLI:
+     ```bash
+     npm install -g @mermaid-js/mermaid-cli
+     ```
+   - Save each Mermaid code block as a `.mmd` file (e.g., `workflow.mmd`, `architecture.mmd`, `schema.mmd`, `solana.mmd`).
+   - Generate images:
+     ```bash
+     mmdc -i workflow.mmd -o diagrams/workflow.png --scale 2
+     mmdc -i architecture.mmd -o diagrams/architecture.png --scale 2
+     mmdc -i schema.mmd -o diagrams/schema.png --scale 2
+     mmdc -i solana.mmd -o diagrams/solana.png --scale 2
+     ```
+   - Alternatively, use `mermaid.live` to export PNGs/SVGs.
+
+3. **Convert to PDF**:
+   - **Pandoc** (simple):
+     ```bash
+     pandoc README.md -o README.pdf --pdf-engine=xelatex -V geometry:margin=1in
+     ```
+   - **MkDocs** (professional styling):
+     - Install: `pip install mkdocs mkdocs-material mkdocs-pdf-export-plugin`
+     - Use the provided `mkdocs.yml`.
+     - Build: `mkdocs build`
+     - Export PDF: Generated by `pdf-export` plugin.
+     - Preview: `mkdocs serve`
+   - **Typora** (quick export):
+     - Open `README.md` in Typora.
+     - Render Mermaid diagrams.
+     - Export to PDF via `File > Export > PDF`.
+   - **LaTeX** (polished):
+     - Save the LaTeX template as `guide.tex`.
+     - Convert Markdown to LaTeX: `pandoc README.md -o readme_content.tex`.
+     - Compile: `xelatex guide.tex`.
+
+4. **Polish the PDF**:
+   - Add a cover page with title, version, date, and optional logo.
+   - Ensure diagrams are high-resolution (use `--scale 2` in Mermaid CLI).
+   - Use Arial or similar font (12pt) for readability.
+   - Include a table of contents (auto-generated by Pandoc/MkDocs/LaTeX).
+
+---
+
+### Additional Notes
+- **New Diagram**: Added a **Solana Program Interaction** sequence diagram to visualize backend-Solana interactions, as suggested in your checklist.
+- **Styling**: The LaTeX template and MkDocs configuration use a clean, professional look (teal palette for MkDocs, Arial for LaTeX). Specify custom colors or fonts if desired.
+- **Logo**: A Polymers Protocol logo, add it to the LaTeX cover page or MkDocs theme.
+- **Optimization**: The checklist is integrated as a dedicated section for quick reference, aligning with your action-ready format.
