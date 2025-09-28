@@ -1,117 +1,102 @@
-import { Connection, Keypair, PublicKey, Transaction } from "@solana/web3.js";
-import { PolymersRaydiumClient } from "../polymers/raydiumClient";
-import { HeliusClient, WebhookConfig } from "../solana/helius";
+import { Connection, PublicKey, Keypair, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID, createTransferInstruction } from '@solana/spl-token';
+import PolymersRaydiumClient from '../solana/raydium';
+import BN from 'bn.js';
 
-// ---------------- Types ----------------
-export interface RewardRecipient {
-  user: string;        // recipient public key
-  amount: string;      // raw token amount (string for bignum safety)
-  tokenMint: string;   // token mint (PLY, SOL, etc.)
+// Environment setup
+const connection = new Connection(process.env.SOLANA_RPC_URL || 'https://api.devnet.solana.com', 'confirmed');
+const PLY_MINT_ADDRESS = process.env.PLY_MINT_ADDRESS || '';
+
+interface Recipient {
+  user: PublicKey;
+  nftMint: PublicKey;
 }
 
-export interface DistributorConfig {
-  connection: Connection;
-  heliusApiKey: string;
-  merchantWallet: string;
-  wallet: Keypair;
+interface StubReward {
+  rewards: BN;
+  instruction: TransactionInstruction;
 }
 
-// ---------------- Rewards Distributor ----------------
-export class RewardsDistributor {
-  private connection: Connection;
-  private raydium: PolymersRaydiumClient;
-  private helius: HeliusClient;
-  private merchantWallet: PublicKey;
+/**
+ * Devnet-ready PolymersRewardsDistributor stub
+ * Simulates claim → swap → distribute pipeline
+ */
+export class PolymersRewardsDistributor {
+  private wallet: Keypair;
+  private raydiumClient: PolymersRaydiumClient;
 
-  constructor(config: DistributorConfig) {
-    this.connection = config.connection;
-    this.raydium = new PolymersRaydiumClient(config.wallet);
-    this.helius = new HeliusClient({ apiKey: config.heliusApiKey });
-    this.merchantWallet = new PublicKey(config.merchantWallet);
+  constructor(wallet: Keypair) {
+    this.wallet = wallet;
+    this.raydiumClient = new PolymersRaydiumClient(wallet);
   }
 
   /**
-   * Claim staking rewards → swap → distribute
-   * All in one atomic transaction
+   * Claims rewards (stub), swaps SOL→PLY, distributes PLY to recipients.
+   * @param recipients Array of { user, nftMint }
+   * @param slippageBps Slippage tolerance (default: 50 = 0.5%)
+   * @returns Transaction signature
    */
-  async processRewards(recipients: RewardRecipient[]): Promise<string> {
-    // Step 1: claim staking rewards (stub — integrate your staking program)
-    // Example: await this.claimFromStakingProgram();
+  async claimSwapDistributeBatch(recipients: Recipient[], slippageBps: number = 50): Promise<string> {
+    if (recipients.length === 0) throw new Error('No recipients provided');
 
-    // Step 2: optimize by grouping by tokenMint
-    const grouped: Record<string, RewardRecipient[]> = {};
+    // Step 1: Stub claim rewards
+    const stubRewards: StubReward[] = recipients.map((r) => ({
+      rewards: new BN(1_000_000_000), // 1 SOL per recipient (mock)
+      instruction: new TransactionInstruction({
+        keys: [],
+        programId: new PublicKey('11111111111111111111111111111111'), // dummy
+        data: Buffer.alloc(0),
+      }),
+    }));
+
+    const totalSol = stubRewards.reduce((acc, r) => acc.add(r.rewards), new BN(0));
+
+    console.log(`💰 Total mock rewards to swap: ${totalSol.toString()} lamports`);
+
+    // Step 2: Swap total SOL to PLY via Raydium
+    const swapSignature = await this.raydiumClient.batchSwapSolToPly([totalSol.toString()], slippageBps);
+    console.log(`🔁 Mock swap executed, signature: ${swapSignature}`);
+
+    // Step 3: Distribute PLY equally to recipients
+    const plyMint = new PublicKey(PLY_MINT_ADDRESS);
+    const distributorPlyAccount = await getAssociatedTokenAddress(plyMint, this.wallet.publicKey);
+
+    const instructions: TransactionInstruction[] = [];
+    const signers: Keypair[] = [this.wallet];
+
+    const rewardPerRecipient = totalSol.div(new BN(recipients.length));
+
     for (const r of recipients) {
-      if (!grouped[r.tokenMint]) grouped[r.tokenMint] = [];
-      grouped[r.tokenMint].push(r);
+      const recipientPlyAccount = await getAssociatedTokenAddress(plyMint, r.user);
+
+      const transferIx = createTransferInstruction(
+        distributorPlyAccount,
+        recipientPlyAccount,
+        this.wallet.publicKey,
+        rewardPerRecipient
+      );
+
+      instructions.push(transferIx);
     }
 
-    // Step 3: build a single Solana transaction
-    const tx = new Transaction();
+    // Build transaction
+    const recentBlockhash = await connection.getLatestBlockhash('confirmed');
+    const tx = new Transaction({
+      recentBlockhash: recentBlockhash.blockhash,
+      feePayer: this.wallet.publicKey,
+    });
+    tx.add(...instructions);
 
-    for (const [tokenMint, group] of Object.entries(grouped)) {
-      // Example: merge swaps if all recipients need PLY
-      if (tokenMint !== "PLY") {
-        const totalAmount = group
-          .map(r => BigInt(r.amount))
-          .reduce((a, b) => a + b, BigInt(0));
+    tx.sign(signers);
+    const signature = await connection.sendTransaction(tx, signers, {
+      maxRetries: 3,
+      preflightCommitment: 'confirmed',
+    });
+    await connection.confirmTransaction(signature, 'confirmed');
 
-        const swapIx = await this.raydium.buildSwapIx({
-          fromMint: tokenMint,
-          toMint: "PLY",
-          amountIn: totalAmount.toString(),
-        });
-        tx.add(swapIx);
-      }
-
-      // Add transfers for each recipient
-      for (const r of group) {
-        const ix = await this.raydium.buildTransferIx({
-          to: new PublicKey(r.user),
-          mint: "PLY", // everything ends up as PLY
-          amount: r.amount,
-        });
-        tx.add(ix);
-      }
-    }
-
-    // Step 4: send atomic tx
-    const sig = await this.connection.sendTransaction(tx, [this.raydium.wallet]);
-    console.log(`✅ Rewards processed in tx: ${sig}`);
-    return sig;
-  }
-
-  // ---------------- Webhooks ----------------
-
-  async registerRewardWebhook(webhookUrl: string) {
-    const config: WebhookConfig = {
-      webhookURL: webhookUrl,
-      transactionTypes: ["TRANSFER", "NFT_SALE"],
-      webhookType: "enhanced",
-      authHeader: "Bearer my-webhook-secret",
-    };
-    return this.helius.createWebhook(config);
-  }
-
-  async listRewardWebhooks() {
-    return this.helius.listWebhooks();
-  }
-
-  /**
-   * Called by backend when Helius webhook fires
-   */
-  async handleWebhookEvent(payload: any) {
-    console.log("🔔 Received Helius webhook", payload);
-
-    if (payload.type === "TRANSFER" && payload.events?.stake) {
-      const recipients: RewardRecipient[] = payload.events.stake.map((evt: any) => ({
-        user: evt.user,
-        amount: evt.amount,
-        tokenMint: evt.tokenMint,
-      }));
-
-      return this.processRewards(recipients);
-    }
-
-    return null;
+    console.log(`✅ PLY distributed to recipients, signature: ${signature}`);
+    return signature;
   }
 }
+
+export default PolymersRewardsDistributor;
