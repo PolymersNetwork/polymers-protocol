@@ -9,240 +9,166 @@
 [![AR](https://img.shields.io/badge/Feature-AR_Navigation-00CED1)](https://docs.polymers.io/ar)
 [![ESG](https://img.shields.io/badge/Feature-ESG_Tracking-32CD32)](https://docs.polymers.io/esg)
 
-🌐 **Website & Dashboard Demo**: [https://poiymers-website.vercel.app](https://poiymers-website.vercel.app)
+## Overview
 
-Or in the Screenshots section, above the table:
+The **Polymers Protocol** is a **Blockchain-as-a-Service (BaaS)** platform built on **Solana**, powering **SmartBin**, a next-generation waste management system. It integrates **Helium’s Decentralized Physical Infrastructure Network (DePIN)** for IoT connectivity, **Hivemapper’s Map Data APIs** for real-time geospatial validation, and **AI-driven analytics** for ESG tracking and predictive insights. The protocol incentivizes sustainable waste management through token rewards (HNT, IOT, PLY, CARB, EWASTE, HONEY) and provides ESG analytics for municipalities and enterprises.
 
-Check out the live **Website & Dashboard Demo** here: [https://poiymers-website.vercel.app](https://poiymers-website.vercel.app)
+🌐 **Live Demo**: Check out the [Website & Dashboard](https://polymers-website.vercel.app).
 
-## Screenshots
+This repository contains the code, scripts, and documentation for developing, testing, and deploying the Polymers Protocol. For a detailed introduction, see [/docs/introduction.md](./docs/introduction.md). For advanced setup and integration, see [/docs/helium-integration.md](./docs/helium-integration.md).
+
+### Screenshots
 
 | **Web Dashboard** | **Mobile App** | **SmartBin Map / AR** |
 |--------------------|----------------|-----------------------|
-| ![Web Dashboard](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/polymers-protocol/repo/main/public/images/smartbin-map.png) |
+| ![Web Dashboard](https://raw.githubusercontent.com/polymers-protocol/polymers/main/public/images/web-dashboard.png) | ![Mobile App](https://raw.githubusercontent.com/polymers-protocol/polymers/main/public/images/mobile-app.png) | ![SmartBin Map](https://raw.githubusercontent.com/polymers-protocol/polymers/main/public/images/smartbin-map.png) |
 | Analytics, NFT Twins, ESG | Wallet, AI Chat, Scan-to-Pay | Real-time AR navigation |
-
-Polymers Protocol is a blockchain-as-a-service platform integrating Solana blockchain, IoT, DePin, and ESG solutions. It is a blockchain-powered, AI-driven platform for polymer and e-waste recycling, enabling supply chain transparency, ESG tracking, and gamified incentives.
-
-**The BaaS platform provides seamless solutions for:**
-
-	•	Wallet Management – Easy token swaps, balance tracking, and Solana Pay integration
-	•	NFT Twins – Blockchain-based batch tracking for materials and ESG compliance
-	•	Payments & Rewards – Instant token rewards for recycling activities
-	•	Recycling Analytics – Predictive insights using AI and LSTM models
-	•	AI Assistance – Chat-based operational and ESG guidance
-	•	SmartBin Integration – IoT-enabled bins with real-time telemetry and automated rewards
-
----
 
 ## Table of Contents
 
-- [Screenshots](#screenshots)
+- [Overview](#overview)
+  - [Screenshots](#screenshots)
 - [Features](#features)
-- [Dashboard Pages](#dashboard-pages)
-- [Mobile Screens](#mobile-screens)
+- [Quickstart](#quickstart)
 - [API Examples](#api-examples)
-- [Helium/DePIN Integration](#heliumdepin-integration)
 - [Monorepo Structure](#monorepo-structure)
-- [Environment Variables](#environment-variables)
-- [Installation](#installation)
-- [Supabase Setup](#supabase-setup)
-- [Usage](#usage)
-- [AI Chat Billing](#ai-chat-billing)
-- [Blockchain & DeFi Integration](#blockchain--defi-integration)
-- [Backend API & MCP](#backend-api--mcp)
 - [Contributing](#contributing)
-- [Swagger API](#swagger-api)
+- [Resources](#resources)
 - [License](#license)
-
----
 
 ## Features
 
-<details>
-<summary><strong>Wallet & Token Management 💸</strong></summary>
+- **SmartBins**: IoT-enabled bins monitoring fill levels, contamination, weight, and temperature via Helium LoRaWAN (~$0.00001 per 24KB).
+- **Wallet & Token Management**: Supports Phantom, Solflare, Backpack, Privy, embedded wallets, and biometric fallback for SOL, PLY, CARB, USDC.
+- **NFT Twins**: Blockchain-based batch tracking with staking, evolution, and gamified rewards via Metaplex.
+- **Payments & Token Swap**: Instant payments and swaps via Solana Pay, Jupiter, Raydium, and Blinks with QR/NFC or manual fallback.
+- **Recycling & ESG**: Track plastic collected, CO2 reduction, and city-level leaderboards with exportable reports.
+- **AI Chat**: GPT-powered assistance with PLY token billing (10 free messages, 100,000 PLY for 10 more) and saved prompts.
+- **AR Navigation**: Hivemapper and Mapbox-powered AR for SmartBin location, with offline caching and static image fallback.
+- **Analytics**: LSTM models for predictive fill level forecasting and route optimization, integrated with Supabase.
 
-- Supports **Phantom**, **Solflare**, **Backpack**, **Privy**, embedded wallet, and biometric fallback  
-- Manage **SOL**, **PLY**, **CARB**, **USDC** tokens  
-- Staking and NFT Twin rewards  
-- Automatic updates post-blockchain actions  
+For details, see [AI Chat](https://docs.polymers.io/ai), [AR Navigation](https://docs.polymers.io/ar), and [ESG Tracking](https://docs.polymers.io/esg).
 
-</details>
+## Quickstart
 
-<details>
-<summary><strong>NFT Twins 🖼️</strong></summary>
+### Prerequisites
+- **Node.js**: v20+.
+- **Solana CLI**: v1.18+ (`npm install -g @solana/cli`).
+- **Helium CLI**: v2.0+ (`npm install -g @helium/cli`).
+- **Supabase CLI**: For telemetry database.
+- **Hivemapper Account**: API keys from [hivemapper.com/map-data-console](https://hivemapper.com/map-data-console).
+- **Phantom Wallet**: For Solana transactions.
 
-- Staking, evolution, gamification, and reward claiming  
-- Rewards linked to token issuance  
+### Installation
+1. **Clone Repository**:
+   ```bash
+   git clone https://github.com/PolymersNetwork/polymers-protocol
+   cd polymers-protocol
+   npm install
+   ```
 
-</details>
+2. **Set Up Environment**:
+   Create `.env` with:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=https://<your-supabase-url>
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
+   RPC_URL=https://api.mainnet-beta.solana.com
+   SOLANA_PRIVATE_KEY=<base58-private-key>
+   HIVEMAPPER_API_KEY=<your-hivemapper-api-key>
+   HELIUM_HOTSPOT_ADDRESS=<your_hotspot_address>
+   PLY_MINT=PLYKdaCUgxTUw6rSjWbgSN97Qtecb6Fy6SazWf1tvAC
+   CARB_MINT=<carb_mint_address>
+   EWASTE_MINT=<ewaste_mint_address>
+   HONEY_MINT=<honey_mint_address>
+   REWARD_WALLET_ADDRESS=<reward_wallet_address>
+   ```
 
-<details>
-<summary><strong>AI Chat 🤖</strong></summary>
+3. **Supabase Setup**:
+   - Create tables: `Users`, `Wallets`, `NFTTwins`, `Staking`, `Transactions`, `ESG`, `Payments`, `Donations`, `SmartBins`, `SavedPrompts`, `Recycling`, `Swap`.
+   - Run migrations and seed data from `/app/data/sample-data.ts`.
 
-- GPT-powered chat with **PLY token billing**  
-- Free: 10 messages per user  
-- Additional: 10 messages = 100,000 PLY  
-- Saved prompts with quick-insert functionality  
+4. **Run Local Simulations**:
+   Test SmartBin workflows without hardware:
+   ```bash
+   npm run simulate:iot
+   npm run simulate:hivemapper
+   npm run simulate:rewards
+   npm run test:lstm
+   npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
+   ```
+   See [/docs/helium-integration.md#local-simulation-and-testing](./docs/helium-integration.md#local-simulation-and-testing).
 
-</details>
+5. **Deploy to Devnet**:
+   ```bash
+   anchor deploy --provider.cluster devnet
+   ```
 
-<details>
-<summary><strong>Payments & Token Swap 💱</strong></summary>
+### Quickstart Flowchart
+```mermaid
+graph TD
+    A[Start: New Contributor] -->|Check Prerequisites| B{Node.js, Solana CLI, <br>Helium CLI, Supabase CLI, <br>Hivemapper Account, Phantom Wallet?}
+    B -->|No| C[Install Prerequisites]
+    C -->|Run npm install -g| D[Clone Repository]
+    B -->|Yes| D[Clone Repository]
+    D -->|Run git clone| E[Install Dependencies]
+    E -->|Run npm install| F[Set Up .env]
+    F -->|Configure API keys| G{Simulations Ready?}
+    G -->|Run npm run simulate:*| H[Run Simulations]
+    H --> I[Telemetry: simulate:iot]
+    H --> J[Hivemapper: simulate:hivemapper]
+    H --> K[Rewards: simulate:rewards]
+    H --> L[Analytics: test:lstm]
+    H --> M[OTA: ota:deploy]
+    I --> N{Simulations Successful?}
+    J --> N
+    K --> N
+    L --> N
+    M --> N
+    N -->|Yes| O[Deploy to Devnet]
+    N -->|No| P[Check Logs, Fix Errors]
+    P --> H
+    O -->|Run anchor deploy| Q[End: Devnet Deployed]
+    style A fill:#f9f,stroke:#333
+    style C fill:#f9f,stroke:#333
+    style D fill:#f9f,stroke:#333
+    style E fill:#f9f,stroke:#333
+    style F fill:#f9f,stroke:#333
+    style H fill:#cff,stroke:#333
+    style I fill:#cff,stroke:#333
+    style J fill:#cff,stroke:#333
+    style K fill:#cff,stroke:#333
+    style L fill:#cff,stroke:#333
+    style M fill:#cff,stroke:#333
+    style O fill:#9f9,stroke:#333
+    style Q fill:#9f9,stroke:#333
+```
 
-- Token swaps via **Jupiter** and **Raydium**  
-- Payments with **SOL**, **PLY**, **CARB**, **USDC**, or **Blinks**  
-- QR/NFC scan-to-pay with manual fallback  
-
-</details>
-
-<details>
-<summary><strong>Recycling & ESG ♻️</strong></summary>
-
-- Track recycled items, CO2 reduction, and plastic collected  
-- City-level dashboards and leaderboards  
-
-</details>
-
-<details>
-<summary><strong>Transactions 📜</strong></summary>
-
-- Paginated, sortable transaction history  
-- Wallet-specific views  
-
-</details>
-
-<details>
-<summary><strong>SmartBins / IoT / AR 📍</strong></summary>
-
-- Real-time maps with **AR navigation**  
-- Offline caching and synchronization  
-- Telemetry and device status monitoring  
-
-</details>
-
-<details>
-<summary><strong>Offline & Fallbacks 🔌</strong></summary>
-
-- Wallet: Embedded → Privy → Biometric  
-- Map: AR → Mapbox → Static images  
-- Scanning: QR/NFC → Manual input  
-
-</details>
-
----
-
-## Dashboard Pages
-
-<details>
-<summary><strong>Analytics Dashboard 📊</strong></summary>
-
-- Real-time metrics for recycling, CO2 reduction, and token flows  
-- Visualizations: Charts, graphs, and leaderboards  
-- Filters for time range and wallet-specific data  
-
-</details>
-
-<details>
-<summary><strong>NFT Twins Dashboard 🖼️</strong></summary>
-
-- View, stake, and evolve NFT Twins  
-- Track rewards and gamification progress  
-- Integration with **Metaplex** for NFT management  
-
-</details>
-
-<details>
-<summary><strong>ESG Dashboard ♻️</strong></summary>
-
-- City-level ESG metrics (CO2, plastic collected)  
-- Leaderboards for recycling contributions  
-- Exportable reports for compliance  
-
-</details>
-
-<details>
-<summary><strong>SmartBins Dashboard 📍</strong></summary>
-
-- Real-time map of SmartBin locations  
-- Telemetry data: Fill levels, device status  
-- AR navigation toggle  
-
-</details>
-
----
-
-## Mobile Screens
-
-<details>
-<summary><strong>Wallet Management 💸</strong></summary>
-
-- View balances for **SOL**, **PLY**, **CARB**, **USDC**  
-- Stake NFTs and claim rewards  
-- Switch between wallets (Phantom, Solflare, etc.)  
-
-</details>
-
-<details>
-<summary><strong>AI Chat 🤖</strong></summary>
-
-- Chat interface with GPT-powered responses  
-- View message quotas and PLY billing  
-- Access saved prompts  
-
-</details>
-
-<details>
-<summary><strong>Scan-to-Pay 💳</strong></summary>
-
-- QR/NFC scanning for payments  
-- Manual input fallback  
-- Supports **Solana Pay** and **Blinks**  
-
-</details>
-
-<details>
-<summary><strong>AR SmartBin Navigation 🗺️</strong></summary>
-
-- AR-powered navigation to nearby SmartBins  
-- Fallback to **Mapbox** or static images  
-- Offline caching for map data  
-
-</details>
-
-<details>
-<summary><strong>ESG Dashboard ♻️</strong></summary>
-
-- Mobile-optimized ESG metrics  
-- Track personal recycling contributions  
-- View city-level leaderboards  
-
-</details>
-
----
+### Developer Notes
+- **Prerequisites**: Install dependencies before cloning to avoid failures:
+  ```bash
+  npm install -g @solana/cli @helium/cli supabase
+  ```
+- **Environment**: Secure `SOLANA_PRIVATE_KEY` and API keys in a secrets manager (e.g., Doppler). Verify addresses in `.env` to prevent telemetry or reward issues.
+- **Simulations**: Run all simulations before deployment to validate workflows. Use `/scripts/sample_data/sample_telemetry.json` for reproducible tests. See [/docs/helium-integration.md#local-simulation-and-testing](./docs/helium-integration.md#local-simulation-and-testing).
+- **OTA Updates**: Test on a simulated bin first:
+  ```bash
+  npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
+  ```
+  See [/docs/helium-integration.md#ota-firmware-management](./docs/helium-integration.md#ota-firmware-management).
+- **Rewards**: Verify token mints and Solana Pay configs in `/api/wallet/swap.ts`. Test thresholds (e.g., ESG score > 0.5, Hivemapper coverage > 0.8) with `/scripts/simulate_rewards.ts`. See [/docs/helium-integration.md#rewards-integration](./docs/helium-integration.md#rewards-integration).
+- **API Testing**: Test endpoints locally using [Swagger Docs](https://api.polymers.io/swagger) with a valid `Authorization: Bearer <your-token>`.
+- **Troubleshooting**: Check Supabase logs or console output for simulation failures. Refer to [/docs/helium-integration.md#troubleshooting-and-best-practices](./docs/helium-integration.md#troubleshooting-and-best-practices).
 
 ## API Examples
 
-Below are example API calls for the Polymers Protocol endpoints. All requests require an `Authorization: Bearer <your-token>` header for authentication. Optional query parameters and error responses are included where applicable.
+All requests require `Authorization: Bearer <your-token>`. Test endpoints via [Swagger Docs](https://api.polymers.io/swagger).
 
-<details>
-<summary><strong>GET /users</strong></summary>
-
-Retrieve a list of users or a specific user’s details.
-
-**Request Parameters**:  
-| Parameter | Type | Description | Required | Example |
-|-----------|------|-------------|----------|---------|
-| `wallet` | String | Filter by wallet address | Optional | `5Hb...xYz` |
-| `limit` | Integer | Number of users to return | Optional | `10` |
-
-**Request**:  
+### GET /users
+Retrieve user details.
 ```bash
-curl -X GET "https://api.polymers.io/users?wallet=5Hb...xYz&limit=10" \
--H "Authorization: Bearer <your-token>"
+curl -X GET "https://api.polymersprotocol.org/users?wallet=5Hb...xYz&limit=10" -H "Authorization: Bearer <your-token>"
 ```
-
-**Success Response (200)**:  
+**Response (200)**:
 ```json
 {
   "users": [
@@ -257,39 +183,12 @@ curl -X GET "https://api.polymers.io/users?wallet=5Hb...xYz&limit=10" \
 }
 ```
 
-**Error Response (401)**:  
-```json
-{
-  "error": "Unauthorized",
-  "message": "Invalid or missing authorization token",
-  "statusCode": 401
-}
-```
-
-</details>
-
-<details>
-<summary><strong>POST /transactions</strong></summary>
-
-Create a new transaction (e.g., token transfer or payment).
-
-**Request Body**:  
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `wallet` | String | Sender wallet address | Yes |
-| `amount` | Number | Transaction amount | Yes |
-| `token` | String | Token type (SOL, PLY, CARB, USDC) | Yes |
-| `recipient` | String | Recipient wallet address | Yes |
-
-**Request**:  
+### POST /transactions
+Create a token transfer.
 ```bash
-curl -X POST https://api.polymers.io/transactions \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","amount":100,"token":"PLY","recipient":"7Jk...aBc"}'
+curl -X POST https://api.polymersprotocol.org/transactions -H "Authorization: Bearer <your-token>" -H "Content-Type: application/json" -d '{"wallet":"5Hb...xYz","amount":100,"token":"PLY","recipient":"7Jk...aBc"}'
 ```
-
-**Success Response (201)**:  
+**Response (201)**:
 ```json
 {
   "transactionId": "txn_456",
@@ -301,35 +200,12 @@ curl -X POST https://api.polymers.io/transactions \
 }
 ```
 
-**Error Response (400)**:  
-```json
-{
-  "error": "Bad Request",
-  "message": "Invalid token type",
-  "statusCode": 400
-}
-```
-
-</details>
-
-<details>
-<summary><strong>GET /nft-twins</strong></summary>
-
-Retrieve a user’s NFT Twins and their staking/reward status.
-
-**Request Parameters**:  
-| Parameter | Type | Description | Required | Example |
-|-----------|------|-------------|----------|---------|
-| `wallet` | String | Filter by owner wallet | Yes | `5Hb...xYz` |
-| `staked` | Boolean | Filter by staking status | Optional | `true` |
-
-**Request**:  
+### GET /nft-twins
+Retrieve NFT Twins.
 ```bash
-curl -X GET "https://api.polymers.io/nft-twins?wallet=5Hb...xYz&staked=true" \
--H "Authorization: Bearer <your-token>"
+curl -X GET "https://api.polymersprotocol.org/nft-twins?wallet=5Hb...xYz&staked=true" -H "Authorization: Bearer <your-token>"
 ```
-
-**Success Response (200)**:  
+**Response (200)**:
 ```json
 {
   "nfts": [
@@ -345,40 +221,12 @@ curl -X GET "https://api.polymers.io/nft-twins?wallet=5Hb...xYz&staked=true" \
 }
 ```
 
-**Error Response (404)**:  
-```json
-{
-  "error": "Not Found",
-  "message": "No NFTs found for wallet",
-  "statusCode": 404
-}
-```
-
-</details>
-
-<details>
-<summary><strong>POST /payments</strong></summary>
-
-Initiate a payment using Solana Pay or Blinks.
-
-**Request Body**:  
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `wallet` | String | Sender wallet address | Yes |
-| `amount` | Number | Payment amount | Yes |
-| `token` | String | Token type (SOL, PLY, CARB, USDC) | Yes |
-| `method` | String | Payment method (solana-pay, blinks) | Yes |
-| `recipient` | String | Recipient wallet address | Yes |
-
-**Request**:  
+### POST /payments
+Initiate a payment.
 ```bash
-curl -X POST https://api.polymers.io/payments \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","amount":50,"token":"USDC","method":"solana-pay","recipient":"7Jk...aBc"}'
+curl -X POST https://api.polymersprotocol.org/payments -H "Authorization: Bearer <your-token>" -H "Content-Type: application/json" -d '{"wallet":"5Hb...xYz","amount":50,"token":"USDC","method":"solana-pay","recipient":"7Jk...aBc"}'
 ```
-
-**Success Response (201)**:  
+**Response (201)**:
 ```json
 {
   "paymentId": "pay_123",
@@ -390,35 +238,12 @@ curl -X POST https://api.polymers.io/payments \
 }
 ```
 
-**Error Response (500)**:  
-```json
-{
-  "error": "Internal Server Error",
-  "message": "Failed to process payment",
-  "statusCode": 500
-}
-```
-
-</details>
-
-<details>
-<summary><strong>GET /esg</strong></summary>
-
-Retrieve ESG metrics for a user or city.
-
-**Request Parameters**:  
-| Parameter | Type | Description | Required | Example |
-|-----------|------|-------------|----------|---------|
-| `wallet` | String | Filter by user wallet | Optional | `5Hb...xYz` |
-| `city` | String | Filter by city name | Optional | `NewYork` |
-
-**Request**:  
+### GET /esg
+Retrieve ESG metrics.
 ```bash
-curl -X GET "https://api.polymers.io/esg?wallet=5Hb...xYz" \
--H "Authorization: Bearer <your-token>"
+curl -X GET "https://api.polymersprotocol.org/esg?wallet=5Hb...xYz" -H "Authorization: Bearer <your-token>"
 ```
-
-**Success Response (200)**:  
+**Response (200)**:
 ```json
 {
   "esg": {
@@ -431,44 +256,18 @@ curl -X GET "https://api.polymers.io/esg?wallet=5Hb...xYz" \
 }
 ```
 
-**Error Response (400)**:  
-```json
-{
-  "error": "Bad Request",
-  "message": "Missing wallet or city parameter",
-  "statusCode": 400
-}
-```
-
-</details>
-
-<details>
-<summary><strong>GET /smartbins</strong></summary>
-
-Fetch real-time SmartBin data, including location and telemetry.
-
-**Request Parameters**:  
-| Parameter | Type | Description | Required | Example |
-|-----------|------|-------------|----------|---------|
-| `city` | String | Filter by city name | Optional | `NewYork` |
-| `status` | String | Filter by bin status (operational, full) | Optional | `operational` |
-
-**Request**:  
+### GET /smartbins
+Fetch SmartBin data.
 ```bash
-curl -X GET "https://api.polymers.io/smartbins?city=NewYork&status=operational" \
--H "Authorization: Bearer <your-token>"
+curl -X GET "https://api.polymersprotocol.org/smartbins?city=NewYork&status=operational" -H "Authorization: Bearer <your-token>"
 ```
-
-**Success Response (200)**:  
+**Response (200)**:
 ```json
 {
   "smartbins": [
     {
       "id": "bin_456",
-      "location": {
-        "lat": 40.7128,
-        "lng": -74.0060
-      },
+      "location": { "lat": 40.7128, "lng": -74.0060 },
       "fillLevel": 75,
       "status": "operational",
       "lastUpdated": "2025-09-26T08:06:00Z"
@@ -477,37 +276,12 @@ curl -X GET "https://api.polymers.io/smartbins?city=NewYork&status=operational" 
 }
 ```
 
-**Error Response (404)**:  
-```json
-{
-  "error": "Not Found",
-  "message": "No SmartBins found for specified city",
-  "statusCode": 404
-}
-```
-
-</details>
-
-<details>
-<summary><strong>POST /ai-agents</strong></summary>
-
-Send a message to the AI chat agent and receive a response.
-
-**Request Body**:  
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `wallet` | String | User wallet address | Yes |
-| `message` | String | User input message | Yes |
-
-**Request**:  
+### POST /ai-agents
+Send a message to the AI chat.
 ```bash
-curl -X POST https://api.polymers.io/ai-agents \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","message":"What is my recycling impact?"}'
+curl -X POST https://api.polymersprotocol.org/ai-agents -H "Authorization: Bearer <your-token>" -H "Content-Type: application/json" -d '{"wallet":"5Hb...xYz","message":"What is my recycling impact?"}'
 ```
-
-**Success Response (201)**:  
+**Response (201)**:
 ```json
 {
   "messageId": "msg_789",
@@ -517,442 +291,58 @@ curl -X POST https://api.polymers.io/ai-agents \
 }
 ```
 
-**Error Response (429)**:  
-```json
-{
-  "error": "Too Many Requests",
-  "message": "Message quota exceeded. Purchase more with PLY tokens.",
-  "statusCode": 429
-}
-```
-
-</details>
-
-<details>
-<summary><strong>POST /donations</strong></summary>
-
-Create a donation transaction for ESG initiatives.
-
-**Request Body**:  
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `wallet` | String | Donor wallet address | Yes |
-| `amount` | Number | Donation amount | Yes |
-| `token` | String | Token type (SOL, PLY, CARB, USDC) | Yes |
-| `cause` | String | Donation cause (e.g., ocean_cleanup) | Yes |
-
-**Request**:  
-```bash
-curl -X POST https://api.polymers.io/donations \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","amount":200,"token":"CARB","cause":"ocean_cleanup"}'
-```
-
-**Success Response (201)**:  
-```json
-{
-  "donationId": "don_101",
-  "status": "confirmed",
-  "amount": 200,
-  "token": "CARB",
-  "cause": "ocean_cleanup",
-  "timestamp": "2025-09-26T08:06:00Z"
-}
-```
-
-**Error Response (400)**:  
-```json
-{
-  "error": "Bad Request",
-  "message": "Invalid cause specified",
-  "statusCode": 400
-}
-```
-
-</details>
-
-<details>
-<summary><strong>GET /recycling</strong></summary>
-
-Retrieve recycling history for a user.
-
-**Request Parameters**:  
-| Parameter | Type | Description | Required | Example |
-|-----------|------|-------------|----------|---------|
-| `wallet` | String | Filter by user wallet | Yes | `5Hb...xYz` |
-| `startDate` | String | Filter by start date (ISO) | Optional | `2025-09-01` |
-
-**Request**:  
-```bash
-curl -X GET "https://api.polymers.io/recycling?wallet=5Hb...xYz&startDate=2025-09-01" \
--H "Authorization: Bearer <your-token>"
-```
-
-**Success Response (200)**:  
-```json
-{
-  "recycling": [
-    {
-      "id": "rec_202",
-      "wallet": "5Hb...xYz",
-      "item": "plastic_bottle",
-      "weight": 0.5,
-      "timestamp": "2025-09-25T10:00:00Z"
-    }
-  ]
-}
-```
-
-**Error Response (404)**:  
-```json
-{
-  "error": "Not Found",
-  "message": "No recycling records found for wallet",
-  "statusCode": 404
-}
-```
-
-</details>
-
-<details>
-<summary><strong>POST /swap</strong></summary>
-
-Perform a token swap via Jupiter or Raydium.
-
-**Request Body**:  
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `wallet` | String | User wallet address | Yes |
-| `fromToken` | String | Source token (SOL, PLY, CARB, USDC) | Yes |
-| `toToken` | String | Target token (SOL, PLY, CARB, USDC) | Yes |
-| `amount` | Number | Amount to swap | Yes |
-
-**Request**:  
-```bash
-curl -X POST https://api.polymers.io/swap \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","fromToken":"SOL","toToken":"PLY","amount":1.5}'
-```
-
-**Success Response (201)**:  
-```json
-{
-  "swapId": "swp_303",
-  "status": "completed",
-  "fromAmount": 1.5,
-  "toAmount": 150000,
-  "fromToken": "SOL",
-  "toToken": "PLY",
-  "timestamp": "2025-09-26T08:06:00Z"
-}
-```
-
-**Error Response (400)**:  
-```json
-{
-  "error": "Bad Request",
-  "message": "Insufficient balance for swap",
-  "statusCode": 400
-}
-```
-
-</details>
-
-<details>
-<summary><strong>PUT /settings</strong></summary>
-
-Update user settings (e.g., wallet preferences, notifications).
-
-**Request Body**:  
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `wallet` | String | User wallet address | Yes |
-| `defaultWallet` | String | Preferred wallet (Phantom, Solflare, etc.) | Optional |
-| `notifications` | Object | Notification preferences | Optional |
-
-**Request**:  
-```bash
-curl -X PUT https://api.polymers.io/settings \
--H "Authorization: Bearer <your-token>" \
--H "Content-Type: application/json" \
--d '{"wallet":"5Hb...xYz","defaultWallet":"Phantom","notifications":{"email":true}}'
-```
-
-**Success Response (200)**:  
-```json
-{
-  "userId": "user_123",
-  "settings": {
-    "defaultWallet": "Phantom",
-    "notifications": {
-      "email": true
-    }
-  },
-  "updatedAt": "2025-09-26T08:06:00Z"
-}
-```
-
-**Error Response (400)**:  
-```json
-{
-  "error": "Bad Request",
-  "message": "Invalid wallet address",
-  "statusCode": 400
-}
-```
-
-</details>
-
-<details>
-<summary><strong>GET /messages</strong></summary>
-
-Retrieve a user’s AI chat message history.
-
-**Request Parameters**:  
-| Parameter | Type | Description | Required | Example |
-|-----------|------|-------------|----------|---------|
-| `wallet` | String | Filter by user wallet | Yes | `5Hb...xYz` |
-| `limit` | Integer | Number of messages to return | Optional | `20` |
-
-**Request**:  
-```bash
-curl -X GET "https://api.polymers.io/messages?wallet=5Hb...xYz&limit=20" \
--H "Authorization: Bearer <your-token>"
-```
-
-**Success Response (200)**:  
-```json
-{
-  "messages": [
-    {
-      "id": "msg_789",
-      "wallet": "5Hb...xYz",
-      "prompt": "What is my recycling impact?",
-      "response": "You’ve recycled 25.5kg of plastic, reducing CO2 by 10.2kg!",
-      "timestamp": "2025-09-26T08:06:00Z"
-    }
-  ]
-}
-```
-
-**Error Response (404)**:  
-```json
-{
-  "error": "Not Found",
-  "message": "No messages found for wallet",
-  "statusCode": 404
-}
-```
-
-</details>
-
----
-
-## Helium/DePIN Integration 📡
-
-The Polymers Protocol leverages **Helium's DePIN** for low-cost, decentralized IoT connectivity, particularly for **SmartBin telemetry** and **AR navigation**. Helium's LoRaWAN network and Solana integration enable scalable, real-time data ingestion and rewards in HNT tokens.
-
-### Key Features
-- **LoRaWAN Telemetry**: SmartBins transmit fill levels and status via Helium's low-power network, reducing costs by 90% compared to cellular.
-- **AR Navigation**: Helium coverage maps enhance Hivemapper's real-time imagery for precise AR overlays.
-- **HNT Rewards**: Users earn HNT for deploying hotspots near bins, integrated with NFT Twin staking.
-
-### Code Snippets
-1. **Ingest SmartBin Telemetry** (Backend `/api/smartbins`):
-   ```javascript
-   import { Helium } from '@helium/sdk';
-   import { Connection } from '@solana/web3.js';
-
-   const helium = new Helium({ rpc: 'https://api.mainnet-beta.solana.com' });
-   const connection = new Connection('https://api.mainnet-beta.solana.com');
-
-   async function ingestBinTelemetry(binId, fillLevel) {
-     const payload = { binId, fillLevel, timestamp: new Date().toISOString() };
-     const oracleTx = await helium.oracles.submitData(payload);
-     const sig = await connection.sendTransaction(oracleTx);
-     // Save to Supabase
-     await supabase.from('SmartBins').upsert({ id: binId, fillLevel });
-     return sig;
-   }
-   ```
-
-2. **AR Navigation with Helium Coverage** (Mobile App):
-   ```javascript
-   import { Helium } from '@helium/sdk';
-   import MapboxGL from '@react-native-mapbox-gl/maps';
-
-   const helium = new Helium({ rpc: 'https://api.mainnet-beta.solana.com' });
-
-   async function renderARMap(lat, lng) {
-     const coverage = await helium.hotspots.getCoverage(lat, lng);
-     if (coverage.available) {
-       // Use Hivemapper tiles for AR overlay
-       const tiles = await fetchHivemapperTiles(lat, lng, 18);
-       // Render AR with Mapbox
-       return <MapboxGL.MapView tiles={tiles} />;
-     }
-     // Fallback to static Mapbox images
-     return <MapboxGL.MapView tiles="static" />;
-   }
-   ```
-
-3. **HNT Rewards for Hotspot Deployment**:
-   ```javascript
-   import { Helium } from '@helium/sdk';
-   import { PublicKey } from '@solana/web3.js';
-
-   async function claimHNTRewards(wallet) {
-     const hotspotKey = new PublicKey('hotspot-pubkey');
-     const rewardTx = await helium.hotspots.claimRewards(hotspotKey, wallet);
-     const sig = await connection.sendTransaction(rewardTx);
-     return sig; // HNT credited to wallet
-   }
-   ```
-
-For more, see [Helium Developer Portal](https://docs.helium.com/).
-
----
+For additional endpoints (`/donations`, `/recycling`, `/swap`, `/settings`, `/messages`), see [Swagger Docs](https://api.polymersprotocol.org/swagger).
 
 ## Monorepo Structure
 
 ```
 /apps
-  /web          # Web Dashboard (Next.js)
-  /mobile       # React Native / Expo Mobile App
-  /backend      # Fastify / MCP Backend API
-  /shared       # Shared components, hooks, types, constants
+  /web          # Next.js Web Dashboard
+  /mobile       # React Native/Expo Mobile App
+  /backend      # Fastify/MCP Backend API
+  /shared       # Shared components, hooks, types
 /app/data       # Sample data and seeding
-/lib            # Blockchain: Solana, SUI, Helium/DePIN, Metaplex, Jupiter, Raydium, Solana Pay
+/lib            # Solana, Helium, Hivemapper, Metaplex, Jupiter, Raydium
 /hooks          # React hooks for dashboard/mobile
-/context        # WalletContext, UserContext, AIProvider, ESGContext, PaymentsContext
+/context        # WalletContext, UserContext, AIProvider, ESGContext
 /constants      # Colors, tokens, API endpoints
 /utils          # Utility functions
 /api            # Backend API routes
-/prisma         # Supabase/Neon schema, migrations, seed data
+/prisma         # Supabase schema, migrations, seed data
 /docs
+  introduction.md
+  helium-integration.md
   swagger.yaml  # API documentation
-  architecture.md
 /public
-  images        # Logos, screenshots
+  /images       # Logos, screenshots
 /scripts
   deploy.ts     # Deployment scripts
+  simulate_*.ts # Simulation scripts
+  sample_data/sample_telemetry.json
 .env.example
 README.md
 ```
 
----
-
-## Environment Variables
-
-```plaintext
-NEXT_PUBLIC_SUPABASE_URL=https://<your-supabase-url>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
-RPC_URL=https://api.mainnet-beta.solana.com
-SOLANA_PRIVATE_KEY=<base58-private-key>
-HIVEMAPPER_API_KEY=<your-hivemapper-api-key>
-```
-
----
-
-## Installation
-
-<details>
-<summary><strong>Web Dashboard 🖥️</strong></summary>
-
-```bash
-cd apps/web
-npm install
-npm run dev
-```
-
-</details>
-
-<details>
-<summary><strong>Mobile App 📱</strong></summary>
-
-```bash
-cd apps/mobile
-npm install
-expo start
-```
-
-</details>
-
-<details>
-<summary><strong>Backend API ⚙️</strong></summary>
-
-```bash
-cd apps/backend
-npm install
-npm run dev
-```
-
-</details>
-
----
-
-## Supabase Setup
-
-1. Create tables:  
-   `Users`, `Wallets`, `NFT Twins`, `Staking`, `Transactions`, `ESG`, `Payments`, `Donations`, `SmartBins`, `SavedPrompts`, `Recycling`, `Swap`  
-2. Run migrations and seed data from `/app/data/sample-data.ts`  
-3. Configure API keys in `.env`
-
----
-
-## Usage
-
-- **Web Dashboard**: Analytics, NFT Twins, staking, ESG metrics, SmartBin monitoring, token flows  
-- **Mobile App**: Wallet management, AI chat, scan-to-pay, AR SmartBin navigation, ESG dashboards  
-- **API**: REST endpoints for `/users`, `/transactions`, `/nft-twins`, `/payments`, `/esg`, `/smartbins`, `/ai-agents`
-
----
-
-## AI Chat Billing
-
-- **Free**: 10 messages per user  
-- **Additional**: 10 messages = 100,000 PLY tokens  
-- Messages and prompts stored in **Supabase** and integrated into the chat interface  
-
----
-
-## Blockchain & DeFi Integration
-
-- **Solana**: Blinks, NFT Twins (Metaplex), Dialect, Pyth, Jupiter, Raydium, Solana Pay, Helius, Embedded Wallets  
-- **Helium/DePIN**: LoRaWAN for SmartBin telemetry, coverage maps for AR navigation, HNT rewards for hotspot deployment, integrated via Solana for low-cost transactions  
-- **Hivemapper**: Real-time street imagery for AR SmartBin navigation, providing sub-meter precision and daily updates  
-- **SUI**: CARB token, NFT Twins, PoT, staking  
-- **Payments & Swap**: SOL, PLY, CARB, USDC, HNT via Jupiter/Raydium  
-- **Maps & AR**: Mapbox + Hivemapper + AR Wayfinder + static image fallback  
-
----
-
-## Backend API & MCP
-
-- **Framework**: Fastify with MCP actions  
-- **Endpoints**: `/users`, `/transactions`, `/nft-twins`, `/payments`, `/esg`, `/smartbins`, `/ai-agents`, `/donations`, `/recycling`, `/swap`, `/settings`, `/messages`  
-- **MCP Actions**: Staking, NFT Twin evolution, reward claims, token swaps, ESG updates  
-- **Telemetry**: IoT/SmartBin device data ingestion via Helium LoRaWAN  
-
----
-
 ## Contributing
 
-- Use **TypeScript** and adhere to the monorepo structure  
-- Route blockchain operations through **MCP actions**  
-- Implement fallbacks for wallets, maps, scanning, and offline scenarios  
-- Maintain offline caching for IoT/SmartBin telemetry  
+- Use **TypeScript** and adhere to the monorepo structure.
+- Route blockchain operations through **MCP actions** in `/apps/backend`.
+- Implement fallbacks for wallets (Phantom → Privy → Biometric), maps (AR → Mapbox → Static), and scanning (QR/NFC → Manual).
+- Maintain offline caching for SmartBin telemetry.
+- Submit issues or PRs on [GitHub](https://github.com/PolymersNetwork/polymers-protocol).
+- Join discussions on X (search “Polymers Protocol” or “Helium IoT”) or Hivemapper’s Discord ([discord.com/invite/FRWMKyy5v2](https://discord.com/invite/FRWMKyy5v2)).
 
----
+## Resources
 
-## Swagger API
-
-- Full documentation: [View Swagger Docs](https://api.polymers.io/swagger)  
-- Endpoints: `/users`, `/transactions`, `/nft-twins`, `/payments`, `/esg`, `/smartbins`, `/ai-agents`, `/donations`, `/swap`, `/messages`  
-
----
+- **Polymers Protocol**: [github.com/PolymersNetwork/polymers-protocol](https://github.com/PolymersNetwork/polymers-protocol)
+- **Helium Docs**: [docs.helium.com/solana](https://docs.helium.com/solana)
+- **Hivemapper Docs**: [docs.hivemapper.com](https://docs.hivemapper.com)
+- **Solana Cookbook**: [solanacookbook.com](https://solanacookbook.com)
+- **Supabase Docs**: [supabase.com/docs](https://supabase.com/docs)
+- **Swagger Docs**: [api.polymers.io/swagger](https://api.polymers.io/swagger)
+- **AI Chat**: [docs.polymers.io/ai](https://docs.polymers.io/ai)
+- **AR Navigation**: [docs.polymers.io/ar](https://docs.polymers.io/ar)
+- **ESG Tracking**: [docs.polymers.io/esg](https://docs.polymers.io/esg)
 
 ## License
 
