@@ -1,229 +1,162 @@
-# Polymers Protocol – E-Waste & Waste Management
+# Polymers Protocol
 
-**Version 1.0 Beta**  
-A blockchain-as-a-service platform integrating **Solana**, **IoT/DePIN**, and **ESG solutions** for polymer and e-waste recycling. Features **supply chain transparency**, **tokenized rewards**, **predictive analytics**, and **gamified engagement**.
+The **Polymers Protocol** is a decentralized platform built on **Solana** that powers **SmartBin**, a next-generation waste management system. It integrates **Helium’s Decentralized Physical Infrastructure Network (DePIN)** for long-range IoT connectivity and **Hivemapper’s Map Data APIs** for real-time geospatial validation. The protocol incentivizes sustainable waste tracking through token rewards (HNT, IOT, PLY, CARB, EWASTE, HONEY) and provides ESG (Environmental, Social, Governance) analytics for municipalities and enterprises.
 
----
+This repository contains the code, scripts, and documentation to develop, test, and deploy the Polymers Protocol. For a detailed introduction, see [/docs/introduction.md](./docs/introduction.md). For advanced setup and integration, see [/docs/helium-integration.md](./docs/helium-integration.md).
 
-## 🔹 Key Features
+## Overview
 
-### 1. Dashboard
-- Real-time SmartBin telemetry: fill, contamination, weight, temperature  
-- NFT Twins for batch tracking on Solana  
-- ESG and carbon footprint monitoring  
-- Predictive analytics for supply and contamination trends  
-- Gamified missions, leaderboards, tokenized incentives
+Polymers Protocol enables **SmartBins**—IoT-enabled waste bins that monitor fill levels, contamination, weight, and temperature. Key components include:
 
-### 2. Mobile App
-- React Native + Expo (OTA updates)  
-- Dark theme, green-gray-white palette, Satoshi + Geist fonts  
-- Schedule pickups, track recycling, get reminders  
-- Real-time Solana rewards and gamification
+- **Helium DePIN**: Long-range LoRaWAN connectivity (up to 10km) with 1.2M+ hotspots globally (September 2025).
+- **Hivemapper APIs**: Real-time map validation and features (e.g., speed limits, traffic lights).
+- **Solana Blockchain**: High-throughput transactions (~65,000 TPS with Firedancer) for telemetry, rewards, and NFT Twins (~0.002 SOL per mint).
+- **Supabase**: Real-time telemetry storage and analytics.
+- **Predictive Analytics**: LSTM models for fill level forecasting and route optimization.
+- **Rewards**: Token distribution (HNT, IOT, PLY, CARB, EWASTE, HONEY) via Solana Pay based on ESG scores.
 
-### 3. IoT & SmartBins
-- Log real-time and historical sensor data  
-- Auto-analyze fill levels, contamination, and collection times  
-- AI-driven metric updates on new readings
+## Features
 
-### 4. NFT Twins
-- Metaplex NFT minting per batch  
-- Track polymer type, weight, contamination, ESG metrics
+- **SmartBins**: Monitor fill levels, contamination, weight, and temperature using IoT sensors.
+- **Telemetry**: Low-cost, high-frequency data logging via Helium LoRaWAN (~$0.00001 per 24KB).
+- **Validation & Mapping**: Hivemapper APIs ensure accurate bin locations and enrich analytics with map features.
+- **Predictive Analytics**: Forecast fill schedules and optimize collection routes using LSTM models.
+- **Rewards**: Distribute tokens and mint NFT Twins based on ESG scoring and Hivemapper contributions.
+- **OTA Updates**: Secure firmware updates with staged deployment and rollback support.
 
-### 5. Analytics & AI
-- LSTM models for supply/demand and contamination forecasts  
-- ESG scores and carbon offset calculations  
-- Auto-updated metrics from IoT data
-
-### 6. Rewards & Gamification
-- Tokens: **PLY** (recycling), **CARB** (offsets), **EWASTE**  
-- Leaderboards for users and enterprises  
-- Reward missions in dashboard and app
-
----
-
-## 📂 Project Structure
-
-/app                   # Frontend dashboard
-/api                   # Backend APIs
-/components            # React components
-/lib                   # AI, IoT, Helium utilities
-/programs/src          # Solana programs
-/scripts               # Simulation scripts
-/tests                 # Unit & integration tests
-/docs                  # Documentation
-
----
-
-## 🚀 Getting Started
+## Quickstart
 
 ### Prerequisites
-- Node.js ≥16, npm ≥8  
-- Solana CLI & Solana Pay SDK  
-- Supabase for transaction logging  
-- TensorFlow.js for ML models  
-- Expo CLI for mobile app  
+- **Node.js**: v18+.
+- **Solana CLI**: v1.18+ (`npm install -g @solana/cli`).
+- **Helium CLI**: v2.0+ (`npm install -g @helium/cli`).
+- **Supabase CLI**: For telemetry database.
+- **Hivemapper Account**: API keys from [hivemapper.com/map-data-console](https://hivemapper.com/map-data-console).
+- **Phantom Wallet**: For Solana transactions.
 
-### Installation
-```bash
-git clone https://github.com/PolymersNetwork/polymers-recycling-platform.git
-cd polymers-recycling-platform
-npm ci
-cp .env.example .env
-# Configure .env
-npm run dev        # Dashboard
-npx expo start     # Mobile app
+### Installation & Environment
+1. **Clone Repository**:
+   ```bash
+   git clone https://github.com/polymers-protocol/polymers
+   cd polymers
+   npm install
+   ```
 
-Environment Variables
-
-NEXT_PUBLIC_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
-NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_KEY
-PLY_MINT=PLY_TOKEN_MINT
-CARB_MINT=CARB_TOKEN_MINT
-EWASTE_MINT=EWASTE_TOKEN_MINT
-REWARD_WALLET_ADDRESS=REWARD_WALLET
-REWARD_WALLET_TOKEN_ACCOUNT=REWARD_WALLET_TOKEN
-HELIUM_HOTSPOT_ADDRESS=HOTSPOT_PUBKEY
-
-
-⸻
-
-💰 Tokenized Rewards System
-	•	PLY: Polymer recycling points
-	•	CARB: Carbon offset points
-	•	EWASTE: E-waste rewards
-
-Tokenomics Flow
-
-graph LR
-    A[User Deposit] --> B[Reward API]
-    B --> C[Solana Transaction]
-    C --> D[Wallet Updates]
-    D --> E[Dashboard & App]
-    B --> F[Leaderboards]
-    G[Enterprise SmartBins] --> B
-
-
-⸻
-
-🧪 Testnet Rewards Sandbox
-
-Simulate rewards on Solana Devnet:
-	1.	Fund Devnet wallets via faucet
-	2.	Pre-fund SmartBins for test deposits
-	3.	Update .env for Devnet
+2. **Set Up Environment**:
+   Create `.env` with:
+   ```env
+   NEXTitsu
 
 NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
-PLY_MINT=DEV_PLY_MINT
-CARB_MINT=DEV_CARB_MINT
-EWASTE_MINT=DEV_EWASTE_MINT
-REWARD_WALLET_ADDRESS=DEV_REWARD_WALLET
-REWARD_WALLET_TOKEN_ACCOUNT=DEV_REWARD_WALLET_TOKEN
-HELIUM_HOTSPOT_ADDRESS=DEV_HOTSPOT_ADDRESS
+HELIUM_HOTSPOT_ADDRESS=<your_hotspot_address>
+PLY_MINT=<ply_mint_address>
+CARB_MINT=<carb_mint_address>
+EWASTE_MINT=<ewaste_mint_address>
+HONEY_MINT=<honey_mint_address>
+REWARD_WALLET_ADDRESS=<reward_wallet_address>
+NEXT_PUBLIC_SUPABASE_URL=<supabase_url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase_anon_key>
+HIVEMAPPER_API_KEY=<your_api_key>
+HIVEMAPPER_USERNAME=<your_username>
+   ```
 
-	4.	Run:
+### Local Simulation
+Test SmartBin workflows without hardware:
+```bash
+npm run simulate:iot
+npm run simulate:hivemapper
+npm run simulate:rewards
+npm run test:lstm
+npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
+```
 
-npm run dev
-npx expo start
+### Deploy to Devnet
+```bash
+anchor deploy --provider.cluster devnet
+```
 
-Rewards Flow
+### Developer Notes
+- **Prerequisites**: Install all dependencies before cloning to avoid simulation failures:
+  ```bash
+  npm install -g @solana/cli @helium/cli supabase
+  ```
+- **Environment**: Verify API keys and wallet addresses in `.env`. Incorrect values can break telemetry or rewards. Store `.env` in a secrets manager (e.g., Doppler) for security.
+- **Simulations**: Run simulations before Devnet deployment to validate telemetry, Hivemapper validation, rewards, analytics, and OTA workflows. Use `/scripts/sample_data/sample_telemetry.json` for reproducible tests.
+- **OTA Updates**: Test OTA deployments on a simulated bin first:
+  ```bash
+  npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
+  ```
+  Use staged deployments to prevent downtime on live bins. See [/docs/helium-integration.md#ota-firmware-management](./docs/helium-integration.md#ota-firmware-management).
+- **Rewards**: Verify token mint addresses and Solana Pay configurations in `/api/wallet/swap.ts`. Test reward thresholds (e.g., ESG score > 0.5, Hivemapper coverage > 0.8) using `/scripts/simulate_rewards.ts`. See [/docs/helium-integration.md#rewards-integration](./docs/helium-integration.md#rewards-integration).
+- **Troubleshooting**: If simulations fail, check Supabase logs or console output. Refer to [/docs/helium-integration.md#troubleshooting-and-best-practices](./docs/helium-integration.md#troubleshooting-and-best-practices) for fixes.
 
-graph LR
-    A[Deposit] --> B[SmartBin]
-    B --> C[Telemetry API]
-    C --> D[Solana Devnet]
-    D --> E[Wallet Updates]
-    E --> F[Dashboard & App]
-    C --> F[Analytics & Rewards]
-
-Predictive Rewards Simulation
-
-gantt
-    title Rewards Simulation
-    dateFormat  YYYY-MM-DD
-    axisFormat  %d-%m
-    section Deposits
-    User Deposits      :active, des1, 2025-10-01, 10d
-    Enterprise Batches :des2, 2025-10-05, 8d
-    section Tokens
-    PLY Tokens         :dist1, after des1, 10d
-    CARB Tokens        :dist2, after des2, 8d
-    EWASTE Tokens      :dist3, after des1, 12d
-    section Gamification
-    Points Updated     :points1, after dist1, 12d
-    Leaderboards       :points2, after dist2, 10d
-
-
-⸻
-
-🌐 Helium DePIN Integration
-
-Polymers leverages Helium’s Solana-based DePIN for scalable IoT connectivity, powering SmartBin telemetry and rewards via LoRaWAN.
-
-Why Helium?
-	•	Scalability: Handles millions of SmartBins (~65k TPS)
-	•	Low Costs: ~$0.000005 per transaction for Data Credits and rewards
-	•	Coverage: 1M+ global hotspots for reliable connectivity
-	•	Composability: Syncs with Solana Pay, Metaplex NFTs, and Pyth oracles
-
-Integration Overview
-	•	SmartBins send telemetry via LoRaWAN → Supabase → Solana
-	•	Rewards issued in HNT/IOT + PLY/EWASTE
-	•	Dashboard analytics automatically update from telemetry
-
-Flow Diagram
-
+### Quickstart Flowchart
+```mermaid
 graph TD
-    A[SmartBin Sensors] --> B[Helium LoRaWAN]
-    B --> C[Telemetry API]
-    C --> D[Solana Blockchain]
-    D --> E[Rewards: HNT, PLY]
-    E --> F[Wallet & NFT Twins]
-    F --> G[Dashboard & App]
+    A[Start: New Contributor] -->|Check Prerequisites| B{Node.js, Solana CLI, <br>Helium CLI, Supabase CLI, <br>Hivemapper Account, Phantom Wallet?}
+    B -->|No| C[Install Prerequisites]
+    C -->|Run npm install -g| D[Clone Repository]
+    B -->|Yes| D[Clone Repository]
+    D -->|Run git clone| E[Install Dependencies]
+    E -->|Run npm install| F[Set Up .env]
+    F -->|Configure API keys| G{Simulations Ready?}
+    G -->|Run npm run simulate:*| H[Run Simulations]
+    H --> I[Telemetry: simulate:iot]
+    H --> J[Hivemapper: simulate:hivemapper]
+    H --> K[Rewards: simulate:rewards]
+    H --> L[Analytics: test:lstm]
+    H --> M[OTA: ota:deploy]
+    I --> N{Simulations Successful?}
+    J --> N
+    K --> N
+    L --> N
+    M --> N
+    N -->|Yes| O[Deploy to Devnet]
+    N -->|No| P[Check Logs, Fix Errors]
+    P --> H
+    O -->|Run anchor deploy| Q[End: Devnet Deployed]
+    style A fill:#f9f,stroke:#333
+    style C fill:#f9f,stroke:#333
+    style D fill:#f9f,stroke:#333
+    style E fill:#f9f,stroke:#333
+    style F fill:#f9f,stroke:#333
+    style H fill:#cff,stroke:#333
+    style I fill:#cff,stroke:#333
+    style J fill:#cff,stroke:#333
+    style K fill:#cff,stroke:#333
+    style L fill:#cff,stroke:#333
+    style M fill:#cff,stroke:#333
+    style O fill:#9f9,stroke:#333
+    style Q fill:#9f9,stroke:#333
+```
 
-Example Telemetry Submission
+## Key Files
 
-import { Helium } from '@helium/sdk';
-import { Connection, PublicKey } from '@solana/web3.js';
+| File | Purpose |
+|------|---------|
+| `/lib/helium.ts`, `/lib/hivemapper.ts` | API configuration for Helium and Hivemapper |
+| `/api/iot/smartbins.ts` | Telemetry handling with Hivemapper validation ([Telemetry Transmission](./docs/helium-integration.md#telemetry-transmission)) |
+| `/api/wallet/swap.ts` | Reward logic ([Rewards Integration](./docs/helium-integration.md#rewards-integration)) |
+| `/programs/src/nft_mint.ts` | NFT Twin minting |
+| `/lib/lstm_model.ts` | Predictive analytics ([Predictive Analytics](./docs/helium-integration.md#predictive-analytics)) |
+| `/scripts/ota_utils.ts` | OTA update management ([OTA Firmware Management](./docs/helium-integration.md#ota-firmware-management)) |
+| `/scripts/sample_data/sample_telemetry.json` | Sample telemetry dataset |
+| `/scripts/simulate_*.ts` | Simulation scripts for local testing |
 
-const helium = new Helium(new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL));
-async function sendTelemetry(binId, data) {
-  const tx = await helium.hotspots.submitPayload({
-    payload: Buffer.from(JSON.stringify({ binId, ...data })),
-    hotspot: new PublicKey(process.env.HELIUM_HOTSPOT_ADDRESS),
-  });
-  return await connection.sendTransaction(tx);
-}
+## Documentation
+- **Introduction & Quickstart**: [/docs/introduction.md](./docs/introduction.md)
+- **Helium Integration & Advanced Guides**: [/docs/helium-integration.md](./docs/helium-integration.md)
 
-Rewards Trigger Example
+## Contributing
+Submit issues or pull requests on [GitHub](https://github.com/PolymersNetwork/polymers-protocol).
 
-async function issueRewards(binId, userWallet) {
-  // HNT/IOT via Helium
-  // PLY/EWASTE via Solana Pay
-}
+**Community**:
+- X: Search “Polymers Protocol” or “Helium IoT” for discussions.
+- Hivemapper Discord: [discord.com/invite/FRWMKyy5v2](https://discord.com/invite/FRWMKyy5v2)
 
-
-⸻
-
-🧪 Tests
-	•	IoT ingestion & analytics
-	•	Solana program interactions
-	•	Wallet & token transactions
-	•	Mobile prompts & reward flows
-
-npm run test
-
-
-⸻
-
-🛠 Deployment
-	•	Dashboard: Vercel
-	•	Mobile App: Expo (OTA updates)
-	•	Solana Programs: CI/CD with rollbacks
-	•	Monitoring: Sentry for telemetry & errors
-
-⸻
-
-📜 License
-
-MIT License
+## Resources
+- **Polymers Protocol**: [github.com/polymers-protocol/polymers](https://github.com/polymers-protocol/polymers)
+- **Helium Docs**: [docs.helium.com/solana](https://docs.helium.com/solana)
+- **Hivemapper Docs**: [docs.hivemapper.com](https://docs.hivemapper.com)
+- **Solana Cookbook**: [solanacookbook.com](https://solanacookbook.com)
+- **Supabase Docs**: [supabase.com/docs](https://supabase.com/docs)
