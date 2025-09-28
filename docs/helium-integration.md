@@ -749,4 +749,3 @@ File: `/scripts/sample_data/sample_telemetry.json`
 ---
 
 This guide ensures contributors can set up, test, and deploy the Helium-Hivemapper-Polymers integration locally or on devnet. For support, use GitHub issues or the Polymers communities on X and Discord.
-```
