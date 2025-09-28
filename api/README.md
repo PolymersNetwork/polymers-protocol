@@ -41,5 +41,3 @@ Here's a table of the main endpoints, grouped by category, with example requests
 3. **SDKs**: The monorepo includes shared TypeScript types in `/apps/shared`. Generate client SDKs from Swagger if needed.
 
 If `https://polymersprotocol.org` is intended as the frontend/dashboard, you can access the live demo there (e.g., for wallet connections and visualizations). For custom integrations or issues, check the [GitHub repo](https://github.com/PolymersNetwork/polymers-protocol) or open an issue.
-
-If this isn't what you meant (e.g., you need code samples, a specific endpoint deep-dive, or troubleshooting), provide more details!
