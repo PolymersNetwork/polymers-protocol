@@ -1,6 +1,6 @@
 ## Polymers Protocol API Overview
 
-move to pages folder. move pages to root
+move to pages folder. 
 
 Based on the provided URL `https://polymersprotocol.org` and the context from the Polymers Protocol documentation, this appears to be the base domain for the project's website, dashboard, and documentation. However, the primary **API** is hosted at `https://api.polymersprotocol.org`. The root domain (`https://polymersprotocol.org`) likely serves as the frontend entry point (e.g., the live demo website and dashboard mentioned in the repo), while the API subdomain handles backend requests.
 
