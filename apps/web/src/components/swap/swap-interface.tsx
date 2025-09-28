@@ -118,7 +118,7 @@ const SwapInterface: FC<SwapInterfaceProps> = () => {
           fetchQuote();
           handleSwap();
         }}
-        className="w-full p-2 bg-sand text-black font-bold rounded hover:bg-yellow-500"
+        className="w-full p-2 bg-green-500 text-black font-bold rounded hover:bg-green-600"
       >
         Swap
       </button>
