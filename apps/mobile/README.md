@@ -15,8 +15,6 @@
 </div>
 </div>
 
-**Replace the hero banner URL (`https://via.placeholder.com/1200x300?text=Polymers+Hero+Banner`) with your actual banner image.**
-
 ⸻
 
 🎨 **App Screenshots (Responsive)**
@@ -43,8 +41,6 @@
 
 </div>
 
-**Replace screenshot URLs (`https://via.placeholder.com/260x500?text=...`) with your actual app screenshot images.**
-
 **Highlights:**
 - ✅ Real-time pickup tracking & rewards via Solana Pay
 - 🌍 AR map for SmartBins (>70% full) with Helium telemetry
@@ -57,7 +53,7 @@
 
 ⸻
 
-🖼️ **Responsive Visual Grid Diagram (2x3 Dashboard)**
+🖼️ **Responsive Visual Grid Diagram**
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
 
@@ -472,6 +468,7 @@ npx pwabuilder build --platform android
 ⸻
 
 🌍 **Why Polymers?**
+
 - ♻️ Simplifies recycling with Helium DePIN  
 - 🎨 Gamifies eco-actions with Metaplex cNFTs  
 - 📊 Real-time ESG analytics via Pyth & Chainlink  
