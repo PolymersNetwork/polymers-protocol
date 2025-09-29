@@ -1,7 +1,3 @@
-# Polymers Mobile App
-
-⸻
-
 <!-- HERO SECTION -->
 
 <div align="center" style="background: url('https://via.placeholder.com/1200x300?text=Polymers+Hero+Banner') no-repeat center/cover; border-radius: 15px; padding: 60px 20px; color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
