@@ -17,7 +17,7 @@
 
 ⸻
 
-🎨 **App Screenshots**
+🎨 **App Screenshots (Responsive)**
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 30px;">
 
@@ -43,16 +43,17 @@
 
 **Highlights:**
 - ✅ Real-time pickup tracking & rewards via Solana Pay
-- 🌍 AR map for SmartBins (>70% full) with Helius telemetry
-- 🎟️ cNFT Twins for ESG compliance and recycling history
+- 🌍 AR map for SmartBins (>70% full) with Helium telemetry
+- 🎟️ cNFT Twins for ESG compliance via Metaplex
 - 🔄 Biometric-secured hybrid swaps via Jupiter & Raydium
-- 🔐 Solana Mobile Stack with Seed Vault & MWA v2
-- 📱 Solana Seeker Phone with hardware-secured Web3 features
+- 🔐 Solana Mobile Stack with Seed Vault & MWA v2 on Seeker
+- 🤖 AI Chat/ESG Assistant powered by GPT, billed in PLY
 - 🔒 Transparent liquidity with Raydium Burn & Earn
+- 📱 Solana dApp Store distribution for fee-free access
 
 ⸻
 
-🖼️ **Responsive Visual Grid Diagram**
+🖼️ **Responsive Visual Grid Diagram (2x3 Dashboard)**
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
 
@@ -60,7 +61,7 @@
 ```mermaid
 graph TD
     A[User Scans SmartBin] --> B[AR Map Shows Bins >70% Full]
-    B --> C[Fetch Telemetry via Helius]
+    B --> C[Fetch Telemetry via Helium]
     C --> D[Update Dashboard]
     style A fill:#f9f,stroke:#333
     style B fill:#f9f,stroke:#333
@@ -121,7 +122,7 @@ graph TD
 ```mermaid
 graph TD
     A[User Initiates Action] --> B[MWA v2 Connects Wallet]
-    B --> C[Seed Vault Biometric Auth]
+    B --> C[Seeker Seed Vault Auth]
     C --> D[Sign & Submit Tx]
     D --> E[Update App]
     style A fill:#fcf,stroke:#333
@@ -152,12 +153,12 @@ graph TD
 </div>
 
 **Grid Explanation**:
-- **AR Map Flow**: Locates SmartBins using Helius telemetry.
-- **NFT Twins Flow**: Mints cNFTs for ESG tracking post-deposit.
+- **AR Map Flow**: Locates SmartBins using Helium telemetry.
+- **NFT Twins Flow**: Mints cNFTs via Metaplex for ESG tracking.
 - **Hybrid Swap Flow**: Jupiter/Raydium swaps for reward redemption.
 - **Burn & Earn Flow**: Locks PLY/USDC liquidity; reinvests fees.
 - **SMS Flow**: Secures actions with MWA v2 biometric auth.
-- **Seeker Hardware Flow**: Leverages Solana Seeker’s Seed Vault and Genesis Token for secure swaps and airdrops.
+- **Seeker Hardware Flow**: Leverages Seeker’s Seed Vault and Genesis Token.
 
 ⸻
 
@@ -172,21 +173,21 @@ graph TD
 - Track status in real-time  
 
 **📊 SmartBin Telemetry**  
-- Sensors for fill level, weight, contamination  
+- Helium DePIN sensors for fill level, weight, contamination  
 - Historical analytics  
 - Automated Solana rewards  
 - OTA updates via Expo  
 
 **💰 Solana Rewards & NFT Twins**  
 - Tokens: PLY, CARB, EWASTE  
-- cNFT Twins for ESG compliance  
+- cNFT Twins for ESG compliance via Metaplex  
 - Biometric swaps via Solana Pay, Jupiter, Raydium  
 - Gamified missions & leaderboards  
 
 **🔮 Predictive Analytics & ESG**  
-- Predict fill levels & collection times  
-- ESG metrics (e.g., carbon footprint)  
-- AI/LLM query support  
+- Predict fill levels & collection times with Chainlink  
+- ESG metrics (e.g., carbon footprint) via Pyth  
+- AI Chat/ESG Assistant powered by GPT  
 
 **🔒 Burn & Earn Liquidity**  
 - Lock PLY/USDC pools for trust  
@@ -198,6 +199,10 @@ graph TD
 - MWA v2 for biometric transaction signing  
 - Solana Pay for QR/NFC payments  
 - Genesis Token for airdrops & ecosystem perks  
+
+**📲 Solana dApp Store**  
+- Fee-free distribution for Polymers app  
+- Optimized for Seeker’s Web3 features  
 
 </details>
 
@@ -211,36 +216,82 @@ graph TD
 | Category       | Prompt Example                              | Action / Flow                                                                 |
 |----------------|---------------------------------------------|------------------------------------------------------------------------------|
 | Pickups        | “Schedule pickup for tomorrow”             | Books pickup → assigns SmartBin → triggers rewards                           |
-| SmartBins      | “Show bins >70% full”                      | AR map → Helius telemetry → dashboard update                                 |
+| SmartBins      | “Show bins >70% full”                      | AR map → Helium telemetry → dashboard update                                 |
 | SmartBins      | “Add IoT reading”                          | Updates telemetry → analytics → rewards                                      |
 | Rewards        | “Check PLY balance”                        | Queries Solana → updates wallet & NFT Twins                                  |
 | Rewards        | “Swap 50 PLY to USDC”                      | MWA v2 biometric swap (Jupiter/Raydium) → updates balances                   |
 | ESG            | “Show carbon footprint”                    | Computes from telemetry & NFT Twins → displays                               |
-| Predictions    | “Predict Bin #12 collection”               | ML on telemetry → shows ETA                                                 |
+| Predictions    | “Predict Bin #12 collection”               | ML on telemetry → shows ETA via Chainlink                                    |
+| AI Assistant   | “Explain my ESG impact”                    | GPT-powered response → billed in PLY → Dialect notifications                 |
 | Gamification   | “Show leaderboard”                         | Retrieves missions/scores → updates display                                  |
 
 </details>
 
 ⸻
 
-🔧 **Architecture & IoT Flow**
+🔧 **Polymers Protocol Architecture**
 
 <details>
 <summary>Click to expand Architecture Diagram</summary>
 
 ```mermaid
-graph LR
-    A[User Deposits Waste] --> B[SmartBin Records Telemetry]
-    B --> C[Update Historical Data]
-    C --> D[Compute Analytics]
-    D --> E[Rewards & NFT Twins via MWA v2]
-    E --> F[Update App UI]
+graph TD
+    A["[Helium IoT Icon] SmartBins IoT (Helium DePIN)"] --> B["[Polymers Logo] Polymers Protocol APIs"]
+    B --> C["[Solana Logo] Solana On-Chain Programs"]
+    C --> D["[Jupiter Logo] Liquidity (Jupiter)"]
+    C --> E["[Raydium Logo] Staking (Raydium)"]
+    C --> F["[Pyth+Chainlink Logo] Oracles (Pyth+Chainlink)"]
+    C --> G["[Metaplex Logo] NFT Twins (Metaplex)"]
+    C --> H["[GPT Icon] AI Chat / ESG Assistant"]
+    B --> I["[Dialect Logo] Messaging + Blinks (Dialect)"]
+    I --> J[Mobile & Web Apps]
+    J --> K[Users: Wallets + Rewards + ESG]
+
+    %% Color Palette
+    style A fill:#4CAF50,stroke:#FFFFFF,color:#FFFFFF
+    style B fill:#388E3C,stroke:#FFFFFF,color:#FFFFFF
+    style C fill:#66BB6A,stroke:#FFFFFF,color:#FFFFFF
+    style D fill:#81C784,stroke:#FFFFFF,color:#FFFFFF
+    style E fill:#81C784,stroke:#FFFFFF,color:#FFFFFF
+    style F fill:#81C784,stroke:#FFFFFF,color:#FFFFFF
+    style G fill:#A5D6A7,stroke:#FFFFFF,color:#FFFFFF
+    style H fill:#66BB6A,stroke:#C2185B,color:#FFFFFF
+    style I fill:#2E7D32,stroke:#FFFFFF,color:#FFFFFF
+    style J fill:#C8E6C9,stroke:#FFFFFF,color:#FFFFFF
+    style K fill:#C8E6C9,stroke:#FFFFFF,color:#FFFFFF
+
+    %% Container Styling
+    subgraph Polymers_Protocol [Polymers Protocol]
+        direction TB
+        style Polymers_Protocol fill:#1E1E1E,stroke:#F5F5F5,stroke-width:2px
+        B
+        C
+        D
+        E
+        F
+        G
+        H
+        I
+        J
+        K
+    end
 ```
 
-- **Telemetry**: Synced to backend  
-- **Analytics**: Real-time metrics  
-- **Rewards**: Biometric-secured via Solana Pay  
-- **NFT Twins**: ESG compliance tracking  
+**Architecture Explanation**:
+- **SmartBins IoT (Helium)**: DePIN sensors for real-time telemetry (#4CAF50).
+- **Polymers APIs**: Core backend for data aggregation (#388E3C).
+- **Solana Programs**: On-chain logic for rewards and swaps (#66BB6A).
+- **Liquidity/Staking (Jupiter/Raydium)**: PLY/USDC pools and staking (#81C784).
+- **Oracles (Pyth+Chainlink)**: Price feeds and analytics (#81C784).
+- **NFT Twins (Metaplex)**: ESG-compliant cNFTs (#A5D6A7).
+- **AI Chat/ESG Assistant (GPT)**: PLY-billed queries with gradient highlight (#66BB6A→#C2185B).
+- **Messaging (Dialect)**: Blinks and notifications (#2E7D32).
+- **Apps/Users**: Mobile/Web interfaces for wallets and ESG (#C8E6C9).
+- **Container**: Dark gray background (#1E1E1E), light gray borders (#F5F5F5), white text (#FFFFFF).
+
+**Logo Placeholders**:
+- Replace `[Helium IoT Icon]`, `[Polymers Logo]`, etc., with actual URLs (e.g., `![Helium](https://your-logo-url.com/helium.png)`).
+- Use 32x32px PNG/SVG logos for clarity.
 
 </details>
 
@@ -299,8 +350,8 @@ graph TD
 - **Seed Vault**: Secures keys in Seeker’s hardware enclave; biometric auth for swaps/NFT mints.
 - **MWA v2**: Connects to wallets (Phantom, Seed Vault) with `solana:` deep-links.
 - **Solana Pay**: QR/NFC payments optimized for Seeker’s 5G/NFC.
-- **Genesis Token**: Unlocks airdrops, enhancing Polymers’ reward system.
-- **Benefits**: Secure, fast UX for reward redemptions, ESG tracking, and airdrop claims on Seeker.
+- **Genesis Token**: Unlocks airdrops, enhancing Polymers’ rewards.
+- **dApp Store**: Fee-free distribution for Polymers app.
 
 </details>
 
@@ -323,9 +374,11 @@ graph TD
 | REWARD_WALLET_ADDRESS        | Reward wallet key                    | REWARD_WALLET_PUBLIC_KEY             |
 | PRIVY_APP_ID                 | Privy auth ID                        | privy-app-id                         |
 | CHAINLINK_API_KEY            | Chainlink oracle key                 | chainlink-key                        |
+| PYTH_API_KEY                 | Pyth oracle key                      | pyth-key                             |
 | BUBBLEGUM_TREE_ID            | Bubblegum Merkle Tree ID             | TREE_PUBLIC_KEY                      |
 | CANDY_MACHINE_ID             | Candy Machine ID                     | CANDY_MACHINE_PUBLIC_KEY             |
 | HELIUS_API_KEY               | Helius Webhook key                   | helius-api-key                       |
+| DIALECT_API_KEY              | Dialect messaging key                | dialect-key                          |
 | NEXT_PUBLIC_ENV              | Environment (dev/test/prod)          | production                           |
 
 </details>
@@ -344,7 +397,7 @@ graph TD
 - Supabase (backend)  
 - Privy.io (auth)  
 - TensorFlow.js (analytics)  
-- SDKs: `@solana/pay`, `@solana/web3.js`, `@solana/spl-token`, `@jup-ag/api`, `@raydium-io/raydium-sdk`, `@solana-mobile/mobile-wallet-adapter-protocol-web3js@^2.2.3`, `@solana/wallet-adapter-react@^0.15.35`, `react-native-get-random-values`, `buffer`, `expo-crypto`, `react-native-qrcode-svg`
+- SDKs: `@solana/pay`, `@solana/web3.js`, `@solana/spl-token`, `@jup-ag/api`, `@raydium-io/raydium-sdk`, `@solana-mobile/mobile-wallet-adapter-protocol-web3js@^2.2.3`, `@solana/wallet-adapter-react@^0.15.35`, `react-native-get-random-values`, `buffer`, `expo-crypto`, `react-native-qrcode-svg`, `@metaplex-foundation/js`, `@pythnetwork/client`, `@chainlink/contracts`, `@dialectlabs/sdk`
 
 **Installation**
 
@@ -366,6 +419,9 @@ npx eas build --platform ios
 npx expo run:android
 # OTA Updates
 npx eas update
+# Solana dApp Store Submission
+npx pwabuilder build --platform android
+# Submit via https://dappstore.solanamobile.com/publish
 ```
 
 </details>
@@ -373,13 +429,14 @@ npx eas update
 ⸻
 
 🌍 **Why Polymers?**
-- ♻️ Simplifies recycling for all  
-- 🎨 Gamifies eco-actions with tokens & NFTs  
-- 📊 Real-time ESG analytics via Helius  
-- 🔐 Biometric-secured swaps with Solana Mobile Stack & Seeker  
+- ♻️ Simplifies recycling with Helium DePIN  
+- 🎨 Gamifies eco-actions with Metaplex cNFTs  
+- 📊 Real-time ESG analytics via Pyth & Chainlink  
+- 🔐 Biometric-secured swaps on Seeker with SMS  
 - 🔄 Flexible Jupiter/Raydium swaps  
+- 🤖 GPT-powered AI Chat/ESG Assistant  
 - 🔒 Transparent liquidity via Burn & Earn  
-- 📱 Seeker hardware for secure keys & airdrop rewards  
+- 📱 Fee-free distribution via Solana dApp Store  
 
 ⸻
 
