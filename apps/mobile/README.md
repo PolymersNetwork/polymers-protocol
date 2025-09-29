@@ -1,4 +1,4 @@
- Polymers Mobile App – E-Waste & Recycling dApp
+Polymers Mobile App – E-Waste & Recycling dApp
 
 A Web3-enabled mobile app built with Expo + React Native to simplify recycling, track environmental impact, and reward sustainable behavior using Solana blockchain tokens.
 
@@ -6,22 +6,30 @@ A Web3-enabled mobile app built with Expo + React Native to simplify recycling, 
 
 ⸻
 
-🎨 App Screenshots
+🎨 App Screenshots (Responsive)
 
-Grid Preview: Dashboard | AR Map | NFT Twins
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px;">
 
-<table>
-<tr>
-<td><img src="https://via.placeholder.com/250x500?text=Dashboard" alt="Dashboard" width="250"/></td>
-<td><img src="https://via.placeholder.com/250x500?text=AR+Map" alt="AR Map Preview" width="250"/></td>
-<td><img src="https://via.placeholder.com/250x500?text=NFT+Twins" alt="NFT Twins Preview" width="250"/></td>
-</tr>
-<tr>
-<td align="center">Home Dashboard</td>
-<td align="center">AR Map Preview</td>
-<td align="center">NFT Twins & Rewards</td>
-</tr>
-</table>
+
+<div style="flex: 1 1 250px; text-align: center;">
+<img src="https://via.placeholder.com/250x500?text=Dashboard" alt="Dashboard" style="width: 100%; max-width: 250px;"/>
+<p><b>Home Dashboard</b></p>
+</div>
+
+
+<div style="flex: 1 1 250px; text-align: center;">
+<img src="https://via.placeholder.com/250x500?text=AR+Map" alt="AR Map Preview" style="width: 100%; max-width: 250px;"/>
+<p><b>AR Map Preview</b></p>
+</div>
+
+
+<div style="flex: 1 1 250px; text-align: center;">
+<img src="https://via.placeholder.com/250x500?text=NFT+Twins" alt="NFT Twins Preview" style="width: 100%; max-width: 250px;"/>
+<p><b>NFT Twins & Rewards</b></p>
+</div>
+
+
+</div>
 
 
 Highlights:
