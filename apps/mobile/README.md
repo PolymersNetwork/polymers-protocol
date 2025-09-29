@@ -1,47 +1,82 @@
-Polymers Mobile App – E-Waste & Recycling dApp
+ Polymers Mobile App – E-Waste & Recycling dApp
 
-Version 1.0 Beta
-
-A Web3-enabled mobile app built with Expo and React Native to simplify recycling, track environmental impact, and reward sustainable behavior using Solana blockchain tokens. The app features a sleek dark theme with a green-gray-white palette, Font Awesome icons, and Satoshi + Geist typography, designed in Figma.
+A Web3-enabled mobile app built with Expo + React Native to simplify recycling, track environmental impact, and reward sustainable behavior using Solana blockchain tokens.
 
 🔗 Live Demo: demo.polymers.app
 
 ⸻
 
+🎨 App Screenshots
+
+Grid Preview: Dashboard | AR Map | NFT Twins
+
+<table>
+<tr>
+<td><img src="https://via.placeholder.com/250x500?text=Dashboard" alt="Dashboard" width="250"/></td>
+<td><img src="https://via.placeholder.com/250x500?text=AR+Map" alt="AR Map Preview" width="250"/></td>
+<td><img src="https://via.placeholder.com/250x500?text=NFT+Twins" alt="NFT Twins Preview" width="250"/></td>
+</tr>
+<tr>
+<td align="center">Home Dashboard</td>
+<td align="center">AR Map Preview</td>
+<td align="center">NFT Twins & Rewards</td>
+</tr>
+</table>
+
+
+Highlights:
+	•	Real-time pickup tracking & rewards
+	•	Locate nearby SmartBins (>70% full) using AR
+	•	View cNFT Twins representing ESG compliance & recycling history
+
+⸻
+
 📱 Key Features
 
-1. Schedule Pickups
+<details>
+<summary>Click to expand Key Features</summary>
+
+
+Schedule Pickups
 	•	Book e-waste or recycling pickups in a few taps
 	•	Assign SmartBins to scheduled pickups
 	•	Track pickup status in real-time
 
-2. SmartBin Telemetry
-	•	Sensors for fill level, weight, temperature, and contamination
+SmartBin Telemetry
+	•	Sensors track fill level, weight, temperature, and contamination
 	•	Historical time-series tracking for trend analysis
 	•	Automated Solana rewards for recycling deposits
 	•	Over-the-air (OTA) firmware updates via Expo
 
-3. Solana Rewards & NFT Twins
+Solana Rewards & NFT Twins
 	•	Tokens: PLY, CARB, EWASTE
 	•	NFT Twins for batch ESG compliance and recycling history
 	•	Instant wallet updates via Solana Pay
 	•	Gamified missions, leaderboards, and achievements
 
-4. Predictive Analytics & ESG
-	•	Compute fill levels, contamination trends, and predicted collection times
+Predictive Analytics & ESG
+	•	Predict fill levels, contamination trends, and collection times
 	•	ESG impact metrics (e.g., carbon footprint)
 	•	AI/LLM assistant for pickup, reward, and environmental queries
 
-5. Gamification
+Gamification
 	•	Missions, challenges, and eco-badges
 	•	Leaderboards for individuals and organizations
 	•	Unlock rewards based on recycling and ESG compliance
+
+</details>
+
+
 
 ⸻
 
 📋 Mobile App Prompts
 
-Category	Prompt Example	Action/Flow
+<details>
+<summary>Click to expand Prompts & Actions</summary>
+
+
+Category	Prompt Example	Action / Flow
 Pickups	“Schedule an e-waste pickup for tomorrow”	Books pickup → assigns SmartBin → triggers rewards
 SmartBins	“Show bins >70% full”	Displays AR map → fetches telemetry → updates dashboard
 SmartBins	“Add new IoT reading”	Updates historical data → recomputes analytics → triggers rewards
@@ -51,12 +86,17 @@ ESG	“Show my carbon footprint this month”	Computes from IoT history & NFT Tw
 Predictions	“Predict next collection time for Bin #12”	Uses historical telemetry + ML → displays ETA
 Gamification	“Show leaderboard”	Retrieves missions and scores → updates display
 
+</details>
+
+
 
 ⸻
 
-🔧 Mobile App Architecture
+🔧 Architecture & IoT Flow
 
-IoT + Analytics Flow
+<details>
+<summary>Click to expand Architecture Diagram</summary>
+
 
 graph LR
     A[User deposits waste] --> B[SmartBin records IoT telemetry]
@@ -70,39 +110,53 @@ graph LR
 	•	Reward Triggers: Automated Solana token issuance
 	•	NFT Twins: Track batch ESG compliance and recycling history
 
+</details>
+
+
+
 ⸻
 
-### Environment Variables
+🔑 Environment Variables
 
-Variable	Description	Example / Notes
-NEXT_PUBLIC_SOLANA_RPC_URL	RPC endpoint for Solana blockchain	https://api.mainnet-beta.solana.com
-NEXT_PUBLIC_SUPABASE_URL	URL for Supabase project	https://xyzcompany.supabase.co
+<details>
+<summary>Click to expand Environment Variables</summary>
+
+
+Variable	Description	Example
+NEXT_PUBLIC_SOLANA_RPC_URL	Solana RPC endpoint	https://api.mainnet-beta.solana.com
+NEXT_PUBLIC_SUPABASE_URL	Supabase URL	https://xyzcompany.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY	Supabase anon/public key	public-anon-key
-PLY_MINT	Mint address for PLY token	PLY_TOKEN_MINT_ADDRESS
-CARB_MINT	Mint address for CARB token	CARB_TOKEN_MINT_ADDRESS
-EWASTE_MINT	Mint address for EWASTE token	EWASTE_TOKEN_MINT_ADDRESS
-REWARD_WALLET_ADDRESS	Public key of wallet distributing rewards	REWARD_WALLET_PUBLIC_KEY
-REWARD_WALLET_TOKEN_ACCOUNT	Token account of reward wallet	TOKEN_ACCOUNT_PUBLIC_KEY
-PRIVY_APP_ID	Privy.io app ID for authentication	privy-app-id
-CHAINLINK_API_KEY	API key for Chainlink oracles	chainlink-key
-BUBBLEGUM_TREE_ID	ID of the Bubblegum Merkle Tree for cNFTs	TREE_PUBLIC_KEY
-CANDY_MACHINE_ID	ID of the deployed Candy Machine	CANDY_MACHINE_PUBLIC_KEY
-HELIUS_API_KEY	API key for Helius Webhooks	helius-api-key
-NEXT_PUBLIC_ENV	Environment tag for app (dev/test/prod)	production
+PLY_MINT	PLY token mint address	PLY_TOKEN_MINT_ADDRESS
+CARB_MINT	CARB token mint address	CARB_TOKEN_MINT_ADDRESS
+EWASTE_MINT	EWASTE token mint address	EWASTE_TOKEN_MINT_ADDRESS
+REWARD_WALLET_ADDRESS	Reward wallet public key	REWARD_WALLET_PUBLIC_KEY
+PRIVY_APP_ID	Privy authentication ID	privy-app-id
+CHAINLINK_API_KEY	Chainlink oracle API key	chainlink-key
+BUBBLEGUM_TREE_ID	Bubblegum Merkle Tree ID	TREE_PUBLIC_KEY
+CANDY_MACHINE_ID	Candy Machine ID	CANDY_MACHINE_PUBLIC_KEY
+HELIUS_API_KEY	Helius Webhook API key	helius-api-key
+NEXT_PUBLIC_ENV	Environment (dev/test/prod)	production
+
+</details>
+
 
 
 ⸻
 
-🚀 Getting Started (Expo + React Native)
+🚀 Getting Started
+
+<details>
+<summary>Click to expand Setup & Installation</summary>
+
 
 Prerequisites
-	•	Node.js: ≥16
-	•	npm: ≥8
+	•	Node.js ≥16
+	•	npm ≥8
 	•	Expo CLI: npm install -g expo-cli
-	•	Solana CLI: For blockchain interactions
-	•	Supabase: For transaction logging
-	•	Privy.io: For authentication
-	•	TensorFlow.js: For predictive analytics
+	•	Solana CLI
+	•	Supabase (backend)
+	•	Privy.io (authentication)
+	•	TensorFlow.js (predictive analytics)
 	•	Solana Pay SDK: @solana/pay, @solana/web3.js, @solana/spl-token
 
 Installation
@@ -111,80 +165,29 @@ git clone https://github.com/PolymersNetwork/polymers-recycling-app.git
 cd polymers-recycling-app
 npm ci
 cp .env.example .env
-# Configure environment variables in .env
-npx expo start  # Start development server
+# Configure environment variables
+npx expo start
 
+Build & OTA Deployment
 
-⸻
-
-📦 Build & OTA Deployment (Expo)
-
-Build Production Apps
-
-npx eas build --platform ios      # iOS
-npx eas build --platform android  # Android
-
-Over-the-Air (OTA) Updates
-
+# iOS
+npx eas build --platform ios
+# Android
+npx eas build --platform android
+# OTA Updates
 npx eas update
 
+</details>
+
+
 
 ⸻
 
-🧪 Testing
-
-Run unit and integration tests to ensure reliability:
-
-npm run test
-
-Tests cover:
-	•	IoT data ingestion
-	•	Analytics helpers
-	•	Solana reward workflows
-	•	Mobile prompts and gamification
-
-⸻
-
-🛠 Error Monitoring & Rollbacks
-	•	Monitoring: Use Sentry for telemetry, blockchain, and app error tracking
-	•	Rollbacks: Versioned deployments for Solana program updates to enable safe rollbacks
-
-⸻
-
-### Configuring a Metaplex Candy Machine for cNFT Twin Minting
-
-Polymers uses Metaplex Candy Machine v3 and Bubblegum to mint compressed NFT (cNFT) Twins for SmartBin batches.
-
-Key Points
-	•	Compressed NFTs (cNFTs): Low-cost, high-volume minting (~$0.00001 per NFT)
-	•	Batch Minting: Mint multiple cNFT Twins in one transaction
-	•	Integration:
-	•	Solana Pay: Combines mint + reward tokens
-	•	Helius Webhooks: Tracks NFT_MINT and TRANSFER events
-	•	Supabase: Logs batch data and ESG metrics
-	•	Gamification: cNFT Twins grant eco-badges, leaderboard points, and AR overlays
-
-Setup Steps
-	1.	Deploy Bubblegum Merkle Tree (~16,000 NFTs capacity)
-	2.	Configure Candy Machine with cNFT support
-	3.	Prepare metadata with ESG attributes
-	4.	Batch mint cNFT Twins + PLY tokens via Solana Pay
-	5.	Display QR code in the app (AR Wayfinder)
-	6.	Verify mints via Helius Webhook
-	7.	Log to Supabase and update leaderboard/dashboard
-
-Example Code Snippets
-	•	scripts/setupCandyMachine.js → Deploy Candy Machine and Merkle Tree
-	•	components/BatchMintReward.js → React Native component to mint cNFTs and generate Solana Pay QR
-	•	server/webhook.js → Node.js webhook handler to update Supabase
-
-⸻
-
-🌍 Why Polymers Mobile App?
-	•	Simplifies recycling for homeowners and businesses
-	•	Gamifies eco-friendly actions with tokens and NFTs
-	•	Delivers real-time analytics and ESG insights
-	•	Ensures transparent, secure blockchain-based rewards
+🌍 Why Polymers?
+	•	Simplifies recycling for individuals & businesses
+	•	Gamifies eco-friendly actions with tokens & NFTs
+	•	Provides real-time analytics & ESG insights
+	•	Secure, transparent blockchain-based rewards
 
 ⸻
 
