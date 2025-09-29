@@ -15,6 +15,8 @@
 </div>
 </div>
 
+**Replace the hero banner URL (`https://via.placeholder.com/1200x300?text=Polymers+Hero+Banner`) with your actual banner image.**
+
 ⸻
 
 🎨 **App Screenshots (Responsive)**
@@ -40,6 +42,8 @@
 </div>
 
 </div>
+
+**Replace screenshot URLs (`https://via.placeholder.com/260x500?text=...`) with your actual app screenshot images.**
 
 **Highlights:**
 - ✅ Real-time pickup tracking & rewards via Solana Pay
@@ -236,14 +240,14 @@ graph TD
 
 ```mermaid
 graph TD
-    A["[Helium IoT Icon] SmartBins IoT (Helium DePIN)"] --> B["[Polymers Logo] Polymers Protocol APIs"]
-    B --> C["[Solana Logo] Solana On-Chain Programs"]
-    C --> D["[Jupiter Logo] Liquidity (Jupiter)"]
-    C --> E["[Raydium Logo] Staking (Raydium)"]
-    C --> F["[Pyth+Chainlink Logo] Oracles (Pyth+Chainlink)"]
-    C --> G["[Metaplex Logo] NFT Twins (Metaplex)"]
-    C --> H["[GPT Icon] AI Chat / ESG Assistant"]
-    B --> I["[Dialect Logo] Messaging + Blinks (Dialect)"]
+    A["<img src='https://assets-global.website-files.com/60f1dc1ab2b21b7a4af4672d/614cd3eb78103a5e1c5e7e64_helium_logo_white.png' width='32' height='32'/> SmartBins IoT (Helium DePIN)"] --> B["<img src='https://your-polymers-logo-url.com/polymers.png' width='32' height='32'/> Polymers Protocol APIs"]
+    B --> C["<img src='https://solana.com/assets/mainnet/brand/solana-logo-dark.svg' width='32' height='32'/> Solana On-Chain Programs"]
+    C --> D["<img src='https://jup.ag/favicon.ico' width='32' height='32'/> Liquidity (Jupiter)"]
+    C --> E["<img src='https://raydium.io/favicon.ico' width='32' height='32'/> Staking (Raydium)"]
+    C --> F["<img src='https://pyth.network/favicon.ico' width='32' height='32'/> Oracles (Pyth+Chainlink)"]
+    C --> G["<img src='https://metaplex.com/favicon.ico' width='32' height='32'/> NFT Twins (Metaplex)"]
+    C --> H["<img src='https://openai.com/favicon.ico' width='32' height='32'/> AI Chat / ESG Assistant"]
+    B --> I["<img src='https://dialect.to/favicon.ico' width='32' height='32'/> Messaging + Blinks (Dialect)"]
     I --> J[Mobile & Web Apps]
     J --> K[Users: Wallets + Rewards + ESG]
 
@@ -289,9 +293,48 @@ graph TD
 - **Apps/Users**: Mobile/Web interfaces for wallets and ESG (#C8E6C9).
 - **Container**: Dark gray background (#1E1E1E), light gray borders (#F5F5F5), white text (#FFFFFF).
 
-**Logo Placeholders**:
-- Replace `[Helium IoT Icon]`, `[Polymers Logo]`, etc., with actual URLs (e.g., `![Helium](https://your-logo-url.com/helium.png)`).
-- Use 32x32px PNG/SVG logos for clarity.
+**Logo Embeds**:
+- **Helium**: `https://assets-global.website-files.com/60f1dc1ab2b21b7a4af4672d/614cd3eb78103a5e1c5e7e64_helium_logo_white.png`
+- **Polymers**: Placeholder (`https://your-polymers-logo-url.com/polymers.png`); replace with your logo.
+- **Solana**: `https://solana.com/assets/mainnet/brand/solana-logo-dark.svg`
+- **Jupiter**: `https://jup.ag/favicon.ico`
+- **Raydium**: `https://raydium.io/favicon.ico`
+- **Pyth**: `https://pyth.network/favicon.ico`
+- **Chainlink**: Combined with Pyth in label; use Pyth logo for simplicity.
+- **Metaplex**: `https://metaplex.com/favicon.ico`
+- **GPT**: `https://openai.com/favicon.ico` (proxy for GPT; replace if using a specific provider logo).
+- **Dialect**: `https://dialect.to/favicon.ico`
+
+**SVG Generation Instructions**:
+1. **Install mermaid-cli**:
+   ```bash
+   npm install -g @mermaid-js/mermaid-cli
+   ```
+2. **Save Mermaid Code**:
+   - Copy the Mermaid code above to `architecture.mmd`.
+3. **Generate Base SVG**:
+   ```bash
+   mmdc -i architecture.mmd -o architecture.svg -b #1E1E1E
+   ```
+4. **Embed Logos in SVG**:
+   - Open `architecture.svg` in Inkscape or Figma.
+   - Replace `<img src='...'>` placeholders with actual `<image>` tags at node coordinates (e.g., x=10, y=10, width=32, height=32).
+   - Example:
+     ```xml
+     <image x="10" y="10" width="32" height="32" xlink:href="https://assets-global.website-files.com/60f1dc1ab2b21b7a4af4672d/614cd3eb78103a5e1c5e7e64_helium_logo_white.png"/>
+     ```
+5. **Convert to PNG** (optional):
+   ```bash
+   mmdc -i architecture.mmd -o architecture.png -b #1E1E1E
+   ```
+6. **Embed in README**:
+   - Upload `architecture.svg` or `architecture.png` to your repo (e.g., `/docs/assets/`).
+   - Replace the Mermaid block with:
+     ```markdown
+     ![Architecture Diagram](/docs/assets/architecture.png)
+     ```
+
+**Note**: If you lack a Polymers logo, I can generate a mockup (e.g., green-themed recycling icon) upon request. Some favicon URLs (e.g., Jupiter, Raydium) may need resizing to 32x32px in an SVG editor for consistency.
 
 </details>
 
