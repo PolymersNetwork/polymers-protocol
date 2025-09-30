@@ -1,37 +1,47 @@
 
-♻️ Polymers Protocol – Full Stack Blockchain Platform
+♻️ # ♻️ Polymers Protocol – Full Stack Blockchain Platform
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue)](https://www.typescriptlang.org/)  
+[![Solana](https://img.shields.io/badge/Solana-Mainnet-green)](https://solana.com/)  
+[![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E)](https://supabase.com/)  
+[![Swagger](https://img.shields.io/badge/Swagger-API_Docs-brightgreen)](https://api.polymers.io/swagger)  
+[![AI](https://img.shields.io/badge/Feature-AI_Chat-FF69B4)](https://docs.polymers.io/ai)  
+[![AR](https://img.shields.io/badge/Feature-AR_Navigation-00CED1)](https://docs.polymers.io/ar)  
+[![ESG](https://img.shields.io/badge/Feature-ESG_Tracking-32CD32)](https://docs.polymers.io/esg)
 
-⸻
+---
 
-Overview
+## Overview
 
-Polymers Protocol is a Blockchain-as-a-Service (BaaS) platform on Solana, powering SmartBin—a next-generation waste management, ESG tracking, and gamified reward system.
+**Polymers Protocol** is a **Blockchain-as-a-Service (BaaS)** platform on **Solana**, powering **SmartBin**—a next-generation **waste management, ESG tracking, and gamified reward system**.  
 
-Key integrations:
-	•	Helium DePIN – IoT-enabled SmartBins for telemetry
-	•	Hivemapper – Real-time mapping, AR navigation, city coverage
-	•	AI Analytics – ESG tracking, predictive insights, reward optimization
-	•	Solana Ecosystem Tools – Jupiter, Raydium, Metaplex, Solana Pay, Blinks
+Key integrations:  
+- **Helium DePIN** – IoT-enabled SmartBins for telemetry  
+- **Hivemapper** – Real-time mapping, AR navigation, city coverage  
+- **AI Analytics** – ESG tracking, predictive insights, reward optimization  
+- **Solana Ecosystem Tools** – Jupiter, Raydium, Metaplex, Solana Pay, Blinks  
 
-🌐 Live Demo / MVP: Website & Dashboard
-📖 Docs: /docs/introduction.md | /docs/helium-integration.md
+🌐 **Live Demo / MVP:** [Website & Dashboard](https://poiymers-website.vercel.app)  
+📖 **Docs:** [/docs/introduction.md](./docs/introduction.md) | [/docs/helium-integration.md](./docs/helium-integration.md)
 
-⸻
+---
 
-Highlights
-	•	SmartBins IoT: Fill, contamination, weight, temp (~$0.00001 / 24KB)
-	•	Wallets & Tokens: Phantom, Solflare, Backpack, Privy, embedded wallets; SOL, PLY, CARB, USDC
-	•	NFT Twins: Gamified Metaplex NFTs with staking, evolution, ESG-linked rewards
-	•	Payments & Token Swap: Solana Pay, Jupiter, Raydium, Blinks; QR/NFC & manual fallback
-	•	ESG Analytics: Track plastic collected, CO₂ reduction, leaderboards, predictive LSTM models
-	•	AI Chat & AR Navigation: GPT-powered chat with PLY billing; Hivemapper + Mapbox AR overlays
-	•	Rewards & Gamification: Badges, NFT evolution, leaderboard rankings, yield staking
+## Highlights
 
-⸻
+- **SmartBins IoT:** Fill, contamination, weight, temp (~$0.00001 / 24KB)  
+- **Wallets & Tokens:** Phantom, Solflare, Backpack, Privy, embedded wallets; SOL, PLY, CARB, USDC  
+- **NFT Twins:** Gamified Metaplex NFTs with staking, evolution, ESG-linked rewards  
+- **Payments & Token Swap:** Solana Pay, Jupiter, Raydium, Blinks; QR/NFC & manual fallback  
+- **ESG Analytics:** Track plastic collected, CO₂ reduction, leaderboards, predictive LSTM models  
+- **AI Chat & AR Navigation:** GPT-powered chat with PLY billing; Hivemapper + Mapbox AR overlays  
+- **Rewards & Gamification:** Badges, NFT evolution, leaderboard rankings, yield staking  
 
-Architecture Overview
+---
 
+## Architecture Overview
+
+```mermaid
 flowchart TD
     A[SmartBins IoT: Helium DePIN] --> B[Polymers Protocol APIs]
     B --> C[Solana On-Chain Programs]
@@ -41,15 +51,6 @@ flowchart TD
     B --> G[Dialect + AI Chat: Notifications & Assistance]
     G --> H[Dashboard & Mobile App]
     H --> I[Users: Wallets, Rewards, ESG Metrics]
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#cff,stroke:#333,stroke-width:2px
-    style C fill:#9cf,stroke:#333,stroke-width:2px
-    style D fill:#9f9,stroke:#333,stroke-width:2px
-    style E fill:#f99,stroke:#333,stroke-width:2px
-    style F fill:#ff9,stroke:#333,stroke-width:2px
-    style G fill:#fcf,stroke:#333,stroke-width:2px
-    style H fill:#cfc,stroke:#333,stroke-width:2px
-    style I fill:#9fc,stroke:#333,stroke-width:2px
 
 
 ⸻
