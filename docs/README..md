@@ -1,16 +1,8 @@
+# Polymers Protocol
 
-Got it! Here’s a GitHub-ready README version for your Polymers Protocol project. I’ve formatted it cleanly with Markdown styling suitable for GitHub, including badges, code blocks, tables, and links.
+Polymers Protocol is a decentralized platform on Solana powering SmartBin, a next-gen IoT waste management system. It integrates Helium DePIN for long-range connectivity and Hivemapper APIs for real-time geospatial validation. The protocol rewards sustainable behavior using tokens (HNT, IOT, PLY, CARB, EWASTE, HONEY) and provides ESG analytics for cities and enterprises.
 
 ⸻
-
- Polymers Protocol
-
- 
-
- 
-
- 
-
 
 Table of Contents
 	•	Overview
@@ -144,6 +136,7 @@ Community:
 ⸻
 
 Resources
+	•	Polymers Protocol: github.com/polymers-protocol/polymers
 	•	Helium Docs: docs.helium.com/solana
 	•	Hivemapper Docs: docs.hivemapper.com
 	•	Solana Cookbook: solanacookbook.com
