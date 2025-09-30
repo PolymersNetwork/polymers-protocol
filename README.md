@@ -11,36 +11,38 @@
 
 ---
 
-## Overview
+Here’s a polished GitHub README section with your updated Overview, Highlights, and Architecture, ready to merge into your main README. I’ve optimized it for clarity, formatting, and GitHub rendering:
 
-**Polymers Protocol** is a **Blockchain-as-a-Service (BaaS)** platform on **Solana**, powering **SmartBin**—a next-generation **waste management, ESG tracking, and gamified reward system**.  
+⸻
 
-Key integrations:  
-- **Helium DePIN** – IoT-enabled SmartBins for telemetry  
-- **Hivemapper** – Real-time mapping, AR navigation, city coverage  
-- **AI Analytics** – ESG tracking, predictive insights, reward optimization  
-- **Solana Ecosystem Tools** – Jupiter, Raydium, Metaplex, Solana Pay, Blinks  
+Overview
 
-🌐 **Live Demo / MVP:** [Website & Dashboard](https://poiymers-website.vercel.app)  
-📖 **Docs:** [/docs/introduction.md](./docs/introduction.md) | [/docs/helium-integration.md](./docs/helium-integration.md)
+Polymers Protocol is a Blockchain-as-a-Service (BaaS) platform on Solana, powering SmartBin—a next-generation waste management, ESG tracking, and gamified reward system. It integrates:
+	•	Helium DePIN – IoT-enabled SmartBins for telemetry
+	•	Hivemapper APIs – Real-time mapping, AR navigation, city coverage
+	•	AI Analytics – ESG tracking, predictive insights, reward optimization
+	•	Solana Ecosystem Tools – Jupiter, Raydium, Metaplex, Solana Pay, Blinks
 
----
+The protocol rewards sustainable behavior using tokens (HNT, IOT, PLY, CARB, EWASTE, HONEY) and provides ESG analytics for municipalities and enterprises.
 
-## Highlights
+🌐 Live Demo / MVP: Website & Dashboard
+📖 Docs: /docs/introduction.md | /docs/helium-integration.md
 
-- **SmartBins IoT:** Fill, contamination, weight, temp (~$0.00001 / 24KB)  
-- **Wallets & Tokens:** Phantom, Solflare, Backpack, Privy, embedded wallets; SOL, PLY, CARB, USDC  
-- **NFT Twins:** Gamified Metaplex NFTs with staking, evolution, ESG-linked rewards  
-- **Payments & Token Swap:** Solana Pay, Jupiter, Raydium, Blinks; QR/NFC & manual fallback  
-- **ESG Analytics:** Track plastic collected, CO₂ reduction, leaderboards, predictive LSTM models  
-- **AI Chat & AR Navigation:** GPT-powered chat with PLY billing; Hivemapper + Mapbox AR overlays  
-- **Rewards & Gamification:** Badges, NFT evolution, leaderboard rankings, yield staking  
+⸻
 
----
+Highlights
+	•	SmartBins IoT: Monitors fill level, contamination, weight, temperature (~$0.00001 per 24KB)
+	•	Wallets & Tokens: Phantom, Solflare, Backpack, Privy; SOL, PLY, CARB, USDC
+	•	NFT Twins: Gamified Metaplex NFTs with staking, evolution, ESG-linked rewards
+	•	Payments & Token Swap: Solana Pay, Jupiter, Raydium, Blinks; QR/NFC & manual fallback
+	•	ESG Analytics: Track plastic collected, CO₂ reduction, leaderboards, predictive LSTM models
+	•	AI Chat & AR Navigation: GPT-powered chat with PLY billing; Hivemapper + Mapbox AR overlays
+	•	Rewards & Gamification: Badges, NFT evolution, leaderboard rankings, yield staking
 
-## Architecture Overview
+⸻
 
-```mermaid
+Architecture Overview
+
 flowchart TD
     A[SmartBins IoT: Helium DePIN] --> B[Polymers Protocol APIs]
     B --> C[Solana On-Chain Programs]
@@ -50,7 +52,6 @@ flowchart TD
     B --> G[Dialect + AI Chat: Notifications & Assistance]
     G --> H[Dashboard & Mobile App]
     H --> I[Users: Wallets, Rewards, ESG Metrics]
-
 
 ⸻
 
