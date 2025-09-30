@@ -1,5 +1,4 @@
-
-♻️ # ♻️ Polymers Protocol – Full Stack Blockchain Platform
+# ♻️ Polymers Protocol – Full Stack Blockchain Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue)](https://www.typescriptlang.org/)  
