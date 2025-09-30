@@ -1,29 +1,20 @@
-# ♻️ Polymers Protocol – Full Stack Blockchain Platform
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
-[![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue)](https://www.typescriptlang.org/)  
-[![Solana](https://img.shields.io/badge/Solana-Mainnet-green)](https://solana.com/)  
-[![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E)](https://supabase.com/)  
-[![Swagger](https://img.shields.io/badge/Swagger-API_Docs-brightgreen)](https://api.polymers.io/swagger)  
-[![AI](https://img.shields.io/badge/Feature-AI_Chat-FF69B4)](https://docs.polymers.io/ai)  
-[![AR](https://img.shields.io/badge/Feature-AR_Navigation-00CED1)](https://docs.polymers.io/ar)  
-[![ESG](https://img.shields.io/badge/Feature-ESG_Tracking-32CD32)](https://docs.polymers.io/esg)
+♻️ Polymers Protocol – Full Stack Blockchain Platform
 
----
-
-Here’s a polished GitHub README section with your updated Overview, Highlights, and Architecture, ready to merge into your main README. I’ve optimized it for clarity, formatting, and GitHub rendering:
 
 ⸻
 
 Overview
 
-Polymers Protocol is a Blockchain-as-a-Service (BaaS) platform on Solana, powering SmartBin—a next-generation waste management, ESG tracking, and gamified reward system. It integrates:
+Polymers Protocol is a Blockchain-as-a-Service (BaaS) platform on Solana, powering SmartBin—a next-generation waste management, ESG tracking, and gamified reward system.
+
+It integrates:
 	•	Helium DePIN – IoT-enabled SmartBins for telemetry
 	•	Hivemapper APIs – Real-time mapping, AR navigation, city coverage
 	•	AI Analytics – ESG tracking, predictive insights, reward optimization
 	•	Solana Ecosystem Tools – Jupiter, Raydium, Metaplex, Solana Pay, Blinks
 
-The protocol rewards sustainable behavior using tokens (HNT, IOT, PLY, CARB, EWASTE, HONEY) and provides ESG analytics for municipalities and enterprises.
+The protocol rewards sustainable behavior using tokens (HNT, IOT, PLY, CARB, EWASTE, HONEY) and provides ESG analytics for cities and enterprises.
 
 🌐 Live Demo / MVP: Website & Dashboard
 📖 Docs: /docs/introduction.md | /docs/helium-integration.md
@@ -53,12 +44,12 @@ flowchart TD
     G --> H[Dashboard & Mobile App]
     H --> I[Users: Wallets, Rewards, ESG Metrics]
 
+
 ⸻
 
 Screenshots
 
 Web Dashboard	Mobile App	SmartBin Map / AR
-		
 Analytics, NFT Twins, ESG Metrics	Wallet, AI Chat, Scan-to-Pay	Real-time AR navigation and telemetry
 
 
@@ -82,7 +73,7 @@ npm install
 
 Environment
 
-Create .env:
+Create a .env file:
 
 NEXT_PUBLIC_SUPABASE_URL=https://<your-supabase-url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
@@ -157,11 +148,11 @@ README.md
 ⸻
 
 Contributing
-	•	TypeScript + monorepo standards
-	•	Blockchain ops via MCP actions (/apps/backend)
+	•	Follow TypeScript + monorepo standards
+	•	Blockchain operations via MCP actions (/apps/backend)
 	•	Fallbacks: Wallets (Phantom → Privy → Biometric), Maps (AR → Mapbox → Static), Scanning (QR/NFC → Manual)
 	•	Offline caching for SmartBin telemetry
-	•	Issues & PRs: GitHub
+	•	Issues & Pull Requests: GitHub
 
 ⸻
 
