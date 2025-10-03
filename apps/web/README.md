@@ -122,65 +122,80 @@ A blockchain-powered, AI-driven platform for polymer and e-waste recycling, enab
 This diagram visualizes the **Polymers Protocol full-stack flow**, showing **frontend interactions, backend processing, IoT telemetry, AI/LLM, token flows, NFT Twins, dashboards, Solana Pay, Maps/AR, ESG tracking, and CI/CD pipelines**.
 
 ```mermaid
-graph TD
-    %% IoT Layer
-    A[SmartBin Sensors<br>Fill, Weight, Temp, Contamination<br>Helium DePIN] -->|Telemetry & Material Data| B[Supabase Realtime DB]
+%% Full-Stack Architecture: Polymers Recycling Dashboard
+%% Colors: dark green (#064635), sand (#D4B483), light gray (#E5E5E5), white (#FFFFFF)
 
-    %% AI ESG Scanner
-    B -->|Material Detection & ESG Metrics| C[AI ESG Scanner<br>TensorFlow.js + Expo-camera]
-    C -->|ESG Calculations| B
+flowchart TB
+    style Frontend fill:#D4B483,stroke:#064635,stroke-width:2px
+    style Backend fill:#E5E5E5,stroke:#064635,stroke-width:2px
+    style Blockchain fill:#FFFFFF,stroke:#064635,stroke-width:2px
+    style IoT fill:#064635,stroke:#D4B483,stroke-width:2px
+    style Oracles fill:#E5E5E5,stroke:#064635,stroke-width:2px
 
-    %% Oracles & Token Flow
-    B -->|Real-Time Data| D[Oracles Layer<br>Pyth + Chainlink + Internal DB]
-    D -->|Validated Metrics| E[Token Flow Engine<br>PLY, CARB, EWASTE, HONEY, HNT<br>Bezier Animations]
+    subgraph Frontend["Frontend (Dashboard & Website)"]
+        Dashboards["Role-based Dashboards<br>(analytics, rewards, leaderboards)"]
+        ARMap["Maps & AR Navigation"]
+        LLM["AI / LLM Assistant<br>Swap, Forecast, NFT queries"]
+        NFTUI["NFT Twins UI"]
+    end
 
-    %% NFT Twins & Gamification
-    E -->|Minting & Rewards| F[NFT Twins & Gamification<br>Metaplex cNFTs, Leaderboards, Missions]
-    F -->|Display Rewards| G[Dashboards<br>React Native / Next.js]
+    subgraph IoT["SmartBins / Helium DePIN"]
+        SmartBin["IoT SmartBins<br>Fill, Weight, Temperature, Contamination"]
+        Helium["Helium DePIN LoRaWAN<br>Real-time Telemetry"]
+    end
 
-    %% Solana Pay Integration
-    G -->|Swap/Rewards| H[Solana Pay Wallets<br>PLY, CARB, USDC, EWASTE]
-    H -->|Transaction Logging| B
+    subgraph Backend["Backend & Services"]
+        Supabase["Supabase Realtime DB<br>iot_readings, token_flows, esg_metrics"]
+        IoTProcessor["IoT Processing<br>computeIoTAnalytics, batch telemetry"]
+        RewardEngine["Token Flow Engine<br>calculateReward"]
+        AIAnalytics["Predictive Analytics<br>LSTM Models & ESG Forecasts"]
+        NFTMint["NFT Minting Service<br>Metaplex NFTs for Batches"]
+    end
 
-    %% Predictive Analytics
-    B -->|Historical Data| I[Predictive Analytics<br>LSTM Models, ESG Forecasts, Maintenance Scheduling]
-    I -->|Insights & Predictions| G
+    subgraph Oracles["Oracle Integration Layer"]
+        Pyth["Pyth: CO₂e Metrics"]
+        Chainlink["Chainlink: Token Prices"]
+        InternalDB["Internal Emission DB"]
+    end
 
-    %% AI & LLM Agent
-    G -->|User Queries| J[AI & LLM Agent<br>Dialect + GPT/Grok]
-    J -->|Autonomous Actions<br>Swap, Transfer, Forecast, Mint NFT| H
-    J -->|Insights & Recommendations| G
+    subgraph Blockchain["Solana Blockchain"]
+        SolanaPrograms["NFT, Rewards, Staking Programs"]
+        SolanaPay["Solana Pay Token Swaps<br>PLY, CARB, USDC, EWASTE"]
+    end
 
-    %% Maps & Wayfinding
-    B -->|Geospatial & Bin Data| K[Maps & AR Layer<br>Hivemapper + Mapbox]
-    K -->|Route & Location Info| G
+    %% Frontend → Backend
+    Dashboards -->|Queries & Updates| Supabase
+    ARMap -->|Real-time Telemetry| Supabase
+    LLM -->|API Requests| Backend
+    NFTUI -->|NFT Info| NFTMint
 
-    %% ESG Tracking & Compliance
-    B -->|Telemetry & ESG Metrics| L[Compliance & ESG Tracking<br>Carbon Footprint, Audit Logs, KPIs]
-    L --> G
-    L -->|Anomaly Alerts| M[Sentry]
+    %% IoT → Backend
+    SmartBin --> Helium
+    Helium -->|Telemetry| IoTProcessor
+    IoTProcessor --> Supabase
+    IoTProcessor --> RewardEngine
 
-    %% CI/CD Layer
-    G -->|Build/Test| N[CI/CD Pipeline<br>Expo, Vercel, GitHub Actions]
-    B -->|Backend Deploy| N
-    D -->|Smart Contracts Deploy| N
-    N -->|OTA Updates| A
+    %% Backend → Oracles
+    RewardEngine -->|Fetch ESG & Price Data| Pyth
+    RewardEngine --> Chainlink
+    RewardEngine --> InternalDB
+    AIAnalytics -->|Predictive Models| Supabase
 
-    %% Styling
-    style A fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
-    style B fill:#F4A261,stroke:#1A3C34,color:#1A3C34
-    style C fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
-    style D fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
-    style E fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
-    style F fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
-    style G fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
-    style H fill:#F4A261,stroke:#1A3C34,color:#1A3C34
-    style I fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
-    style J fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
-    style K fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
-    style L fill:#F4A261,stroke:#1A3C34,color:#1A3C34
-    style M fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
-    style N fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
+    %% Backend → Blockchain
+    RewardEngine --> SolanaPrograms
+    NFTMint --> SolanaPrograms
+    SolanaPay --> SolanaPrograms
+
+    %% Notes
+    classDef darkgreen fill:#064635,stroke:#D4B483,stroke-width:2px,color:white;
+    classDef sand fill:#D4B483,stroke:#064635,stroke-width:2px,color:#064635;
+    classDef lightgray fill:#E5E5E5,stroke:#064635,stroke-width:2px,color:#064635;
+    class Frontend,Balances sand;
+    class Backend,RewardEngine,AIAnalytics lightgray;
+    class Blockchain SolanaPrograms,SolanaPay;
+    class IoT,Helium darkgreen;
+    class Oracles,Pyth,Chainlink,InternalDB lightgray;
+```
 
 🖼 Rendering Instructions
 	1.	Install Mermaid CLI:
