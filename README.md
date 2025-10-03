@@ -1,261 +1,338 @@
-# ♻️ Polymers Protocol
+## ♻️ Polymers Protocol
 
-**Polymers Protocol** is a **full-stack Blockchain-as-a-Service (BaaS)** platform built on **Solana**, powering **SmartBin**—an IoT-enabled, gamified waste management system with ESG tracking, token rewards, and NFT Twins. The full-stack architecture integrates **frontend** (React Native/Next.js), **backend** (Fastify/MCP), **blockchain** (Solana, Metaplex, Jupiter, Raydium, Solana Pay), **IoT** (Helium DePIN), and **AI** (TensorFlow.js, GPT/Grok 3) for scalable, low-cost sustainability solutions. It features animated Bezier token flows, an enterprise-grade mobile dashboard, AI-driven ESG scanning, AR Wayfinding, and real-time multi-token analytics.
+**Polymers Protocol** is a full-stack Blockchain-as-a-Service (BaaS) platform built on [Solana](https://solana.com), powering **SmartBin**—an IoT-enabled, gamified waste management ecosystem for polymer and e-waste recycling. It integrates **ESG tracking**, **NFT Twins**, **tokenized rewards**, and the **Polymers Swap Panel** to drive transparency, sustainability, and user engagement.
 
-## 🌟 Full-Stack Features
+The platform combines:
+- **Frontend**: React Native mobile app and Next.js web dashboard with GSAP Bezier token flows and AR Wayfinder.
+- **Backend**: Fastify/MCP API, Supabase real-time database, and LSTM predictive analytics.
+- **Blockchain**: Solana Pay, Jupiter/Raydium swaps, Metaplex cNFTs, PYTH/Chainlink oracles, Helius RPC.
+- **IoT**: SmartBins with Helium DePIN, NB-IoT, Sigfox, and Hivemapper geospatial mapping.
+- **AI**: TensorFlow.js ESG scanner, OpenAI/Grok 3 agents via Dialect.
+- **Compliance**: GDPR, EU CSRD, ISO 14064-1, Plastic Pollution Treaty (INC-5.2, August 2025).
 
-### Frontend
-- **Interactive Dashboard** (`ESGImpact.tsx`): Animated dual flywheel, Bezier-curved multi-token flows (PLY, CARB, EWASTE, HONEY, HNT), sparkline charts, and tooltips using GSAP and `react-native-svg-charts`.
-- **Mobile App**: React Native/Expo with AI ESG Scanner (`expo-camera` + TensorFlow.js) and AR Wayfinder (Hivemapper + Mapbox).
-- **Web Dashboard**: Next.js with GSAP-driven Bezier flows (`TokenFlowDemoWeb.tsx`) for browser-based analytics.
-- **UI/UX**: Dark green (`#1A3C34`), sand (`#F4A261`), light gray (`#D3D3D3`), white (`#FFFFFF`); Satoshi-Bold (headings), Geist-Regular (body); GSAP animations.
+**Version**: 1.0 Beta  
+**Live Demo**: [demo.polymersnetwork.org](https://demo.polymersnetwork.org)  
+**Repository**: [github.com/polymers-protocol/smartbin](https://github.com/polymers-protocol/smartbin)
 
-### Backend
-- **Fastify/MCP API**: RESTful endpoints for user data, transactions, ESG metrics, and SmartBin telemetry.
-- **Supabase**: Real-time database with subscriptions for IoT telemetry and LSTM predictive analytics.
-- **Security**: AES-256 encryption, Privy.io wallet authentication (Phantom, Solflare, Backpack).
+---
 
-### Blockchain
-- **Solana**: 65K+ TPS for token minting (PLY, CARB, EWASTE, HONEY, HNT), NFT Twins (Metaplex cNFTs), and payments (Solana Pay).
-- **DeFi**: Jupiter/Raydium for swaps; Pyth/Chainlink oracles for ESG and price data.
-- **Blinks**: Dialect-powered notifications and actions.
+### 🌟 Full-Stack Features
 
-### IoT
-- **SmartBins**: Sensors for fill, weight, contamination, temperature via Helium DePIN (~$0.00001/24KB).
-- **OTA Updates**: Firmware deployment (`npm run ota:deploy`).
+- **Frontend**:
+  - Interactive dashboard (`ESGImpact.tsx`) with dual flywheel, Bezier-curved token flows (PLY, CARB, EWASTE, HONEY, SOL), sparkline charts, and GSAP tooltips.
+  - Mobile app (React Native/Expo) with AI ESG Scanner (expo-camera, TensorFlow.js), AR Wayfinder (Hivemapper/Mapbox), and [Polymers Swap Panel](#polymers-swap-panel).
+  - Web dashboard (Next.js) with GSAP-driven Bezier flows (`TokenFlowDemoWeb.tsx`).
+  - UI/UX: Dark green (#1A3C34), sand (#F4A261), light gray (#D3D3D3), white (#FFFFFF); Satoshi-Bold (headings), Geist-Regular (body).
 
-### AI
-- **AI ESG Scanner**: TensorFlow.js with `expo-camera` for material detection (>95% accuracy).
-- **AI Assistant**: GPT/Grok 3 via Dialect for user support.
-- **LSTM Analytics**: Predictive fill modeling via Supabase.
+- **Backend**:
+  - Fastify/MCP API for user data, transactions, and [SmartBin telemetry](#helium-depin-integration).
+  - Supabase for real-time telemetry and LSTM analytics.
+  - Security: AES-256 encryption, Privy.io wallet auth (Phantom, Solflare, Backpack).
 
-### Compliance
-- **Standards**: GDPR, EU CSRD, TCFD, ISO 14064-1, ISO 31000, Plastic Pollution Treaty (INC-5.2, August 2025).
-- **Security**: AES-256, Privy.io, Sentry monitoring.
-- **Offline Support**: AsyncStorage caching.
+- **Blockchain**:
+  - Solana (65K+ TPS) for token minting, [NFT Twins](#esg-nft-twins--rewards), and [Polymers Swap Panel](#polymers-swap-panel) via Solana Pay, Jupiter, Raydium.
+  - Oracles: PYTH (ESG metrics), Chainlink (token prices).
+  - Helius for RPC and event streaming.
 
-### Gamification
-- **NFT Twins**: Metaplex cNFTs with staking and evolution animations.
-- **Token Rewards**: Multi-token flows (PLY, CARB, EWASTE, HONEY, HNT) visualized via Bezier paths.
-- **Leaderboard**: Animated rankings with monthly rewards (100 CARB + 50 EWASTE for 1st).
+- **IoT**:
+  - SmartBins with [Helium DePIN](#helium-depin-integration), NB-IoT, Sigfox for fill, weight, contamination, temperature telemetry.
+  - Geospatial mapping via Hivemapper/Mapbox.
+  - OTA firmware updates (`npm run ota:deploy`).
 
-## 🚀 Live Demo / MVP
+- **AI & Agents**:
+  - AI ESG Scanner (>95% accuracy) for material detection.
+  - OpenAI Chat/Grok 3 agents via Dialect for user guidance and notifications.
+  - LSTM models for predictive fill and reward analytics.
 
-[Website & Dashboard](https://polymers.app) *(placeholder)*  
-[Mobile App](https://polymers.app/mobile) *(placeholder)*  
+- **Compliance & Security**:
+  - GDPR, EU CSRD, ISO 14064-1, ISO 31000 compliance.
+  - AES-256 encryption, Privy.io auth, Sentry monitoring.
+  - Offline support via AsyncStorage caching.
 
-### Animated Token Flow Demo
-Visualize multi-token flows (PLY, CARB, EWASTE, HONEY, HNT) along Bezier paths from **SmartBins → Supabase → Rewards → NFT Twins** using GSAP, React Native SVG, and real-time Supabase telemetry. Includes sparkline charts and touchable tooltips. See `/apps/mobile/src/components/TokenFlowDemo.tsx` or `/docs/demo.md`.
+---
 
-**Run the demo**:
-```bash
-npm install react-native-svg gsap-rn @fortawesome/react-native-fontawesome react-native-svg-charts
-cd apps/mobile
-npm run start
-```
+### 🏗️ Architecture Overview
 
-**Web Demo**:
-```bash
-cd apps/web
-npm install gsap @fortawesome/react-fontawesome
-npm run dev
-```
-
-## 📂 Full-Stack Architecture
+The Polymers Protocol integrates IoT, blockchain, AI, and frontend components to create a seamless waste management ecosystem. The diagram below illustrates the flow from SmartBins to user wallets, dashboards, and leaderboards.
 
 ```mermaid
 graph TD
-    A[SmartBin Sensors<br>Fill, Weight, Temp, Contamination] -->|LoRaWAN| B[Helium Hotspot<br>10km Range]
-    B -->|Telemetry| C[Supabase<br>Realtime Database]
-    C -->|Validated Data & ESG Calculations| D[Rewards System<br>PLY/CARB/EWASTE/HONEY/HNT]
-    D -->|NFT Minting| E[Metaplex cNFTs<br>NFT Twins]
-    C -->|Geospatial Validation| F[Hivemapper AR<br>Mapbox Overlays]
-    D -->|ATA Updates| G[Wallets<br>Phantom, Solflare, Backpack]
-    F -->|Map Data| H[Frontend<br>React Native/Next.js]
-    C -->|LSTM Predictions| H[Interactive Dashboard<br>Bezier Flows, Sparklines]
-    D -->|Price & ESG Oracles| I[Pyth + Chainlink]
-    D -->|Swap & Liquidity| J[Jupiter + Raydium]
-    H -->|AI Chat| K[Dialect + GPT/Grok]
-    C -->|API Requests| L[Backend<br>Fastify/MCP]
+    %% IoT Layer
+    A[SmartBin Sensors<br>Helium DePIN, NB-IoT, Sigfox] -->|Telemetry| B[IoT Gateway<br>Hivemapper, Mapbox AR]
+    B -->|Geospatial Data| C[Supabase DB<br>Real-time Telemetry]
+
+    %% AI Layer
+    C --> D[AI Engine<br>TensorFlow.js, LSTM Analytics]
+    D -->|Material Detection| E[AI ESG Scanner<br>Expo Camera, >95% Accuracy]
+    D -->|Predictive Analytics| F[ESG Metrics<br>Carbon Offset, Cleanliness Score]
+    D -->|User Guidance| G[AI Assistant<br>OpenAI Chat, GPT/Grok 3, Dialect]
+
+    %% Blockchain Layer
+    C --> H[Rewards Engine<br>PLY, CARB, EWASTE, HONEY, SOL]
+    H -->|Minting| I[NFT Twins<br>Metaplex cNFTs]
+    H -->|Price Feeds| J[Oracles<br>PYTH, Chainlink]
+    H -->|Token Swaps| K[Polymers Swap Panel<br>Solana Pay, Jupiter, Raydium]
+    K -->|Transactions| L[User Wallets<br>Phantom, Solflare, Backpack]
+    K -->|Observability| M[Helius<br>RPC, Event Streaming]
+    L -->|Staking| N[Staking Program<br>HONEY Rewards]
+
+    %% Frontend Layer
+    H -->|Rewards Data| O[Gamified Leaderboard<br>Animated Rankings, CARB/EWASTE Bonuses]
+    I -->|NFT Data| O
+    K -->|Swap Data| O
+    F -->|ESG Data| P[Dashboard<br>Next.js, GSAP Bezier Flows, Analytics]
+    F -->|ESG Data| Q[Mobile App<br>React Native, Expo, AR Wayfinder]
+    G -->|Notifications| Q
+    O -->|User Rankings| P
+    O -->|User Rankings| Q
+
+    %% Security & Compliance
+    C -->|Encrypted Storage| R[Security Layer<br>AES-256, Privy.io, Sentry]
+    R -->|Compliance| S[GDPR, EU CSRD, ISO 14064-1]
+
+    %% Styling
+    style A fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
+    style K fill:#F4A261,stroke:#1A3C34,color:#1A3C34
+    style O fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
+    style P fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
+    style Q fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
 ```
 
-**Animated Token Flows**: GSAP-driven Bezier animations with sparklines and tooltips visualize real-time token flows from SmartBins to NFT Twins.
+---
 
-## 🗂️ Monorepo Structure
+### 🌐 Helium DePIN Integration
+
+Helium’s [Decentralized Physical Infrastructure Network (DePIN)](https://docs.helium.com/) powers Polymers’ IoT layer, providing low-cost, global connectivity for SmartBins in polymer and e-waste recycling. Leveraging Helium’s LoRaWAN network—on [Solana](https://solana.com) since April 2023 (HIP-70, 81% approval)—Polymers achieves real-time telemetry (fill levels, weight, temperature, contamination) at ~$0.00001 per 24KB payload, feeding [ESG Metrics](#esg-nft-twins--rewards), [NFT Twins](#esg-nft-twins--rewards), [Token Rewards & Swap Panel](#polymers-swap-panel), and [Leaderboard](#gamification--leaderboard).
+
+#### Overview of Helium DePIN
+- **LoRaWAN Network**: Low-power, long-range (10–15 km rural, 1–2 km urban) IoT connectivity, ideal for SmartBins.
+- **Solana Integration**: Unified HNT token (HIP-138, Jan 2025) for Data Credits (DCs) and on-chain proofs via [Helius](https://helius.dev).
+- **Token Model**: DCs minted from HNT for micro-transmissions; daily DC burns (e.g., $20K+ in 2025) reduce HNT supply.
+- **Network Growth**: 350K+ Hotspots, 1M+ daily users, with expansions via Telefónica (Mexico) and Google Pixel 8 bundling.
+
+#### Integration Flow
+Helium powers `/lib/helium.ts`, with NB-IoT/Sigfox fallbacks (`/lib/nbiot.ts`, `/lib/sigfox.ts`):
+1. **Data Capture**: SmartBin sensors (ultrasonic, load cells) transmit via LoRaWAN to Hotspots.
+2. **Transmission & DCs**: Payloads (~24KB) consume DCs minted from HNT, authenticated via `HELIUM_API_KEY`.
+3. **On-Chain Processing**: Data streams to Supabase via Helius RPC, triggering:
+   - [NFT Twins](#esg-nft-twins--rewards) minting (Metaplex).
+   - [Token Rewards](#esg-nft-twins--rewards) (PLY, CARB, HONEY) using PYTH oracles.
+4. **Feedback Loop**: Updates [Dashboard](#full-stack-features) and Mobile App (AR Wayfinder via Hivemapper/Mapbox); Dialect notifications alert pickups/rewards.
+5. **Gamification**: High-quality data boosts [Leaderboard](#gamification--leaderboard) rankings and [Swap Panel](#polymers-swap-panel) eligibility for HNT/HONEY.
+
+This creates a proof-of-coverage ecosystem, with Hotspot owners earning HNT for relaying Polymers’ data.
+
+#### Technical Implementation
+- **Libraries**:
+  - `@helium/iot-sdk`: Device onboarding, DC payments, telemetry decoding.
+  - `helium-cli`: Wallet setup (`helium wallet export --key-type solana`).
+  - [Helius](https://helius.dev): RPC for DC burns, HNT mints.
+- **Environment Variables**:
+  ```plaintext
+  HELIUM_API_KEY=YOUR_HELIUM_API_KEY
+  NEXT_PUBLIC_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+  NB_IOT_MQTT_BROKER=mqtt://broker.hivemq.com
+  SIGFOX_API_KEY=YOUR_SIGFOX_API_KEY
+  ```
+- **Code Example** (from `/lib/helium.ts`):
+  ```typescript
+  import { HeliumIoT } from '@helium/iot-sdk';
+  import { Connection } from '@solana/web3.js';
+  import { supabase } from '../lib/supabaseClient';
+
+  async function sendTelemetry(payload: Buffer, deviceId: string, connection: Connection) {
+    const helium = new HeliumIoT({ apiKey: process.env.HELIUM_API_KEY });
+    const dcCost = await helium.calculateDCCost(payload.length); // ~$0.00001/24KB
+    const burnTx = await helium.burnHNTForDCs(dcCost, wallet);
+    await connection.sendTransaction(burnTx);
+    const response = await helium.transmit(payload, deviceId);
+    if (response.success) {
+      await supabase.from('telemetry').insert({ data: response.payload, binId: deviceId });
+    }
+    return response;
+  }
+  ```
+- **Testing**:
+  ```bash
+  npm run simulate:iot  # Mock Hotspot relays
+  npm run test          # Verify telemetry, DC burns (<1s latency)
+  npm run ota:deploy    # OTA firmware updates
+  ```
+
+#### Benefits for E-Waste Management
+| Aspect              | Benefit                              | Impact                                      |
+|---------------------|--------------------------------------|---------------------------------------------|
+| Cost Efficiency     | $0.00001/24KB vs. $0.01+ cellular    | Scales 100K+ SmartBins globally             |
+| Coverage            | 350K+ Hotspots, long-range LoRaWAN   | Accurate [NFT Twins](#esg-nft-twins--rewards) & [ESG Metrics](#esg-nft-twins--rewards) |
+| Decentralization    | HNT rewards for Hotspot owners       | Boosts [Leaderboard](#gamification--leaderboard) & [Swap Panel](#polymers-swap-panel) |
+| Scalability         | 1M+ connections, ~400ms confirmations | Supports AI predictions for pickups         |
+| ESG Alignment       | Low-energy LoRaWAN, on-chain proofs  | Enhances CARB tokens, EU CSRD compliance    |
+
+#### Challenges & Mitigations
+- **Coverage Gaps**: Use NB-IoT/Sigfox; Hivemapper maps Hotspots in AR Wayfinder.
+- **DC Volatility**: Batch transmissions; swap USDC in [Swap Panel](#polymers-swap-panel).
+- **Security**: AES-256 encryption, Privy.io auth.
+- **Adoption**: Incentivize Hotspot deployment with HNT/PLY bonuses.
+
+#### Future Potential
+- Hybrid IoT/5G SmartBins for video contamination detection.
+- DC auto-minting via Solana programs.
+- HNT staking for enterprise users.
+
+#### Resources
+- [Helium Docs](https://docs.helium.com/)
+- [Helius RPC](https://helius.dev)
+- [Polymers Repo](https://github.com/polymers-protocol/smartbin)
+
+---
+
+### 📊 ESG, NFT Twins & Rewards
+
+- **Core Metrics**:
+  - Carbon Offset (kg CO₂e) = Weight Recycled × Emission Factor
+  - ESG Points = Carbon Offset × 10
+  - Cleanliness Score = 100 - (Contamination % × 2)
+  - Tons Recycled = Weight / 1000
+  - Rivers Cleaned = Plastic Recycled × 0.001 km
+- **Rewards & NFTs**:
+  - [NFT Twins](#esg-nft-twins--rewards): 5 PLY per 100 ESG Points, minted as Metaplex cNFTs.
+  - Staking: HONEY = Staked ESG Points × 0.01/day.
+  - [Leaderboard](#gamification--leaderboard): Animated rankings with CARB/EWASTE bonuses.
+  - [Swap Panel](#polymers-swap-panel): Swap PLY, CARB, EWASTE, SOL.
+- **Tokenomics**:
+  | Token  | Purpose                    | Swap Support         |
+  |--------|----------------------------|----------------------|
+  | PLY    | Recycling points           | Solana Pay, Jupiter  |
+  | CARB   | Carbon offset rewards      | Solana Pay, Raydium  |
+  | EWASTE | E-waste rewards            | Solana Pay, Jupiter  |
+  | HONEY  | Staking rewards            | Solana Pay           |
+  | SOL    | Native Solana transactions | Solana Pay, Raydium  |
+
+---
+
+### 💹 Polymers Swap Panel
+
+The [Polymers Swap Panel](#polymers-swap-panel) connects [SmartBins](#helium-depin-integration) → [Rewards](#esg-nft-twins--rewards) → Swaps → Wallets with live multi-token flows, Solana Pay QR codes, and Jupiter/Raydium swaps.
+
+- **Screenshot**: [View Swap Panel Screenshot](/docs/swap-panel-screenshot.png) *(Placeholder: Add actual image to repo)*
+- **Interactive GIF**: [View Token Flow Animation](/docs/swap-flow.gif) *(Placeholder: Add to repo)*
+
+#### 📱 Mobile Demo
+```jsx
+import { SwapPanel } from './components/SwapPanel';
+import { TokenFlow } from './components/TokenFlowDemo';
+
+export default function SwapDemo() {
+  return (
+    <TokenFlow tokens={['PLY','CARB','EWASTE','SOL']} from="SmartBin" to="Wallets">
+      <SwapPanel userWallet="Phantom" />
+    </TokenFlow>
+  );
+}
+```
+
+#### 💻 Web Dashboard Demo
+```jsx
+import { SwapPanel } from '../components/SwapPanelWeb';
+import { BezierTokenFlow } from '../components/BezierTokenFlow';
+
+export default function WebSwapDemo() {
+  return (
+    <BezierTokenFlow tokens={['PLY','CARB','EWASTE','SOL']} path="SmartBins→Rewards→Swap→Wallets">
+      <SwapPanel />
+    </BezierTokenFlow>
+  );
+}
+```
+
+---
+
+### 🏆 Gamification & Leaderboard
+
+- **Animated Rankings**: Monthly rewards:
+  - 1st: 100 CARB + 50 EWASTE
+  - 2nd: 50 CARB + 25 EWASTE
+  - 3rd: 25 CARB + 10 EWASTE
+- **Swap Integration**: Rewards swappable via [Polymers Swap Panel](#polymers-swap-panel).
+- **NFT Visibility**: [NFT Twins](#esg-nft-twins--rewards) reflect ESG points and reward history.
+
+---
+
+### 📂 Monorepo Structure
 
 ```
 /apps
-  /web          # Next.js Dashboard (TokenFlowDemoWeb.tsx)
-  /mobile       # React Native/Expo App (ESGImpact.tsx, TokenFlowDemo.tsx)
-  /backend      # Fastify/MCP API
-  /shared       # Shared components/hooks/types
-/data           # Sample data & seeding
-/lib            # Solana, Helium, Hivemapper, Metaplex, Jupiter, Raydium
-/hooks          # React hooks
-/context        # Wallet/User/AI/ESG contexts
-/constants      # Colors, tokens, API endpoints
-/utils          # Utility functions
-/api            # Backend API routes
-/prisma         # Supabase schema & migrations
-/docs           # Documentation & Swagger
-/scripts        # Deployment & simulation scripts
+  /web              # Next.js dashboard
+  /mobile           # React Native app
+  /backend          # Fastify/MCP API
+/shared
+/data
+/lib
+  /helium.ts        # Helium DePIN integration
+  /nbiot.ts         # NB-IoT fallback
+  /sigfox.ts        # Sigfox fallback
+  /lstm_model.ts    # LSTM analytics
+/hooks
+/context
+/constants
+/utils
+/api
+  /iot/smartbins.ts # Telemetry processing
+  /wallet/swap.ts   # Solana Pay swaps
+/prisma
+/docs
+/scripts
+  /simulate_iot.ts  # IoT simulations
 .env.example
 README.md
 ```
 
-## 🛠️ Quickstart
+---
 
-### 1️⃣ Install Dependencies
+### 🛠️ Quickstart
 
-```bash
-npm install -g @solana/cli @helium/cli @coral-xyz/anchor-cli
-npm install axios typescript msw jest @supabase/supabase-js @tensorflow/tfjs expo-camera react-native-svg-charts gsap-rn react-native-svg @fortawesome/react-native-fontawesome gsap @fortawesome/react-fontawesome
-```
+1. **Clone & Install**:
+   ```bash
+   git clone https://github.com/polymers-protocol/smartbin
+   cd smartbin
+   npm install
+   cp .env.example .env
+   ```
+2. **Configure `.env`**:
+   ```plaintext
+   NEXT_PUBLIC_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+   HELIUM_API_KEY=YOUR_HELIUM_API_KEY
+   NB_IOT_MQTT_BROKER=mqtt://broker.hivemq.com
+   SIGFOX_API_KEY=YOUR_SIGFOX_API_KEY
+   PRIVY_APP_ID=YOUR_PRIVY_APP_ID
+   CHAINLINK_API_KEY=YOUR_CHAINLINK_KEY
+   ```
+3. **Run Simulations**:
+   ```bash
+   npm run simulate:iot        # Mock Helium Hotspot relays
+   npm run simulate:hivemapper # Geospatial mapping
+   npm run simulate:rewards    # Reward calculations
+   npm run test:lstm           # LSTM analytics
+   npm run ota:deploy          # OTA firmware updates
+   ```
+4. **Run Demos**:
+   ```bash
+   cd apps/mobile && npm run start  # Mobile app
+   cd ../web && npm run dev        # Web dashboard
+   ```
 
-### 2️⃣ Setup Wallet
+---
 
-Export Helium wallet for Solana:
+### 🤝 Community & Support
 
-```bash
-helium wallet export --key-type solana > solana_wallet.json
-```
-
-### 3️⃣ Configure Environment
-
-Create `.env`:
-
-```env
-NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
-HELIUM_HOTSPOT_ADDRESS=<your_hotspot_address>
-PLY_MINT=<ply_mint_address>
-CARB_MINT=<carb_mint_address>
-EWASTE_MINT=<ewaste_mint_address>
-HONEY_MINT=<honey_mint_address>
-REWARD_WALLET_ADDRESS=<reward_wallet_address>
-NEXT_PUBLIC_SUPABASE_URL=<supabase_url>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase_anon_key>
-HIVEMAPPER_API_KEY=<your_api_key>
-HIVEMAPPER_USERNAME=<your_username>
-```
-
-### 4️⃣ Run Devnet Simulation
-
-```bash
-git clone https://github.com/polymers-protocol/smartbin
-cd smartbin
-npm install
-solana-test-validator --rpc-port 8899 &
-anchor deploy --provider.cluster devnet
-npm run simulate:iot
-npm run simulate:hivemapper
-npm run simulate:rewards
-npm run test:lstm
-npm run ota:deploy --bin test_bin --file ./firmware/latest.bin
-npm run test
-```
-
-## 🧪 Testing & Simulations
-
-```bash
-npm run simulate:iot         # Simulate SmartBin telemetry
-npm run simulate:hivemapper  # Simulate AR mapping
-npm run simulate:rewards     # Simulate token reward issuance
-npm run test:lstm            # Test LSTM predictive analytics
-npm run ota:deploy           # Deploy OTA firmware updates
-npm run test                 # Run unit tests
-```
-
-Unit tests:
-- `/scripts/__tests__/iot.test.ts`
-- `/scripts/__tests__/rewards.test.ts`
-- `/scripts/__tests__/ota_utils.test.ts`
-- `/scripts/__tests__/lstm_model.test.ts`
-- `/scripts/__tests__/esg.test.ts`
-- `/scripts/__tests__/token_flow.test.ts`
-
-## 📡 API Endpoints
-
-```bash
-GET /users            # Fetch user data
-POST /transactions    # Submit transactions
-GET /nft-twins        # Retrieve NFT Twins
-POST /nft-twins       # Mint NFT Twins
-GET /esg              # Fetch ESG metrics
-GET /smartbins        # Fetch SmartBin telemetry
-POST /payments        # Process Solana Pay transactions
-POST /ai-agents       # Trigger AI chat responses
-```
-
-Swagger documentation: `/docs/swagger.yaml`
-
-## 🌍 ESG & Carbon Offset Integration
-
-### Core Metrics
-- **Carbon Offset (kg CO₂e)**: `Weight Recycled (kg) × Emission Factor (kg CO₂e/kg)`
-  - Plastic: 1.5 kg CO₂e/kg
-  - Glass: 0.3 kg CO₂e/kg
-  - Paper: 0.9 kg CO₂e/kg
-  - Aluminum: 9.0 kg CO₂e/kg
-- **ESG Points**: `Carbon Offset × 10`
-- **Cleanliness Score**: `100 - (Contamination % × 2)`
-- **Tons Recycled**: `Weight Recycled (kg) / 1000`
-- **Rivers Cleaned**: `Plastic Recycled (kg) × 0.001` (km, per INC-5.2)
-
-### Additional Metrics
-- **Energy Savings**: `Weight Recycled (kg) × Energy Factor (kWh/kg)`
-  - Plastic: 5.0 kWh/kg
-  - Glass: 1.2 kWh/kg
-  - Paper: 4.0 kWh/kg
-  - Aluminum: 40.0 kWh/kg
-- **Water Savings**: `Weight Recycled (kg) × Water Factor (L/kg)`
-  - Plastic: 22.0 L/kg
-  - Glass: 15.0 L/kg
-  - Paper: 10.0 L/kg
-  - Aluminum: 150.0 L/kg
-- **Social Impact Score**: `(Number of Deposits × 5) + (Leaderboard Rank Points × 2)`
-  - Rank points: 100 (1st), 50 (2nd), 25 (3rd), 10 (others)
-- **Governance Score**: `(Compliance Checkpoints Passed / Total) × 100`
-
-### Reward Mechanism
-- **NFT Twins**: 5 PLY per 100 ESG Points, minted as Metaplex cNFTs with animated scale-up.
-- **Staking**: `HONEY = Staked ESG Points × 0.01/day`
-- **Leaderboard**: Animated rankings; 1st: 100 CARB + 50 EWASTE; 2nd: 50 CARB + 25 EWASTE; 3rd: 25 CARB + 10 EWASTE
-
-### Example
-For 50 kg plastic, 20 kg glass, 10 kg aluminum, 10% contamination, 5 deposits, rank 2:
-- **CO₂e Saved**: `50 × 1.5 + 20 × 0.3 + 10 × 9.0 = 171 kg`
-- **ESG Points**: `171 × 10 = 1710`
-- **Rewards**: `1710 / 100 × 5 = 85.5 PLY`
-- **Energy Savings**: `50 × 5.0 + 20 × 1.2 + 10 × 40.0 = 674 kWh`
-- **Water Savings**: `50 × 22.0 + 20 × 15.0 + 10 × 150.0 = 2900 L`
-- **Cleanliness Score**: `100 - (10 × 2) = 80`
-- **Rivers Cleaned**: `50 × 0.001 = 0.05 km`
-- **Social Impact Score**: `(5 × 5) + (50 × 2) = 125`
-
-Detailed documentation: `/docs/esg_calculations.md`
-
-## 🎨 Visual Design
-- **Palette**: Dark green (`#1A3C34`), sand (`#F4A261`), light gray (`#D3D3D3`), white (`#FFFFFF`).
-- **Typography**: Satoshi-Bold (headings, 18–24px), Geist-Regular (body, 12–16px).
-- **Animations**: GSAP for dual flywheel, Bezier token flows, sparkline charts, tooltips, leaderboard slide-ins, and NFT Twin scale-ups.
-- **Components**:
-  - `ESGImpact.tsx`: Enterprise-grade mobile dashboard with real-time telemetry.
-  - `TokenFlowDemo.tsx`: Bezier flows with sparklines and tooltips.
-  - `TokenFlowDemoWeb.tsx`: Web-based Bezier flows.
-  - AI ESG Scanner: Material detection UI.
-  - AR Wayfinder: Hivemapper + Mapbox overlays.
-
-## 🔒 Compliance & Security
-- **Regulations**: GDPR, EU CSRD, TCFD, ISO 14064-1, ISO 31000, Plastic Pollution Treaty (INC-5.2, August 2025).
-- **Security**: AES-256 encryption, Privy.io wallet auth, Sentry monitoring.
-- **Offline Support**: AsyncStorage caching.
-
-## 🤝 Community & Support
-- **GitHub**: [Polymers Protocol Repo](https://github.com/polymers-protocol/smartbin)
-- **Discord**: [Polymers Protocol](https://discord.gg/polymers-protocol)
+- **GitHub**: [Polymers Protocol Repo](https://github.com/PolymersNetwork/polymers-protpcol)
+- **Discord**: [Polymers Protocol](https://discord.com/invite/polymersprotocol)
 - **Telegram**: [Polymers Protocol](https://t.me/polymersprotocol)
-- **Solana**: [Solana Discord](https://discord.gg/solana)
-- **Helium**: [Helium Discord](https://discord.gg/helium)
+- **Solana**: [Solana Discord](https://discord.com/invite/solana)
+- **Helium**: [Helium Discord](https://discord.com/invite/helium)
 
-## 📜 License
+---
+
+### 📜 License
+
 MIT License – Contributors: Polymers Protocol
