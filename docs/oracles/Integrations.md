@@ -9,11 +9,11 @@ This document outlines the **oracle integration layer** for the Polymers Protoco
 **Purpose:**  
 Ensure that ESG-based rewards and token flows are accurate, real-time, and auditable.
 
-| Oracle / Source       | Purpose                                      | Protocol / Tech       | Notes |
-|-----------------------|----------------------------------------------|---------------------|-------|
-| **Pyth Network**       | Real-time CO₂e, energy, water metrics       | Solana-native        | Low-latency subscription feed for ESG metrics |
-| **Chainlink**          | Token price feeds for multi-token rewards  | Cross-chain          | Redundant and fallback price feed |
-| **Internal Emission DB** | Verified emission factors for unsupported materials | Supabase             | Ensures coverage when oracle data is unavailable |
+| Oracle / Source        | Purpose                                     | Protocol / Tech       | Notes                                           |
+|------------------------|---------------------------------------------|---------------------|------------------------------------------------|
+| **Pyth Network**       | Real-time CO₂e, energy, water metrics      | Solana-native       | Low-latency subscription feed for ESG metrics |
+| **Chainlink**          | Token price feeds for multi-token rewards  | Cross-chain         | Redundant and fallback price feed             |
+| **Internal Emission DB** | Verified emission factors for unsupported materials | Supabase            | Ensures coverage when oracle data is unavailable |
 
 **Data Flow:**
 
@@ -131,19 +131,3 @@ export async function calculateReward(material: string, quantity: number) {
 
 	•	Calculates ESG-based rewards per material deposited.
 	•	Updates NFT Twin minting, dashboards, and compliance metrics in real-time.
-
-⸻
-
-📝 Best Practices
-	•	Failover Strategy: Always include internal DB fallback for continuity.
-	•	Normalization: Ensure CO₂e, energy, and water metrics use consistent units.
-	•	Subscriptions vs Polling: Use Pyth subscriptions for low latency; Chainlink may require polling.
-	•	Security: Validate oracle signatures where possible to prevent spoofing.
-
-⸻
-
-🔗 References
-	•	Pyth Network Docs
-	•	Chainlink Docs
-	•	Supabase Realtime
-	•	Solana Web3.js
