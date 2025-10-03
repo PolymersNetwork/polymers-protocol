@@ -42,6 +42,51 @@ Polymers Protocol is a **blockchain-as-a-service platform** integrating **Solana
 
 ---
 
+flowchart TB
+  %% IoT Layer
+  subgraph IoT["SmartBins / IoT"]
+    SmartBin["IoT SmartBins<br>Fill, Weight, Temp, Contamination"]
+    Helium["Helium DePIN / NB-IoT"]
+  end
+
+  %% Backend & Services
+  subgraph Backend["Backend & Services"]
+    Supabase["Supabase<br>iot_readings, token_flows"]
+    RewardEngine["Token Flow Engine<br>calculateReward"]
+  end
+
+  %% Oracle Layer
+  subgraph Oracles["Oracles"]
+    Pyth["Pyth: CO₂e Metrics"]
+    Chainlink["Chainlink: Token Prices (PLY, CARB, USDC, SOL, EWASTE)"]
+  end
+
+  %% Blockchain Layer
+  subgraph Blockchain["Solana Blockchain"]
+    SolanaPay["Solana Pay<br>PLY, CARB, USDC, SOL, EWASTE Swaps"]
+  end
+
+  %% Frontend
+  subgraph Frontend["Frontend"]
+    Dashboards["Dashboards<br>SOL Balances & Swaps"]
+    LLM["LLM Agent<br>Swap & Balance Prompts"]
+  end
+
+  %% Data Flow
+  SmartBin --> Helium --> Supabase --> RewardEngine --> SolanaPay --> Dashboards
+  RewardEngine --> Pyth
+  RewardEngine --> Chainlink
+  LLM --> SolanaPay
+  Dashboards --> Supabase
+
+  %% Styling
+  style SolanaPay fill:#D4B483,stroke:#064635,color:#064635
+  style Backend fill:#E5E5E5,stroke:#064635
+  style IoT fill:#064635,stroke:#D4B483,color:white
+  style Oracles fill:#E5E5E5,stroke:#064635
+  style Frontend fill:#D4B483,stroke:#064635,color:#064635
+
+
 ## 📂 Project Structure
 
 /app                   # Frontend dashboard
