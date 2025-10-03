@@ -7,7 +7,7 @@ The platform combines:
 - **Backend**: Fastify/MCP API, Neon / Supabase real-time database, and LSTM predictive analytics.
 - **Blockchain**: Solana Pay, Jupiter/Raydium swaps, Metaplex cNFTs, PYTH/Chainlink oracles, Helius RPC.
 - **IoT**: SmartBins with Helium DePIN, NB-IoT, Sigfox, and Hivemapper geospatial mapping.
-- **AI**: TensorFlow.js ESG scanner, OpenAI/Grok 3 agents via Dialect.
+- **AI**: TensorFlow.ts QR-code / ESG scanner, OpenAI, Deepseek, Antrophics, Grok AI agents via Solana and Dialect.
 - **Compliance**: GDPR, EU CSRD, ISO 14064-1, Plastic Pollution Treaty (INC-5.2, August 2025).
 
 **Version**: 1.0 Beta  
