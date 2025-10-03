@@ -3,8 +3,8 @@
 **Polymers Protocol** is a full-stack Blockchain-as-a-Service (BaaS) platform built on [Solana](https://solana.com), powering **SmartBin**—an IoT-enabled, gamified waste management ecosystem for polymer and e-waste recycling. It integrates **ESG tracking**, **NFT Twins**, **tokenized rewards**, and the **Polymers Swap Panel** to drive transparency, sustainability, and user engagement.
 
 The platform combines:
-- **Frontend**: React Native mobile app and Next.js web dashboard with GSAP Bezier token flows and AR Wayfinder.
-- **Backend**: Fastify/MCP API, Supabase real-time database, and LSTM predictive analytics.
+- **Frontend**: React Native mobile app and Next.js frontend + web3 dashboard with GSAP Bezier token flows and AR Wayfinder.
+- **Backend**: Fastify/MCP API, Neon / Supabase real-time database, and LSTM predictive analytics.
 - **Blockchain**: Solana Pay, Jupiter/Raydium swaps, Metaplex cNFTs, PYTH/Chainlink oracles, Helius RPC.
 - **IoT**: SmartBins with Helium DePIN, NB-IoT, Sigfox, and Hivemapper geospatial mapping.
 - **AI**: TensorFlow.js ESG scanner, OpenAI/Grok 3 agents via Dialect.
