@@ -1,67 +1,134 @@
-1️⃣ Oracle Integrations (Real-Time CO₂e & Token Prices)
+## 📂 Full-Stack Architecture
 
-Objective: Feed real-time environmental and token data into token flows and ESG calculations.
+The end-to-end flow covers:
 
-Components & Flow:
-	•	Data Sources: Pyth Network (Solana), Chainlink (cross-chain), internal emission factor database.
-	•	Backend: Fastify/MCP API polls or subscribes to oracle feeds.
-	•	Frontend: Dashboards (React Native / Next.js) consume validated metrics via Supabase subscriptions.
-	•	Token Flow Impact: Real-time token issuance (PLY, CARB, EWASTE, HONEY, HNT) based on updated CO₂e metrics.
+**SmartBin → AI ESG Scanner → Oracles → Token Flow → NFT Twin → Compliance Dashboard → CI/CD**
 
-Implementation Steps:
-	1.	Create /lib/oracles.ts with Pyth + Chainlink SDKs.
-	2.	Implement real-time subscription to emission factor updates.
-	3.	Normalize and feed metrics into Supabase as esg_metrics table.
-	4.	Trigger TokenFlowDemo.tsx updates using GSAP animations for smooth Bezier flows.
+```mermaid
+graph TD
+    A[SmartBin Sensors<br>Fill, Weight, Material, Contamination<br>Helium DePIN] -->|LoRaWAN| B[Helium Hotspot<br>10km Range]
+    B -->|Telemetry| C[Supabase<br>Realtime Database]
+    C -->|Validated Data & ESG Calculations| D[Rewards System<br>PLY, CARB, EWASTE, HONEY, HNT]
+    D -->|NFT Minting| E[Metaplex cNFTs<br>NFT Twins]
+    C -->|Map Data| F[AR Wayfinder<br>Hivemapper + Mapbox]
+    D -->|ATA Updates| G[Wallets<br>Phantom, Solflare, Backpack]
+    F -->|Frontend| H[React Native / Next.js Dashboards]
+    H -->|AI Chat| I[Dialect + GPT/Grok]
+    C -->|API Requests| J[Fastify/MCP Backend]
+    J -->|Audit Logs| K[Compliance Dashboard<br>GDPR, CSRD, TCFD, ISO]
+    H -->|Build/Test| L[CI/CD Pipeline<br>Expo, Vercel, GitHub Actions]
 
-⸻
-
-2️⃣ Expanded Leaderboard & NFT Evolution Animations
-
-Objective: Gamify engagement and visualize NFT twin evolution on dashboards.
-
-Components & Flow:
-	•	NFT Twins: Metaplex cNFTs with staking and evolution levels.
-	•	Leaderboard: Mobile/Web dashboards fetch user points from Supabase.
-	•	Animations: GSAP for Bezier token flows, sparkline charts, and NFT scale/rotation effects.
-
-Implementation Steps:
-	1.	Extend /lib/gamification.ts to track NFT evolution (e.g., level, growth, tier).
-	2.	Create Leaderboard.tsx component pulling Supabase user points in real-time.
-	3.	Apply GSAP timelines for:
-	•	NFT scaling and glow animations on evolution.
-	•	Token flows updating with leaderboard rank changes.
-	4.	Ensure mobile/web dashboards reflect consistent UI/UX and Dark Mode colors (#1A3C34, #F4A261).
+Full implementation plan diagram is available in /docs/implementation_plan.md with detailed integration, component breakdown, and visual design specs.
 
 ⸻
 
-3️⃣ Compliance Dashboard with Risk Scoring & Audit History
+🛠 Features
 
-Objective: Provide governance and ESG compliance visibility (GDPR, CSRD, TCFD, ISO 14064-1, ISO 31000, INC-5.2).
+1. SmartBin Telemetry & AI ESG Scanner
+	•	Real-time data collection via Helium DePIN IoT sensors.
+	•	Material detection using TensorFlow.js (expo-camera) >95% accuracy.
+	•	ESG metrics: CO₂e, energy, water, points.
 
-Components & Flow:
-	•	Data Sources: Supabase audit logs, Fastify transaction logs, token/NFT actions, AI ESG metrics.
-	•	Dashboard: Mobile & Web React components (ComplianceDashboard.tsx).
-	•	Metrics:
-	•	Governance score (0–100) based on audit log completeness.
-	•	ESG risk scoring based on token issuance and CO₂e deviations.
-	•	Historical trends visualized as charts.
+2. Oracle Integrations
+	•	Real-time emission factors and token prices via Pyth & Chainlink.
+	•	Validates ESG metrics before token issuance.
+	•	Multi-token rewards: PLY, CARB, EWASTE, HONEY, HNT.
 
-Implementation Steps:
-	1.	Create compliance_metrics table in Supabase capturing:
-	•	timestamp, metric_type, value, audit_source.
-	2.	Build /apps/mobile/src/components/ComplianceDashboard.tsx:
-	•	Line charts for historical ESG performance.
-	•	Risk scoring widget with color-coded levels (green/yellow/red).
-	•	Audit log table with filtering/searching.
-	3.	Integrate Sentry for error monitoring and anomaly detection.
-	4.	Optional: GSAP or React Spring for animated metric changes and alerts.
+3. Token Flow & NFT Twins
+	•	GSAP-animated Bezier paths visualize multi-token flows.
+	•	NFT Twins minted via Metaplex cNFTs, with staking and animated evolution.
+	•	Leaderboard tracks top users with dynamic animations.
+
+4. Compliance Dashboard
+	•	Displays GDPR, CSRD, TCFD, ISO 14064-1, ISO 31000, INC-5.2 metrics.
+	•	Risk scoring and audit history visualization.
+	•	Monitors anomalies via Sentry integration.
+
+5. Frontend Dashboards
+	•	Mobile: React Native (ESGImpact.tsx, TokenFlowDemo.tsx, Leaderboard.tsx).
+	•	Web: Next.js (TokenFlowDemoWeb.tsx, ComplianceDashboard.tsx).
+	•	AR Wayfinding via Hivemapper + Mapbox overlays.
+	•	AI chat support via Dialect + GPT/Grok.
+
+6. CI/CD & OTA Updates
+	•	GitHub Actions handle build, test, and deployment.
+	•	Expo OTA updates for mobile.
+	•	Vercel deployment for web.
 
 ⸻
 
-✅ Integration Summary
+⚙️ Development Setup
 
-Enhancement	Layer	Tools	Notes
-Oracle Integrations	Blockchain → Backend	Pyth, Chainlink, Fastify, Supabase	Real-time ESG metrics → token issuance
-Leaderboard & NFT Animations	Frontend	React Native, Next.js, GSAP, Supabase	Real-time rank & NFT evolution visualizations
-Compliance Dashboard	Compliance	React Native/Web, Supabase, Sentry, Chart.js / Recharts	Risk scoring, audit history, ESG KPI trends
+Prerequisites
+	•	Node.js >= 20
+	•	npm >= 9
+	•	Yarn (optional)
+	•	Expo CLI for mobile
+	•	GitHub access for CI/CD pipelines
+	•	Supabase project with real-time DB
+
+Environment Variables
+
+Create a .env.local with the following:
+
+NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
+NEXT_PUBLIC_SOLANA_NETWORK=devnet
+NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
+TOKEN_PROGRAM_ID=<token-program-id>
+NFT_PROGRAM_ID=<nft-program-id>
+DEFAULT_WALLET_ADDRESS=<wallet-address>
+METADATA_SERVICE_URL=<metadata-api-url>
+ERROR_TRACKING_SERVICE_URL=<sentry-url>
+SECRET_KEY=<secret-key>
+JWT_SECRET=<jwt-secret>
+NODE_ENV=development
+
+Install Dependencies
+
+npm install
+
+Run Mobile App
+
+cd apps/mobile
+expo start
+
+Run Web App
+
+cd apps/web
+npm run dev
+
+Run Backend
+
+cd apps/backend
+npm run dev
+
+
+⸻
+
+📊 Rendering Diagrams
+	•	Mermaid CLI for SVG export:
+
+npm install -g @mermaid-js/mermaid-cli
+npx @mermaid-js/mermaid-cli -i docs/implementation_plan.md -o docs/implementation_plan.svg
+
+	•	Convert SVG to PNG for presentations:
+
+convert docs/implementation_plan.svg docs/implementation_plan.png
+
+
+⸻
+
+📈 Contribution Guidelines
+	•	Follow ESLint + Prettier rules.
+	•	Use Supabase test dataset for simulation.
+	•	Ensure CI/CD pipeline passes before merging.
+	•	Document new components in /docs/components.md.
+
+⸻
+
+🎨 Design & Compliance
+	•	Colors: Dark Green #1A3C34, Sand #F4A261, Light Gray #D3D3D3, White #FFFFFF.
+	•	Fonts: Satoshi Bold / Geist Regular.
+	•	Compliance: GDPR, CSRD, TCFD, ISO 14064-1, ISO 31000, INC-5.2.
+	•	Animations: GSAP Bezier flows, NFT evolution, leaderboard sparklines.
