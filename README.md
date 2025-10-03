@@ -1,43 +1,43 @@
 # ♻️ Polymers Protocol
 
-**Polymers Protocol** is a **full-stack Blockchain-as-a-Service (BaaS)** platform built on **Solana**, powering **SmartBin**—an IoT-enabled, gamified waste management system with ESG tracking, token rewards, and NFT Twins. The full-stack architecture integrates **frontend** (React Native/Next.js), **backend** (Fastify/MCP), **blockchain** (Solana, Metaplex, Jupiter, Raydium, Solana Pay), **IoT** (Helium DePIN), and **AI** (TensorFlow.js, GPT/Grok 3) to deliver a scalable, low-cost, and user-friendly solution for sustainable waste management. It features animated Bezier token flows, an enterprise-grade mobile dashboard, AI-driven ESG scanning, AR Wayfinding, and real-time multi-token analytics.
+**Polymers Protocol** is a **full-stack Blockchain-as-a-Service (BaaS)** platform built on **Solana**, powering **SmartBin**—an IoT-enabled, gamified waste management system with ESG tracking, token rewards, and NFT Twins. The full-stack architecture integrates **frontend** (React Native/Next.js), **backend** (Fastify/MCP), **blockchain** (Solana, Metaplex, Jupiter, Raydium, Solana Pay), **IoT** (Helium DePIN), and **AI** (TensorFlow.js, GPT/Grok 3) for scalable, low-cost sustainability solutions. It features animated Bezier token flows, an enterprise-grade mobile dashboard, AI-driven ESG scanning, AR Wayfinding, and real-time multi-token analytics.
 
 ## 🌟 Full-Stack Features
 
 ### Frontend
-- **Interactive Dashboard** (`ESGImpact.tsx`): Animated dual flywheel, Bezier-curved multi-token flows (PLY, CARB, EWASTE, HONEY, HNT), sparkline mini-charts, and tooltips using GSAP and `react-native-svg-charts`.
+- **Interactive Dashboard** (`ESGImpact.tsx`): Animated dual flywheel, Bezier-curved multi-token flows (PLY, CARB, EWASTE, HONEY, HNT), sparkline charts, and tooltips using GSAP and `react-native-svg-charts`.
 - **Mobile App**: React Native/Expo with AI ESG Scanner (`expo-camera` + TensorFlow.js) and AR Wayfinder (Hivemapper + Mapbox).
-- **Web Dashboard**: Next.js for real-time ESG analytics and operator controls.
+- **Web Dashboard**: Next.js with GSAP-driven Bezier flows (`TokenFlowDemoWeb.tsx`) for browser-based analytics.
 - **UI/UX**: Dark green (`#1A3C34`), sand (`#F4A261`), light gray (`#D3D3D3`), white (`#FFFFFF`); Satoshi-Bold (headings), Geist-Regular (body); GSAP animations.
 
 ### Backend
-- **Fastify/MCP API**: RESTful endpoints for user data, transactions, ESG metrics, and SmartBin telemetry, integrated with Supabase for storage and LSTM analytics.
-- **Supabase**: Real-time database for IoT telemetry and predictive analytics.
-- **API Security**: AES-256 encryption, Privy.io wallet authentication (Phantom, Solflare, Backpack).
+- **Fastify/MCP API**: RESTful endpoints for user data, transactions, ESG metrics, and SmartBin telemetry.
+- **Supabase**: Real-time database with subscriptions for IoT telemetry and LSTM predictive analytics.
+- **Security**: AES-256 encryption, Privy.io wallet authentication (Phantom, Solflare, Backpack).
 
 ### Blockchain
-- **Solana**: High-throughput (65K+ TPS) blockchain for token minting (PLY, CARB, EWASTE, HONEY, HNT), NFT Twins (Metaplex cNFTs), and payments (Solana Pay).
-- **DeFi Integrations**: Jupiter and Raydium for token swaps and liquidity; Pyth and Chainlink oracles for ESG and price data.
-- **Blinks**: Dialect-powered notifications and actions for real-time user engagement.
+- **Solana**: 65K+ TPS for token minting (PLY, CARB, EWASTE, HONEY, HNT), NFT Twins (Metaplex cNFTs), and payments (Solana Pay).
+- **DeFi**: Jupiter/Raydium for swaps; Pyth/Chainlink oracles for ESG and price data.
+- **Blinks**: Dialect-powered notifications and actions.
 
 ### IoT
-- **SmartBins**: Sensors monitor fill level, weight, contamination, and temperature, connected via **Helium DePIN** (~$0.00001/24KB via LoRaWAN).
-- **OTA Updates**: Firmware deployment for SmartBins (`npm run ota:deploy`).
+- **SmartBins**: Sensors for fill, weight, contamination, temperature via Helium DePIN (~$0.00001/24KB).
+- **OTA Updates**: Firmware deployment (`npm run ota:deploy`).
 
 ### AI
-- **AI ESG Scanner**: TensorFlow.js with `expo-camera` for material detection (plastic, glass, paper, aluminum) and ESG scoring (>95% accuracy).
-- **AI Assistant**: GPT-powered chat (Grok 3 optional) via Dialect for user support and analytics.
-- **LSTM Analytics**: Predictive fill level modeling via Supabase.
+- **AI ESG Scanner**: TensorFlow.js with `expo-camera` for material detection (>95% accuracy).
+- **AI Assistant**: GPT/Grok 3 via Dialect for user support.
+- **LSTM Analytics**: Predictive fill modeling via Supabase.
 
 ### Compliance
-- **Standards**: GDPR, EU CSRD, TCFD, ISO 14064-1, ISO 31000.
-- **Plastic Pollution Treaty**: Aligned with INC-5.2 (August 2025).
-- **Monitoring**: Sentry for error tracking, ensuring enterprise-grade reliability.
+- **Standards**: GDPR, EU CSRD, TCFD, ISO 14064-1, ISO 31000, Plastic Pollution Treaty (INC-5.2, August 2025).
+- **Security**: AES-256, Privy.io, Sentry monitoring.
+- **Offline Support**: AsyncStorage caching.
 
 ### Gamification
-- **NFT Twins**: Metaplex cNFTs representing ESG credits with staking and evolution.
-- **Token Rewards**: Multi-token system (PLY, CARB, EWASTE, HONEY, HNT) with animated Bezier flows from SmartBins → Supabase → Rewards → NFT Twins.
-- **Leaderboard**: Monthly rewards for top users (100 CARB + 50 EWASTE for 1st, etc.).
+- **NFT Twins**: Metaplex cNFTs with staking and evolution animations.
+- **Token Rewards**: Multi-token flows (PLY, CARB, EWASTE, HONEY, HNT) visualized via Bezier paths.
+- **Leaderboard**: Animated rankings with monthly rewards (100 CARB + 50 EWASTE for 1st).
 
 ## 🚀 Live Demo / MVP
 
@@ -45,13 +45,20 @@
 [Mobile App](https://polymers.app/mobile) *(placeholder)*  
 
 ### Animated Token Flow Demo
-Visualize multi-token flows (PLY, CARB, EWASTE, HONEY, HNT) along Bezier paths from **SmartBins → Supabase → Rewards → NFT Twins** using GSAP and React Native SVG. See `/apps/mobile/src/components/TokenFlowDemo.tsx` or `/docs/demo.md`.
+Visualize multi-token flows (PLY, CARB, EWASTE, HONEY, HNT) along Bezier paths from **SmartBins → Supabase → Rewards → NFT Twins** using GSAP, React Native SVG, and real-time Supabase telemetry. Includes sparkline charts and touchable tooltips. See `/apps/mobile/src/components/TokenFlowDemo.tsx` or `/docs/demo.md`.
 
 **Run the demo**:
 ```bash
-npm install react-native-svg gsap-rn @fortawesome/react-native-fontawesome
+npm install react-native-svg gsap-rn @fortawesome/react-native-fontawesome react-native-svg-charts
 cd apps/mobile
 npm run start
+```
+
+**Web Demo**:
+```bash
+cd apps/web
+npm install gsap @fortawesome/react-fontawesome
+npm run dev
 ```
 
 ## 📂 Full-Stack Architecture
@@ -72,13 +79,13 @@ graph TD
     C -->|API Requests| L[Backend<br>Fastify/MCP]
 ```
 
-**Animated Token Flows**: GSAP-driven Bezier animations visualize multi-token (PLY, CARB, EWASTE, HONEY, HNT) flows from SmartBins to NFT Twins, displayed in the enterprise-grade mobile dashboard.
+**Animated Token Flows**: GSAP-driven Bezier animations with sparklines and tooltips visualize real-time token flows from SmartBins to NFT Twins.
 
 ## 🗂️ Monorepo Structure
 
 ```
 /apps
-  /web          # Next.js Dashboard
+  /web          # Next.js Dashboard (TokenFlowDemoWeb.tsx)
   /mobile       # React Native/Expo App (ESGImpact.tsx, TokenFlowDemo.tsx)
   /backend      # Fastify/MCP API
   /shared       # Shared components/hooks/types
@@ -102,12 +109,12 @@ README.md
 
 ```bash
 npm install -g @solana/cli @helium/cli @coral-xyz/anchor-cli
-npm install axios typescript msw jest @supabase/supabase-js @tensorflow/tfjs expo-camera react-native-svg-charts gsap-rn react-native-svg @fortawesome/react-native-fontawesome
+npm install axios typescript msw jest @supabase/supabase-js @tensorflow/tfjs expo-camera react-native-svg-charts gsap-rn react-native-svg @fortawesome/react-native-fontawesome gsap @fortawesome/react-fontawesome
 ```
 
 ### 2️⃣ Setup Wallet
 
-Export Helium wallet for Solana and import into **Phantom**, **Solflare**, or **Backpack**:
+Export Helium wallet for Solana:
 
 ```bash
 helium wallet export --key-type solana > solana_wallet.json
@@ -115,7 +122,7 @@ helium wallet export --key-type solana > solana_wallet.json
 
 ### 3️⃣ Configure Environment
 
-Create `.env` in the project root:
+Create `.env`:
 
 ```env
 NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
@@ -164,6 +171,7 @@ Unit tests:
 - `/scripts/__tests__/ota_utils.test.ts`
 - `/scripts/__tests__/lstm_model.test.ts`
 - `/scripts/__tests__/esg.test.ts`
+- `/scripts/__tests__/token_flow.test.ts`
 
 ## 📡 API Endpoints
 
@@ -209,9 +217,9 @@ Swagger documentation: `/docs/swagger.yaml`
 - **Governance Score**: `(Compliance Checkpoints Passed / Total) × 100`
 
 ### Reward Mechanism
-- **NFT Twins**: 5 PLY per 100 ESG Points, minted as Metaplex cNFTs.
+- **NFT Twins**: 5 PLY per 100 ESG Points, minted as Metaplex cNFTs with animated scale-up.
 - **Staking**: `HONEY = Staked ESG Points × 0.01/day`
-- **Leaderboard**: 1st: 100 CARB + 50 EWASTE; 2nd: 50 CARB + 25 EWASTE; 3rd: 25 CARB + 10 EWASTE
+- **Leaderboard**: Animated rankings; 1st: 100 CARB + 50 EWASTE; 2nd: 50 CARB + 25 EWASTE; 3rd: 25 CARB + 10 EWASTE
 
 ### Example
 For 50 kg plastic, 20 kg glass, 10 kg aluminum, 10% contamination, 5 deposits, rank 2:
@@ -229,17 +237,18 @@ Detailed documentation: `/docs/esg_calculations.md`
 ## 🎨 Visual Design
 - **Palette**: Dark green (`#1A3C34`), sand (`#F4A261`), light gray (`#D3D3D3`), white (`#FFFFFF`).
 - **Typography**: Satoshi-Bold (headings, 18–24px), Geist-Regular (body, 12–16px).
-- **Animations**: GSAP for dual flywheel, Bezier-curved token flows, sparkline charts, and tooltips.
+- **Animations**: GSAP for dual flywheel, Bezier token flows, sparkline charts, tooltips, leaderboard slide-ins, and NFT Twin scale-ups.
 - **Components**:
-  - `ESGImpact.tsx`: Enterprise-grade dashboard with ESG metrics, sparklines, and operator controls.
-  - `TokenFlowDemo.tsx`: Animated Bezier flows for multi-token visualization.
-  - AI ESG Scanner: Material detection UI with `expo-camera`.
+  - `ESGImpact.tsx`: Enterprise-grade mobile dashboard with real-time telemetry.
+  - `TokenFlowDemo.tsx`: Bezier flows with sparklines and tooltips.
+  - `TokenFlowDemoWeb.tsx`: Web-based Bezier flows.
+  - AI ESG Scanner: Material detection UI.
   - AR Wayfinder: Hivemapper + Mapbox overlays.
 
 ## 🔒 Compliance & Security
 - **Regulations**: GDPR, EU CSRD, TCFD, ISO 14064-1, ISO 31000, Plastic Pollution Treaty (INC-5.2, August 2025).
-- **Security**: AES-256 encryption, Privy.io wallet auth, Sentry error monitoring.
-- **Offline Support**: AsyncStorage for caching telemetry and ESG data.
+- **Security**: AES-256 encryption, Privy.io wallet auth, Sentry monitoring.
+- **Offline Support**: AsyncStorage caching.
 
 ## 🤝 Community & Support
 - **GitHub**: [Polymers Protocol Repo](https://github.com/polymers-protocol/smartbin)
