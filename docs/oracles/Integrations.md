@@ -1,134 +1,149 @@
-## 📂 Full-Stack Architecture
+# Oracle Integrations
 
-The end-to-end flow covers:
+This document outlines the **oracle integration layer** for the Polymers Protocol, providing **real-time ESG metrics and token prices** that drive **token flows, NFT twin minting, and compliance dashboards**.
 
-**SmartBin → AI ESG Scanner → Oracles → Token Flow → NFT Twin → Compliance Dashboard → CI/CD**
+---
+
+## 🌐 Overview
+
+**Purpose:**  
+Ensure that ESG-based rewards and token flows are accurate, real-time, and auditable.
+
+| Oracle / Source       | Purpose                                      | Protocol / Tech       | Notes |
+|-----------------------|----------------------------------------------|---------------------|-------|
+| **Pyth Network**       | Real-time CO₂e, energy, water metrics       | Solana-native        | Low-latency subscription feed for ESG metrics |
+| **Chainlink**          | Token price feeds for multi-token rewards  | Cross-chain          | Redundant and fallback price feed |
+| **Internal Emission DB** | Verified emission factors for unsupported materials | Supabase             | Ensures coverage when oracle data is unavailable |
+
+**Data Flow:**
+
+SmartBin Sensors → Supabase Realtime DB → Oracle Layer → Token Flow Engine → NFT Twins / Dashboards / Compliance
+
+---
+
+## 🛠 Architecture
 
 ```mermaid
 graph TD
-    A[SmartBin Sensors<br>Fill, Weight, Material, Contamination<br>Helium DePIN] -->|LoRaWAN| B[Helium Hotspot<br>10km Range]
-    B -->|Telemetry| C[Supabase<br>Realtime Database]
-    C -->|Validated Data & ESG Calculations| D[Rewards System<br>PLY, CARB, EWASTE, HONEY, HNT]
-    D -->|NFT Minting| E[Metaplex cNFTs<br>NFT Twins]
-    C -->|Map Data| F[AR Wayfinder<br>Hivemapper + Mapbox]
-    D -->|ATA Updates| G[Wallets<br>Phantom, Solflare, Backpack]
-    F -->|Frontend| H[React Native / Next.js Dashboards]
-    H -->|AI Chat| I[Dialect + GPT/Grok]
-    C -->|API Requests| J[Fastify/MCP Backend]
-    J -->|Audit Logs| K[Compliance Dashboard<br>GDPR, CSRD, TCFD, ISO]
-    H -->|Build/Test| L[CI/CD Pipeline<br>Expo, Vercel, GitHub Actions]
+    A[Supabase Realtime DB] --> B[Oracle Layer]
+    B --> C[Pyth Network Feed<br>CO₂e, Energy, Water]
+    B --> D[Chainlink Price Feed<br>PLY, CARB, EWASTE, HONEY, HNT]
+    B --> E[Internal Emission DB]
+    C --> F[Token Flow Engine<br>Multi-Token Issuance]
+    D --> F
+    E --> F
+    F --> G[NFT Twin Minting / Dashboards]
+    F --> H[Compliance Dashboard<br>Audit Logs & ESG KPIs]
 
-Full implementation plan diagram is available in /docs/implementation_plan.md with detailed integration, component breakdown, and visual design specs.
-
-⸻
-
-🛠 Features
-
-1. SmartBin Telemetry & AI ESG Scanner
-	•	Real-time data collection via Helium DePIN IoT sensors.
-	•	Material detection using TensorFlow.js (expo-camera) >95% accuracy.
-	•	ESG metrics: CO₂e, energy, water, points.
-
-2. Oracle Integrations
-	•	Real-time emission factors and token prices via Pyth & Chainlink.
-	•	Validates ESG metrics before token issuance.
-	•	Multi-token rewards: PLY, CARB, EWASTE, HONEY, HNT.
-
-3. Token Flow & NFT Twins
-	•	GSAP-animated Bezier paths visualize multi-token flows.
-	•	NFT Twins minted via Metaplex cNFTs, with staking and animated evolution.
-	•	Leaderboard tracks top users with dynamic animations.
-
-4. Compliance Dashboard
-	•	Displays GDPR, CSRD, TCFD, ISO 14064-1, ISO 31000, INC-5.2 metrics.
-	•	Risk scoring and audit history visualization.
-	•	Monitors anomalies via Sentry integration.
-
-5. Frontend Dashboards
-	•	Mobile: React Native (ESGImpact.tsx, TokenFlowDemo.tsx, Leaderboard.tsx).
-	•	Web: Next.js (TokenFlowDemoWeb.tsx, ComplianceDashboard.tsx).
-	•	AR Wayfinding via Hivemapper + Mapbox overlays.
-	•	AI chat support via Dialect + GPT/Grok.
-
-6. CI/CD & OTA Updates
-	•	GitHub Actions handle build, test, and deployment.
-	•	Expo OTA updates for mobile.
-	•	Vercel deployment for web.
+Key Points:
+	•	Oracle layer aggregates, validates, and normalizes all data before feeding token flows.
+	•	Supports real-time updates to dashboards and NFT evolution.
+	•	Fallbacks ensure continuity when a primary oracle is unavailable.
 
 ⸻
 
-⚙️ Development Setup
+💻 Implementation
 
-Prerequisites
-	•	Node.js >= 20
-	•	npm >= 9
-	•	Yarn (optional)
-	•	Expo CLI for mobile
-	•	GitHub access for CI/CD pipelines
-	•	Supabase project with real-time DB
+1. Pyth Integration
 
-Environment Variables
+File: /lib/oracles/pyth.ts
 
-Create a .env.local with the following:
+import { PythConnection } from '@pythnetwork/client';
+import { Connection, PublicKey } from '@solana/web3.js';
 
-NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
-NEXT_PUBLIC_SOLANA_NETWORK=devnet
-NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
-TOKEN_PROGRAM_ID=<token-program-id>
-NFT_PROGRAM_ID=<nft-program-id>
-DEFAULT_WALLET_ADDRESS=<wallet-address>
-METADATA_SERVICE_URL=<metadata-api-url>
-ERROR_TRACKING_SERVICE_URL=<sentry-url>
-SECRET_KEY=<secret-key>
-JWT_SECRET=<jwt-secret>
-NODE_ENV=development
+const SOLANA_RPC = process.env.NEXT_PUBLIC_SOLANA_RPC_URL!;
+const connection = new Connection(SOLANA_RPC);
 
-Install Dependencies
+const pythProgramKey = new PublicKey('YourPythProgramID');
 
-npm install
+export async function fetchPythFeed(feedId: string) {
+  const pyth = new PythConnection(connection, pythProgramKey);
+  await pyth.updateFeeds([feedId]);
+  const price = pyth.getPrice(feedId);
+  return price;
+}
 
-Run Mobile App
-
-cd apps/mobile
-expo start
-
-Run Web App
-
-cd apps/web
-npm run dev
-
-Run Backend
-
-cd apps/backend
-npm run dev
-
+	•	Fetches real-time CO₂e, energy, and water metrics.
+	•	Updates Supabase esg_metrics table for dashboards, token issuance, and NFT triggers.
 
 ⸻
 
-📊 Rendering Diagrams
-	•	Mermaid CLI for SVG export:
+2. Chainlink Integration
 
-npm install -g @mermaid-js/mermaid-cli
-npx @mermaid-js/mermaid-cli -i docs/implementation_plan.md -o docs/implementation_plan.svg
+File: /lib/oracles/chainlink.ts
 
-	•	Convert SVG to PNG for presentations:
+import { ethers } from 'ethers';
 
-convert docs/implementation_plan.svg docs/implementation_plan.png
+const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_SOLANA_RPC_URL);
 
+export async function fetchTokenPrice(aggregatorAddress: string) {
+  const aggregator = new ethers.Contract(
+    aggregatorAddress,
+    [
+      "function latestAnswer() view returns (int256)",
+      "function decimals() view returns (uint8)"
+    ],
+    provider
+  );
+  const price = await aggregator.latestAnswer();
+  const decimals = await aggregator.decimals();
+  return Number(price) / Math.pow(10, decimals);
+}
+
+	•	Retrieves token prices for PLY, CARB, EWASTE, HONEY, HNT.
+	•	Normalized values feed the Token Flow Engine and dashboards.
 
 ⸻
 
-📈 Contribution Guidelines
-	•	Follow ESLint + Prettier rules.
-	•	Use Supabase test dataset for simulation.
-	•	Ensure CI/CD pipeline passes before merging.
-	•	Document new components in /docs/components.md.
+3. Internal Emission DB
+	•	Table: internal_emission_factors (Supabase)
+	•	Fields: material, co2e_kg_per_unit, energy_kWh, water_liters
+	•	Acts as a fallback when Pyth or Chainlink data is unavailable.
 
 ⸻
 
-🎨 Design & Compliance
-	•	Colors: Dark Green #1A3C34, Sand #F4A261, Light Gray #D3D3D3, White #FFFFFF.
-	•	Fonts: Satoshi Bold / Geist Regular.
-	•	Compliance: GDPR, CSRD, TCFD, ISO 14064-1, ISO 31000, INC-5.2.
-	•	Animations: GSAP Bezier flows, NFT evolution, leaderboard sparklines.
+⚡ Token Flow Engine Usage
+
+import { fetchPythFeed } from './pyth';
+import { fetchTokenPrice } from './chainlink';
+import supabase from '../supabaseClient';
+
+export async function calculateReward(material: string, quantity: number) {
+  let co2eFeed;
+  try {
+    co2eFeed = await fetchPythFeed(material);
+  } catch {
+    // fallback to internal DB
+    const { data } = await supabase
+      .from('internal_emission_factors')
+      .select('co2e_kg_per_unit')
+      .eq('material', material)
+      .single();
+    co2eFeed = data?.co2e_kg_per_unit ?? 0;
+  }
+
+  const tokenPrice = await fetchTokenPrice('0xAggregatorAddress');
+  const rewardAmount = quantity * co2eFeed * tokenPrice;
+
+  await supabase.from('token_flows').insert({ material, rewardAmount });
+  return rewardAmount;
+}
+
+	•	Calculates ESG-based rewards per material deposited.
+	•	Updates NFT Twin minting, dashboards, and compliance metrics in real-time.
+
+⸻
+
+📝 Best Practices
+	•	Failover Strategy: Always include internal DB fallback for continuity.
+	•	Normalization: Ensure CO₂e, energy, and water metrics use consistent units.
+	•	Subscriptions vs Polling: Use Pyth subscriptions for low latency; Chainlink may require polling.
+	•	Security: Validate oracle signatures where possible to prevent spoofing.
+
+⸻
+
+🔗 References
+	•	Pyth Network Docs
+	•	Chainlink Docs
+	•	Supabase Realtime
+	•	Solana Web3.js
