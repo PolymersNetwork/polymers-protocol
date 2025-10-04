@@ -48,47 +48,47 @@ Polymers Protocol is a **blockchain-as-a-service platform** integrating **Solana
 flowchart TB
   %% IoT Layer
   subgraph IoT["SmartBins / IoT"]
-    SmartBin["IoT SmartBins<br>Fill, Weight, Temp, Contamination"]:::iot
-    Helium["Helium DePIN / NB-IoT"]:::iot
+    SmartBin["SmartBins<br>Fill, Weight, Temp"]:::iot
+    Helium["Helium DePIN<br>NB-IoT"]:::iot
   end
 
   %% Backend & Services
   subgraph Backend["Backend & Services"]
-    Supabase["Supabase<br>iot_readings, token_flows"]:::backend
-    RewardEngine["Token Flow Engine<br>calculateReward"]:::backend
+    Supabase["Supabase<br>IoT & Token Data"]:::backend
+    RewardEngine["Reward Engine<br>Calculations"]:::backend
   end
 
   %% Oracle Layer
   subgraph Oracles["Oracles"]
-    Pyth["Pyth: CO₂e Metrics"]:::oracle
-    Chainlink["Chainlink: Token Prices"]:::oracle
+    Pyth["Pyth<br>CO₂e Metrics"]:::oracle
+    Chainlink["Chainlink<br>Token Prices"]:::oracle
   end
 
   %% Blockchain Layer
   subgraph Blockchain["Solana Blockchain"]
-    SolanaPay["Solana Pay<br>PLY, CARB, USDC, SOL, EWASTE"]:::blockchain
+    SolanaPay["Solana Pay<br>Token Swaps"]:::blockchain
   end
 
   %% Frontend
   subgraph Frontend["Frontend"]
-    Dashboards["Dashboards<br>SOL Balances & Swaps"]:::frontend
-    LLM["LLM Agent<br>Swap & Balance Prompts"]:::frontend
+    Dashboards["Dashboards<br>Balances & Swaps"]:::frontend
+    LLM["LLM Agent<br>Prompts"]:::frontend
   end
 
   %% Data Flow
-  SmartBin -->|Sensor Data| Helium -->|Relayed| Supabase -->|Processed| RewardEngine -->|Rewards| SolanaPay -->|Updates| Dashboards
-  RewardEngine -->|CO₂e Data| Pyth
-  RewardEngine -->|Token Prices| Chainlink
+  SmartBin -->|Data| Helium -->|Relayed| Supabase -->|Processed| RewardEngine -->|Rewards| SolanaPay -->|Updates| Dashboards
+  RewardEngine -->|CO₂e| Pyth
+  RewardEngine -->|Prices| Chainlink
   LLM -->|Prompts| SolanaPay
   Dashboards -->|Queries| Supabase
 
   %% Styling
-  classDef iot fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
-  classDef backend fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef oracle fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef blockchain fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  linkStyle default stroke:#006666,stroke-width:3px,color:#333333;
+  classDef iot fill:#00A86B,stroke:#006666,stroke-width:2px,color:#FFFFFF,border-radius:10px,font-size:12px;
+  classDef backend fill:#66CCCC,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px,font-size:12px;
+  classDef oracle fill:#66CCCC,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px,font-size:12px;
+  classDef blockchain fill:#FFD700,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px,font-size:12px;
+  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px,font-size:12px;
+  linkStyle default stroke:#006666,stroke-width:2px,color:#333333,stroke-dasharray:5,5;
 ```
 
 ---
@@ -111,7 +111,7 @@ flowchart TB
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js ≥20, npm ≥9
+- Node.js ≥16, npm ≥8
 - Solana CLI and Solana Pay SDK
 - Supabase account for transaction logging
 - TensorFlow.js for machine learning
@@ -154,21 +154,21 @@ REWARD_WALLET_TOKEN_ACCOUNT=REWARD_WALLET_TOKEN
 ```mermaid
 graph LR
   A[User Deposit]:::user --> B[Reward API]:::api
-  B --> C[Solana Transaction]:::solana
-  C --> D[Wallet Updates]:::wallet
-  D --> E[Dashboard & Mobile App]:::frontend
+  B --> C[Solana Tx]:::solana
+  C --> D[Wallet]:::wallet
+  D --> E[App & Dashboard]:::frontend
   B --> F[Leaderboards]:::leaderboard
-  G[Enterprise SmartBins]:::smartbin --> B
+  G[SmartBins]:::smartbin --> B
 
   %% Styling
-  classDef user fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
-  classDef api fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef solana fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef wallet fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef smartbin fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
-  classDef leaderboard fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  linkStyle default stroke:#006666,stroke-width:3px,color:#333333;
+  classDef user fill:#00A86B,stroke:#006666,stroke-width:2px,color:#FFFFFF,border-radius:10px,font-size:12px;
+  classDef api fill:#66CCCC,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px,font-size:12px;
+  classDef solana fill:#FFD700,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px,font-size:12px;
+  classDef wallet fill:#66CCCC,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px;font-size:12px;
+  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px;font-size:12px;
+  classDef smartbin fill:#00A86B,stroke:#006666,stroke-width:2px,color:#FFFFFF,border-radius:10px;font-size:12px;
+  classDef leaderboard fill:#66CCCC,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px;font-size:12px;
+  linkStyle default stroke:#006666,stroke-width:2px,color:#333333,stroke-dasharray:5,5;
 ```
 
 Pre-funded enterprise SmartBins automatically credit bonus tokens.
@@ -203,18 +203,18 @@ graph LR
   A[Deposit]:::deposit --> B[SmartBin]:::smartbin
   B --> C[Telemetry API]:::api
   C --> D[Solana Devnet]:::solana
-  D --> E[Wallet Updates]:::wallet
-  E --> F[Dashboard & Mobile App]:::frontend
-  C --> F[Analytics & Rewards]
+  D --> E[Wallet]:::wallet
+  E --> F[App & Dashboard]:::frontend
+  C --> F[Analytics]
 
   %% Styling
-  classDef deposit fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
-  classDef smartbin fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
-  classDef api fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef solana fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef wallet fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
-  linkStyle default stroke:#006666,stroke-width:3px,color:#333333;
+  classDef deposit fill:#00A86B,stroke:#006666,stroke-width:2px,color:#FFFFFF,border-radius:10px;font-size:12px;
+  classDef smartbin fill:#00A86B,stroke:#006666,stroke-width:2px,color:#FFFFFF,border-radius:10px;font-size:12px;
+  classDef api fill:#66CCCC,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px;font-size:12px;
+  classDef solana fill:#FFD700,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px;font-size:12px;
+  classDef wallet fill:#66CCCC,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px;font-size:12px;
+  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:2px,color:#333333,border-radius:10px;font-size:12px;
+  linkStyle default stroke:#006666,stroke-width:2px,color:#333333,stroke-dasharray:5,5;
 ```
 
 Telemetry data automatically feeds analytics to dashboard charts.
@@ -241,7 +241,6 @@ gantt
 
   %% Styling (limited by Mermaid Gantt)
   %% Using active class for visual emphasis
-  %% Custom colors not supported; consider image-based chart for advanced styling
 ```
 
 ---
