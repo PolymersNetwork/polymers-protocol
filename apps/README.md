@@ -6,7 +6,7 @@ Polymers Protocol is a **blockchain-as-a-service platform** integrating **Solana
 
 ---
 
-## Key Features
+## 🔹 Key Features
 
 ### Dashboard
 - Real-time SmartBin telemetry (fill level, contamination, weight, temperature)
@@ -42,57 +42,58 @@ Polymers Protocol is a **blockchain-as-a-service platform** integrating **Solana
 
 ---
 
-## System Architecture
+## 🔄 System Architecture
 
 ```mermaid
 flowchart TB
   %% IoT Layer
   subgraph IoT["SmartBins / IoT"]
-    SmartBin["IoT SmartBins<br>Fill, Weight, Temp, Contamination"]
-    Helium["Helium DePIN / NB-IoT"]
+    SmartBin["IoT SmartBins<br>Fill, Weight, Temp, Contamination"]:::iot
+    Helium["Helium DePIN / NB-IoT"]:::iot
   end
 
   %% Backend & Services
   subgraph Backend["Backend & Services"]
-    Supabase["Supabase<br>iot_readings, token_flows"]
-    RewardEngine["Token Flow Engine<br>calculateReward"]
+    Supabase["Supabase<br>iot_readings, token_flows"]:::backend
+    RewardEngine["Token Flow Engine<br>calculateReward"]:::backend
   end
 
   %% Oracle Layer
   subgraph Oracles["Oracles"]
-    Pyth["Pyth: CO₂e Metrics"]
-    Chainlink["Chainlink: Token Prices (PLY, CARB, USDC, SOL, EWASTE)"]
+    Pyth["Pyth: CO₂e Metrics"]:::oracle
+    Chainlink["Chainlink: Token Prices"]:::oracle
   end
 
   %% Blockchain Layer
   subgraph Blockchain["Solana Blockchain"]
-    SolanaPay["Solana Pay<br>PLY, CARB, USDC, SOL, EWASTE Swaps"]
+    SolanaPay["Solana Pay<br>PLY, CARB, USDC, SOL, EWASTE"]:::blockchain
   end
 
   %% Frontend
   subgraph Frontend["Frontend"]
-    Dashboards["Dashboards<br>SOL Balances & Swaps"]
-    LLM["LLM Agent<br>Swap & Balance Prompts"]
+    Dashboards["Dashboards<br>SOL Balances & Swaps"]:::frontend
+    LLM["LLM Agent<br>Swap & Balance Prompts"]:::frontend
   end
 
   %% Data Flow
-  SmartBin --> Helium --> Supabase --> RewardEngine --> SolanaPay --> Dashboards
-  RewardEngine --> Pyth
-  RewardEngine --> Chainlink
-  LLM --> SolanaPay
-  Dashboards --> Supabase
+  SmartBin -->|Sensor Data| Helium -->|Relayed| Supabase -->|Processed| RewardEngine -->|Rewards| SolanaPay -->|Updates| Dashboards
+  RewardEngine -->|CO₂e Data| Pyth
+  RewardEngine -->|Token Prices| Chainlink
+  LLM -->|Prompts| SolanaPay
+  Dashboards -->|Queries| Supabase
 
   %% Styling
-  style SolanaPay fill:#D4B483,stroke:#064635,color:#064635
-  style Backend fill:#E5E5E5,stroke:#064635
-  style IoT fill:#064635,stroke:#D4B483,color:white
-  style Oracles fill:#E5E5E5,stroke:#064635
-  style Frontend fill:#D4B483,stroke:#064635,color:#064635
+  classDef iot fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
+  classDef backend fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef oracle fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef blockchain fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  linkStyle default stroke:#006666,stroke-width:3px,color:#333333;
 ```
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 /app                   # Frontend dashboard
@@ -107,10 +108,10 @@ flowchart TB
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js ≥16, npm ≥8
+- Node.js ≥20, npm ≥9
 - Solana CLI and Solana Pay SDK
 - Supabase account for transaction logging
 - TensorFlow.js for machine learning
@@ -143,7 +144,7 @@ REWARD_WALLET_TOKEN_ACCOUNT=REWARD_WALLET_TOKEN
 
 ---
 
-## Tokenized Rewards
+## 💰 Tokenized Rewards
 
 - **PLY**: Points for polymer recycling
 - **CARB**: Carbon offset points
@@ -152,19 +153,29 @@ REWARD_WALLET_TOKEN_ACCOUNT=REWARD_WALLET_TOKEN
 ### Tokenomics Flow
 ```mermaid
 graph LR
-    A[User Deposit] --> B[Reward API]
-    B --> C[Solana Transaction]
-    C --> D[Wallet Updates]
-    D --> E[Dashboard & Mobile App]
-    B --> F[Leaderboards]
-    G[Enterprise SmartBins] --> B
+  A[User Deposit]:::user --> B[Reward API]:::api
+  B --> C[Solana Transaction]:::solana
+  C --> D[Wallet Updates]:::wallet
+  D --> E[Dashboard & Mobile App]:::frontend
+  B --> F[Leaderboards]:::leaderboard
+  G[Enterprise SmartBins]:::smartbin --> B
+
+  %% Styling
+  classDef user fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
+  classDef api fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef solana fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef wallet fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef smartbin fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
+  classDef leaderboard fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  linkStyle default stroke:#006666,stroke-width:3px,color:#333333;
 ```
 
 Pre-funded enterprise SmartBins automatically credit bonus tokens.
 
 ---
 
-## Testnet Rewards Sandbox
+## 🧪 Testnet Rewards Sandbox
 
 Simulate rewards on Solana Devnet:
 1. Fund Devnet wallets using a Solana faucet
@@ -189,42 +200,53 @@ npx expo start    # Start mobile app
 ### Rewards Flow
 ```mermaid
 graph LR
-    A[Deposit] --> B[SmartBin]
-    B --> C[Telemetry API]
-    C --> D[Solana Devnet]
-    D --> E[Wallet Updates]
-    E --> F[Dashboard & Mobile App]
-    C --> F[Analytics & Rewards]
+  A[Deposit]:::deposit --> B[SmartBin]:::smartbin
+  B --> C[Telemetry API]:::api
+  C --> D[Solana Devnet]:::solana
+  D --> E[Wallet Updates]:::wallet
+  E --> F[Dashboard & Mobile App]:::frontend
+  C --> F[Analytics & Rewards]
+
+  %% Styling
+  classDef deposit fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
+  classDef smartbin fill:#00A86B,stroke:#006666,stroke-width:3px,color:#FFFFFF,border-radius:8px;
+  classDef api fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef solana fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef wallet fill:#66CCCC,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  classDef frontend fill:#FFD700,stroke:#006666,stroke-width:3px,color:#333333,border-radius:8px;
+  linkStyle default stroke:#006666,stroke-width:3px,color:#333333;
 ```
 
 Telemetry data automatically feeds analytics to dashboard charts.
 
 ---
 
-## Predictive Rewards Simulation
+## 📊 Predictive Rewards Simulation
 
 ```mermaid
 gantt
-    title Rewards Simulation
-    dateFormat  YYYY-MM-DD
-    axisFormat  %d-%m
-    section Deposits
-    User Deposits      :active, des1, 2025-10-01, 10d
-    Enterprise Batches :des2, 2025-10-05, 8d
-    section Tokens
-    PLY Tokens         :dist1, after des1, 10d
-    CARB Tokens        :dist2, after des2, 8d
-    EWASTE Tokens      :dist3, after des1, 12d
-    section Gamification
-    Points Updated     :points1, after dist1, 12d
-    Leaderboards       :points2, after dist2, 10d
-```
+  title Rewards Simulation
+  dateFormat  YYYY-MM-DD
+  axisFormat  %d-%m
+  section Deposits
+  User Deposits      :active, des1, 2025-10-01, 10d
+  Enterprise Batches :active, des2, 2025-10-05, 8d
+  section Tokens
+  PLY Tokens         :dist1, after des1, 10d
+  CARB Tokens        :dist2, after des2, 8d
+  EWASTE Tokens      :dist3, after des1, 12d
+  section Gamification
+  Points Updated     :points1, after dist1, 12d
+  Leaderboards       :points2, after dist2, 10d
 
-Simulates token distribution vs. deposits for auditing and gamification.
+  %% Styling (limited by Mermaid Gantt)
+  %% Using active class for visual emphasis
+  %% Custom colors not supported; consider image-based chart for advanced styling
+```
 
 ---
 
-## Tests
+## 🧪 Tests
 Run tests to validate:
 - IoT data ingestion and analytics
 - Solana program interactions
@@ -245,6 +267,6 @@ npm run test
 
 ---
 
-## License
+## 📜 License
 
 [MIT License](LICENSE)
