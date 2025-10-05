@@ -1,0 +1,18 @@
+name: Render Mermaid Diagrams
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mermaid-js/mermaid-cli@v1
+        with:
+          input: README.md
+          output: README-rendered.md
+      - name: Commit rendered file
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add README-rendered.md
+          git commit -m "Render Mermaid diagrams" || echo "No changes to commit"
+          git push
