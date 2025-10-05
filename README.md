@@ -58,7 +58,7 @@ The Polymers Protocol integrates IoT, blockchain, AI, and frontend components in
 graph TD
     %% IoT Layer
     subgraph IoT_Layer["IoT Layer"]
-        A[SmartBin Sensors<br>Helium DePIN<br>NB-IoT, Sigfox] -->|Telemetry| B[IoT Gateway<br>Hivemapper<br>Mapbox AR]
+        A[SmartBin Sensors<br>Helium DePIN<br>NB-IoT, Sigfox] -->|Sensor Data| B[IoT Gateway<br>Hivemapper<br>Mapbox AR]
     end
 
     %% Data Layer
@@ -68,53 +68,61 @@ graph TD
 
     %% AI Layer
     subgraph AI_Layer["AI Layer"]
-        C --> D[AI Engine<br>TensorFlow.js<br>LSTM Analytics]
-        D -->|Material Detection| E[AI ESG Scanner<br>Expo Camera<br>>95% Accuracy]
-        D -->|Predictive Analytics| F[ESG Metrics<br>Carbon Offset<br>Cleanliness Score]
-        D -->|User Guidance| G[AI Assistant<br>OpenAI Chat<br>GPT/Grok 3, Dialect]
+        C -->|Data Feed| D[AI Engine<br>TensorFlow.js<br>LSTM Analytics]
+        D -->|Material Analysis| E[AI ESG Scanner<br>Expo Camera<br>>95% Accuracy]
+        D -->|Predictive Insights| F[ESG Metrics<br>Carbon Offset<br>Cleanliness Score]
+        D -->|User Interaction| G[AI Assistant<br>OpenAI Chat<br>GPT/Grok 3, Dialect]
     end
 
     %% Blockchain Layer
     subgraph Blockchain_Layer["Blockchain Layer"]
-        C --> H[Rewards Engine<br>PLY, CARB, EWASTE<br>HONEY, SOL]
-        H -->|Minting| I[NFT Twins<br>Metaplex cNFTs]
-        H -->|Price Feeds| J[Oracles<br>PYTH, Chainlink]
-        H -->|Token Swaps| K[Polymers Swap Panel<br>Solana Pay<br>Jupiter, Raydium]
-        K -->|Transactions| L[Solana Pay QR Codes]
-        L -->|Payments| M[User Wallets<br>Phantom, Solflare, Backpack]
-        K -->|Observability| N[Helius RPC & Event Streaming]
-        M -->|Staking| O[Staking Program<br>HONEY Rewards]
+        C -->|Telemetry Data| H[Rewards Engine<br>PLY, CARB, EWASTE<br>HONEY, SOL]
+        H -->|NFT Creation| I[NFT Twins<br>Metaplex cNFTs]
+        H -->|Market Data| J[Oracles<br>PYTH, Chainlink]
+        H -->|Swap Processing| K[Polymers Swap Panel<br>Solana Pay<br>Jupiter, Raydium]
+        K -->|Payment Processing| L[Solana Pay QR Codes]
+        L -->|Wallet Integration| M[User Wallets<br>Phantom, Solflare, Backpack]
+        K -->|Event Tracking| N[Helius RPC & Event Streaming]
+        M -->|Reward Staking| O[Staking Program<br>HONEY Rewards]
     end
 
     %% Frontend Layer
     subgraph Frontend_Layer["Frontend Layer"]
-        H -->|Rewards Data| P[Gamified Leaderboard<br>Animated Rankings<br>CARB/EWASTE Bonuses]
-        I -->|NFT Data| P
-        K -->|Swap Data| P
-        L -->|Tx Confirmation| P
-        F -->|ESG Data| Q[Dashboard<br>Next.js<br>GSAP Bezier Flows]
-        F -->|ESG Data| R[Mobile App<br>React Native<br>Expo, AR Wayfinder]
-        G -->|Notifications| R
-        P -->|User Rankings| Q
-        P -->|User Rankings| R
+        H -->|Rewards Output| P[Gamified Leaderboard<br>Animated Rankings<br>CARB/EWASTE Bonuses]
+        I -->|NFT Display| P
+        K -->|Swap Interface| P
+        L -->|Transaction Status| P
+        F -->|Metrics Display| Q[Dashboard<br>Next.js<br>GSAP Bezier Flows]
+        F -->|Metrics Display| R[Mobile App<br>React Native<br>Expo, AR Wayfinder]
+        G -->|User Notifications| R
+        P -->|Rankings Display| Q
+        P -->|Rankings Display| R
     end
 
     %% Security Layer
     subgraph Security_Layer["Security & Compliance"]
-        C -->|Encrypted Storage| S[Security Layer<br>AES-256, Privy.io, Sentry]
-        S -->|Compliance| T[GDPR, EU CSRD<br>ISO 14064-1]
+        C -->|Secure Storage| S[Security Layer<br>AES-256, Privy.io, Sentry]
+        S -->|Regulatory Compliance| T[GDPR, EU CSRD<br>ISO 14064-1]
     end
 
     %% Styling
-    classDef primary fill:#1A3C34,stroke:#F4A261,stroke-width:2px,stroke-dasharray:0,font-size:12px,rx:8,ry:8,color:#FFFFFF;
-    classDef secondary fill:#F4A261,stroke:#1A3C34,stroke-width:2px,rx:8,ry:8,font-size:12px,color:#1A3C34;
-    classDef tertiary fill:#D3D3D3,stroke:#1A3C34,stroke-width:2px,rx:8,ry:8,font-size:12px,color:#1A3C34;
-    classDef neutral fill:#FFFFFF,stroke:#1A3C34,stroke-width:2px,rx:8,ry:8,font-size:12px,color:#1A3C34;
+    classDef primary fill:#1A3C34,stroke:#F4A261,stroke-width:2px,stroke-dasharray:0,font-size:12px,rx:10,ry:10,color:#FFFFFF;
+    classDef secondary fill:#F4A261,stroke:#1A3C34,stroke-width:2px,rx:10,ry:10,font-size:12px,color:#1A3C34;
+    classDef tertiary fill:#D3D3D3,stroke:#1A3C34,stroke-width:2px,rx:10,ry:10,font-size:12px,color:#1A3C34;
+    classDef neutral fill:#FFFFFF,stroke:#1A3C34,stroke-width:2px,rx:10,ry:10,font-size:12px,color:#1A3C34;
 
     class A primary;
     class K secondary;
     class L,P,O tertiary;
     class Q,R,S,T neutral;
+
+    %% Background Styling
+    style IoT_Layer fill:#FFF9E6,stroke:#1A3C34,stroke-width:1px;
+    style Data_Layer fill:#FFF9E6,stroke:#1A3C34,stroke-width:1px;
+    style AI_Layer fill:#FFF9E6,stroke:#1A3C34,stroke-width:1px;
+    style Blockchain_Layer fill:#FFF9E6,stroke:#1A3C34,stroke-width:1px;
+    style Frontend_Layer fill:#FFF9E6,stroke:#1A3C34,stroke-width:1px;
+    style Security_Layer fill:#FFF9E6,stroke:#1A3C34,stroke-width:1px;
 ```
 
 ---
