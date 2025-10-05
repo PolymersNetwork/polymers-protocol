@@ -1,4 +1,4 @@
-# ♻️ Polymers Protocol
+# ♻️ Polymers Protocol - Monorepo
 
 **Polymers Protocol** is a full-stack Blockchain-as-a-Service (BaaS) platform built on [Solana](https://solana.com), powering **SmartBin**—an IoT-enabled, gamified waste management ecosystem for polymer and e-waste recycling. It integrates **ESG tracking**, **NFT Twins**, **tokenized rewards**, and the **Polymers Swap Panel** to drive transparency, sustainability, and user engagement.
 
@@ -22,7 +22,7 @@ The platform combines:
   - Interactive dashboard (`ESGImpact.tsx`) with dual flywheel, Bezier-curved token flows (PLY, CARB, EWASTE, HONEY, SOL), sparkline charts, and GSAP tooltips.
   - Mobile app (React Native/Expo) with AI ESG Scanner (expo-camera, TensorFlow.js), AR Wayfinder (Hivemapper/Mapbox), and [Polymers Swap Panel](#polymers-swap-panel).
   - Web dashboard (Next.js) with GSAP-driven Bezier flows (`TokenFlowDemoWeb.tsx`).
-  - UI/UX: Dark green (#1A3C34), sand (#F4A261), light gray (#D3D3D3), white (#FFFFFF); Satoshi-Bold (headings), Geist-Regular
+  - UI/UX: Dark green (#1A3C34), sand (#F4A261), light gray (#D3D3D3), white (#FFFFFF); Satoshi-Bold (headings), Geist-Regular (body).
 
 - **Backend**:
   - Fastify/MCP API for user data, transactions, and [SmartBin telemetry](#helium-depin-integration).
@@ -53,7 +53,7 @@ The platform combines:
 
 ## 🏗️ Architecture Overview
 
-The Polymers Protocol integrates IoT, blockchain, AI, and frontend components to create a seamless waste management ecosystem. The diagram below illustrates the flow from SmartBins to user wallets, dashboards, and leaderboards.
+The Polymers Protocol integrates IoT, blockchain, AI, and frontend components to create a seamless waste management ecosystem. The diagram below illustrates the flow from SmartBins to user wallets, dashboards, and leaderboards, with Solana Pay facilitating transactions.
 
 ```mermaid
 graph TD
@@ -72,30 +72,33 @@ graph TD
     H -->|Minting| I[NFT Twins<br>Metaplex cNFTs]
     H -->|Price Feeds| J[Oracles<br>PYTH, Chainlink]
     H -->|Token Swaps| K[Polymers Swap Panel<br>Solana Pay, Jupiter, Raydium]
-    K -->|Transactions| L[User Wallets<br>Phantom, Solflare, Backpack]
-    K -->|Observability| M[Helius<br>RPC, Event Streaming]
-    L -->|Staking| N[Staking Program<br>HONEY Rewards]
+    K -->|Solana Pay Tx| L[Solana Pay<br>QR Codes, Transactions]
+    L -->|Payments| M[User Wallets<br>Phantom, Solflare, Backpack]
+    K -->|Observability| N[Helius<br>RPC, Event Streaming]
+    M -->|Staking| O[Staking Program<br>HONEY Rewards]
 
     %% Frontend Layer
-    H -->|Rewards Data| O[Gamified Leaderboard<br>Animated Rankings, CARB/EWASTE Bonuses]
-    I -->|NFT Data| O
-    K -->|Swap Data| O
-    F -->|ESG Data| P[Dashboard<br>Next.js, GSAP Bezier Flows, Analytics]
-    F -->|ESG Data| Q[Mobile App<br>React Native, Expo, AR Wayfinder]
-    G -->|Notifications| Q
-    O -->|User Rankings| P
-    O -->|User Rankings| Q
+    H -->|Rewards Data| P[Gamified Leaderboard<br>Animated Rankings, CARB/EWASTE Bonuses]
+    I -->|NFT Data| P
+    K -->|Swap Data| P
+    L -->|Tx Confirmation| P
+    F -->|ESG Data| Q[Dashboard<br>Next.js, GSAP Bezier Flows, Analytics]
+    F -->|ESG Data| R[Mobile App<br>React Native, Expo, AR Wayfinder]
+    G -->|Notifications| R
+    P -->|User Rankings| Q
+    P -->|User Rankings| R
 
     %% Security & Compliance
-    C -->|Encrypted Storage| R[Security Layer<br>AES-256, Privy.io, Sentry]
-    R -->|Compliance| S[GDPR, EU CSRD, ISO 14064-1]
+    C -->|Encrypted Storage| S[Security Layer<br>AES-256, Privy.io, Sentry]
+    S -->|Compliance| T[GDPR, EU CSRD, ISO 14064-1]
 
     %% Styling
     style A fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
     style K fill:#F4A261,stroke:#1A3C34,color:#1A3C34
-    style O fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
-    style P fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
+    style L fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
+    style P fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
     style Q fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
+    style R fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
 ```
 
 ---
@@ -180,7 +183,7 @@ Helium powers `/lib/helium.ts`, with NB-IoT/Sigfox fallbacks (`/lib/nbiot.ts`, `
 #### Resources
 - [Helium Docs](https://docs.helium.com/)
 - [Helius RPC](https://helius.dev)
-- [Polymers Repo](https://github.com/PolymersKnetwork/smartbin)
+- [Polymers Repo](https://github.com/polymers-protocol/smartbin)
 
 ---
 
@@ -196,7 +199,7 @@ Helium powers `/lib/helium.ts`, with NB-IoT/Sigfox fallbacks (`/lib/nbiot.ts`, `
   - [NFT Twins](#esg-nft-twins--rewards): 5 PLY per 100 ESG Points, minted as Metaplex cNFTs.
   - Staking: HONEY = Staked ESG Points × 0.01/day.
   - [Leaderboard](#gamification--leaderboard): Animated rankings with CARB/EWASTE bonuses.
-  - [Swap Panel](#polymers-swap-panel): Swap PLY, CARB, EWASTE, SOL.
+  - [Swap Panel](#polymers-swap-panel): Swap PLY, CARB, EWASTE, SOL via Solana Pay.
 - **Tokenomics**:
   | Token  | Purpose                    | Swap Support         |
   |--------|----------------------------|----------------------|
@@ -251,8 +254,97 @@ export default function WebSwapDemo() {
   - 1st: 100 CARB + 50 EWASTE
   - 2nd: 50 CARB + 25 EWASTE
   - 3rd: 25 CARB + 10 EWASTE
-- **Swap Integration**: Rewards swappable via [Polymers Swap Panel](#polymers-swap-panel).
+- **Swap Integration**: Rewards swappable via [Polymers Swap Panel](#polymers-swap-panel) with Solana Pay.
 - **NFT Visibility**: [NFT Twins](#esg-nft-twins--rewards) reflect ESG points and reward history.
+
+---
+
+## 💸 Solana Pay Integration
+
+Solana Pay enhances Polymers Protocol by enabling fast, low-cost, and user-friendly transactions for token swaps, rewards, and wallet interactions. Integrated with the [Polymers Swap Panel](#polymers-swap-panel), it leverages Solana’s high throughput (65K+ TPS) and sub-second finality to streamline the ecosystem.
+
+#### Key Features
+- **QR Code Payments**: Users scan QR codes in the mobile app or dashboard to initiate swaps (e.g., PLY to SOL) or redeem rewards.
+- **Transaction Speed**: ~400ms confirmation time, ideal for real-time reward distribution.
+- **Low Fees**: ~$0.00025 per transaction, supporting micro-payments for SmartBin rewards.
+- **Wallet Support**: Compatible with Phantom, Solflare, and Backpack via Privy.io auth.
+- **Swap Integration**: Powers the [Polymers Swap Panel](#polymers-swap-panel) for seamless PLY, CARB, EWASTE, HONEY, and SOL exchanges.
+
+#### Integration Flow
+1. **Trigger Event**: SmartBin telemetry or user action (e.g., reward claim) initiates a transaction via the Rewards Engine.
+2. **QR Generation**: The Fastify/MCP API generates a Solana Pay QR code (`/api/solana-pay/generate`) linked to the user’s wallet and token amount.
+3. **Payment Processing**: Users scan the QR code with their wallet app, authorizing the transaction on Solana.
+4. **Confirmation**: Helius RPC streams the transaction status to Supabase, updating the dashboard and mobile app.
+5. **Reward/Swap Update**: Tokens are credited or swapped, reflected in the [Leaderboard](#gamification--leaderboard) and [Swap Panel](#polymers-swap-panel).
+
+#### Technical Implementation
+- **Libraries**:
+  - `@solana/web3.js`: Core Solana blockchain interactions.
+  - `@solana/pay`: QR code generation and transaction handling.
+  - `qrcode`: Generates QR codes for the frontend.
+- **Environment Variables**:
+  ```plaintext
+  SOLANA_PAY_MERCHANT_KEY=YOUR_MERCHANT_PRIVATE_KEY
+  NEXT_PUBLIC_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+  HELIUS_API_KEY=YOUR_HELIUS_API_KEY
+  ```
+- **Code Example** (from `/api/wallet/solana-pay.ts`):
+  ```typescript
+  import { createQR } from '@solana/pay';
+  import { Keypair, Connection, Transaction } from '@solana/web3.js';
+  import { supabase } from '../../lib/supabaseClient';
+
+  async function generateSolanaPayQR(amount: number, recipient: string, reference: string) {
+    const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL, 'confirmed');
+    const merchant = Keypair.fromSecretKey(Uint8Array.from(process.env.SOLANA_PAY_MERCHANT_KEY.split(',')));
+    const qr = createQR({
+      recipient: merchant.publicKey,
+      amount,
+      reference,
+      label: 'Polymers Reward Payment',
+      message: 'Scan to claim your reward!',
+    });
+    const qrImage = await qr.getImage(); // Returns base64 or buffer
+    await supabase.from('transactions').insert({ qrData: qrImage, amount, recipient });
+    return qrImage;
+  }
+
+  async function confirmTransaction(signature: string) {
+    const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL, 'confirmed');
+    const { blockhash } = await connection.getLatestBlockhash();
+    const tx = await connection.getTransaction(signature, { commitment: 'confirmed' });
+    if (tx) {
+      await supabase.from('transactions').update({ status: 'confirmed' }).eq('signature', signature);
+      return { success: true, tx };
+    }
+    return { success: false };
+  }
+  ```
+- **Testing**:
+  ```bash
+  npm run simulate:solana-pay  # Mock QR generation and transactions
+  npm run test:transactions    # Verify payment flow (<400ms latency)
+  ```
+
+#### Benefits
+- **User Experience**: Seamless QR-based payments enhance mobile app usability.
+- **Cost Efficiency**: Low fees enable micro-transactions for rewards and swaps.
+- **Scalability**: Supports high transaction volumes for global SmartBin deployments.
+- **Integration**: Complements Jupiter/Raydium swaps in the [Polymers Swap Panel](#polymers-swap-panel).
+
+#### Challenges & Mitigations
+- **Wallet Adoption**: Promote Phantom/Solflare via tutorials and incentives.
+- **Network Congestion**: Use Helius RPC for reliable transaction streaming.
+- **Security**: Encrypt QR data with AES-256 and validate via Privy.io auth.
+
+#### Future Potential
+- Integrate Solana Pay for HNT staking payments.
+- Add multi-signature support for enterprise transactions.
+- Enable batch QR payments for bulk reward claims.
+
+#### Resources
+- [Solana Pay Docs](https://docs.solana.com/pay)
+- [Polymers Repo](https://github.com/polymers-protocol/smartbin)
 
 ---
 
@@ -291,7 +383,7 @@ README.md
 
 1. **Clone & Install**:
    ```bash
-   git clone https://github.com/PolymersNetwork/smartbin
+   git clone https://github.com/polymers-protocol/smartbin
    cd smartbin
    npm install
    cp .env.example .env
@@ -304,12 +396,14 @@ README.md
    SIGFOX_API_KEY=YOUR_SIGFOX_API_KEY
    PRIVY_APP_ID=YOUR_PRIVY_APP_ID
    CHAINLINK_API_KEY=YOUR_CHAINLINK_KEY
+   SOLANA_PAY_MERCHANT_KEY=YOUR_MERCHANT_PRIVATE_KEY
    ```
 3. **Run Simulations**:
    ```bash
    npm run simulate:iot        # Mock Helium Hotspot relays
    npm run simulate:hivemapper # Geospatial mapping
    npm run simulate:rewards    # Reward calculations
+   npm run simulate:solana-pay # Mock Solana Pay transactions
    npm run test:lstm           # LSTM analytics
    npm run ota:deploy          # OTA firmware updates
    ```
@@ -333,7 +427,7 @@ To maximize the impact and scalability of Polymers Protocol, consider the follow
 - **Scalability & Performance**:
   - Optimize Solana smart contracts with batch minting and staking programs to reduce costs and enhance throughput for 100K+ SmartBins.
   - Implement Supabase edge functions for real-time IoT telemetry processing, supporting Helium DePIN scalability.
-  - Explore cross-chain bridges (e.g., Ethereum, SUI Network) for NFT Twins and token swaps, expanding beyond Solana.
+  - Explore cross-chain bridges (e.g., Ethereum, Polygon) for NFT Twins and token swaps, expanding beyond Solana Pay.
 
 - **Advanced Analytics**:
   - Integrate live ESG dashboards with contamination heatmaps and carbon offset visuals, powered by PYTH/Chainlink oracles.
@@ -342,18 +436,18 @@ To maximize the impact and scalability of Polymers Protocol, consider the follow
 
 - **Interactivity & Integration**:
   - Embed interactive GSAP Bezier charts in the dashboard and mobile app using React Native WebView with Supabase updates.
-  - Publish Swagger/OpenAPI specs for the Fastify/MCP API to encourage third-party integrations, including SmartBin telemetry.
-  - Support additional wallets (e.g., Phantom, Solflare, Backpack) with Privy.io auth for seamless user onboarding.
+  - Publish Swagger/OpenAPI specs for the Fastify/MCP API to encourage third-party integrations, including Solana Pay transactions.
+  - Support additional wallets (e.g., Phantom, Solflare, Backpack) with Privy.io auth for seamless Solana Pay onboarding.
 
 - **Sustainability & Compliance**:
   - Automate ESG report generation for EU CSRD and ISO 14064-1 compliance, leveraging AI ESG Scanner data.
-  - Develop a carbon credit marketplace for trading CARB tokens, integrated with the Polymers Swap Panel.
-  - Strengthen the audit trail with tamper-proof blockchain logging of SmartBin events, enhanced by Helius RPC.
+  - Develop a carbon credit marketplace for trading CARB tokens, integrated with the Polymers Swap Panel and Solana Pay.
+  - Strengthen the audit trail with tamper-proof blockchain logging of SmartBin events, enhanced by Helius RPC and Solana Pay transactions.
 
 - **Community & Ecosystem**:
-  - Release a developer SDK for building apps on the Polymers Protocol, utilizing the API, NFT Twins, and Swap Panel.
+  - Release a developer SDK for building apps on the Polymers Protocol, utilizing the API, NFT Twins, Swap Panel, and Solana Pay.
   - Form partnerships with e-waste recycling facilities and ESG organizations to expand SmartBin deployments.
-  - Encourage open-source contributions to `/lib` (e.g., `helium.ts`, `lstm_model.ts`) and `/apps` with detailed `/docs` guidance.
+  - Encourage open-source contributions to `/lib` (e.g., `helium.ts`, `lstm_model.ts`) and `/api/wallet/solana-pay.ts` with detailed `/docs` guidance.
 
 ---
 
