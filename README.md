@@ -10,9 +10,9 @@ The platform combines:
 - **AI**: TensorFlow.ts QR-code / ESG scanner, OpenAI, Deepseek, Anthropics, Grok AI agents via Solana and Dialect.
 - **Compliance**: GDPR, EU CSRD, ISO 14064-1, Plastic Pollution Treaty (INC-5.2, August 2025).
 
-**Version**: 1.0 Beta  
+**Version**: 1.0 Beta
+
 **Live Demo**: [demo.polymersnetwork.org](https://demo.polymersnetwork.org)  
-**Repository**: [github.com/PolymersNetwork/smartbin](https://github.com/PolymerNetwork/smartbin)
 
 ---
 
