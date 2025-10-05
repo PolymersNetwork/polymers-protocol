@@ -2,49 +2,49 @@
 
 **Version 1.0 – Beta**
 
-Polymers Protocol is a **blockchain-as-a-service (BaaS)** platform leveraging **Solana**, **IoT/DePIN**, and **ESG analytics** to revolutionize polymer and e-waste recycling. It combines **transparent traceability**, **tokenized incentives**, **predictive analytics**, and **AI-assisted management** to enable circular, data-driven waste ecosystems.
+*Polymers Protocol is a **blockchain-as-a-service (BaaS)** platform leveraging **Solana**, **IoT/DePIN**, and **ESG analytics** to revolutionize polymer and e-waste recycling. It delivers **transparent traceability**, **tokenized incentives**, **predictive analytics**, and **AI-driven management** for a circular, data-powered waste ecosystem.*
 
 ---
 
 ## 🔹 Core Components
 
 ### 🌐 Dashboard
-- Real-time telemetry for SmartBins (fill, weight, contamination, temperature).
-- ESG metrics (carbon offset, circularity index).
-- NFT Twin tracking of recycling batches.
-- Predictive analytics for supply & contamination trends.
-- Gamified missions and community leaderboards.
+- **Real-Time Telemetry**: Tracks SmartBin fill, weight, contamination, and temperature.
+- **ESG Metrics**: Monitors carbon offset and circularity index.
+- **NFT Twin Tracking**: Links recycling batches to unique NFTs.
+- **Predictive Analytics**: Forecasts supply and contamination trends.
+- **Gamification**: Offers missions and community leaderboards.
 
 ### 📱 Mobile App
-- Built with **React Native + Expo** (dark theme, green-gray-black palette).
-- Features: pickup scheduling, progress tracking, reminders, and token rewards.
+- Built with **React Native + Expo** in a dark theme with neon green (#00A86B) accents.
+- **Features**: Schedule pickups, track progress, set reminders, and earn token rewards.
 
 ### 🧠 AI & Analytics
-- LSTM forecasting for material supply/demand.
-- ESG score engine for sustainability impact.
-- AI contamination detection from IoT telemetry.
+- **LSTM Forecasting**: Predicts material supply and demand.
+- **ESG Scoring**: Calculates sustainability impact.
+- **AI Detection**: Identifies contamination from IoT data.
 
 ### ♻️ SmartBins
-- DePIN-connected devices streaming weight, fill level, and contamination data.
-- AI-based optimization for pickup scheduling.
-- Integrated token reward triggers via SmartBin Reward API.
+- **DePIN-Connected**: Streams weight, fill, and contamination data.
+- **AI Optimization**: Schedules pickups efficiently.
+- **Reward Integration**: Triggers tokens via SmartBin Reward API.
 
 ---
 
 ## 🔄 SmartBin Reward API
 
-| Endpoint                  | Method | Description                                  |
-|---------------------------|--------|----------------------------------------------|
-| `/api/reward/trigger`     | POST   | Trigger reward mint for valid deposits       |
-| `/api/telemetry/update`   | POST   | Log SmartBin telemetry data                  |
-| `/api/nft/mint`           | POST   | Auto-mint NFT Twin for batch                 |
-| `/api/analytics/report`   | GET    | Return aggregated ESG & usage stats          |
+| **Endpoint**              | **Method** | **Description**                              |
+|---------------------------|------------|----------------------------------------------|
+| `/api/reward/trigger`     | POST       | Initiates reward mint for valid deposits     |
+| `/api/telemetry/update`   | POST       | Logs SmartBin telemetry data                 |
+| `/api/nft/mint`           | POST       | Auto-mints NFT Twin for batches              |
+| `/api/analytics/report`   | GET        | Delivers aggregated ESG and usage stats      |
 
 **Flow**:
 1. SmartBin sends telemetry → `/api/telemetry/update`
 2. If thresholds met → `/api/reward/trigger`
 3. Reward engine mints tokens + NFT Twin
-4. Dashboard & mobile app update in real time
+4. Dashboard & mobile app update live
 
 ---
 
@@ -52,31 +52,31 @@ Polymers Protocol is a **blockchain-as-a-service (BaaS)** platform leveraging **
 
 ```mermaid
 flowchart TD
-  A[SmartBin Event]:::green --> B[Reward API Trigger]:::gray
-  B --> C[Auto-Mint Engine]:::black
-  C --> D1[PLY Mint<br>Recycling Reward]:::gray
-  C --> D2[CARB Mint<br>Carbon Offset]:::gray
-  C --> D3[EWASTE Mint<br>E-Waste Incentive]:::gray
-  C --> E[NFT Twin Mint<br>Batch Tokenization]:::green
-  E --> F[Solana Blockchain<br>Metaplex Program]:::black
-  F --> G[Wallet + Dashboard Sync]:::gray
+  A([SmartBin Event]):::green --> B([Reward API Trigger]):::gray
+  B --> C([Auto-Mint Engine]):::black
+  C --> D1([PLY Mint<br>Recycling Reward]):::gray
+  C --> D2([CARB Mint<br>Carbon Offset]):::gray
+  C --> D3([EWASTE Mint<br>E-Waste Incentive]):::gray
+  C --> E([NFT Twin Mint<br>Batch Tokenization]):::green
+  E --> F([Solana Blockchain<br>Metaplex Program]):::black
+  F --> G([Wallet + Dashboard Sync]):::gray
 
   %% Clickable Nodes
-  click A "https://docs.polymers.network/smartbins" "SmartBin Event Docs"
-  click B "https://docs.polymers.network/reward-api" "Reward API Trigger Docs"
-  click C "https://docs.polymers.network/auto-mint" "Auto-Mint Engine Docs"
-  click D1 "https://docs.polymers.network/tokens#ply" "PLY Token Details"
-  click D2 "https://docs.polymers.network/tokens#carb" "CARB Token Details"
-  click D3 "https://docs.polymers.network/tokens#ewaste" "EWASTE Token Details"
-  click E "https://docs.polymers.network/nft-twins" "NFT Twin Minting Docs"
+  click A "https://docs.polymersnetwork.org/smartbins" "SmartBin Event Docs"
+  click B "https://docs.polymersnetwork.org/reward-api" "Reward API Trigger Docs"
+  click C "https://docs.polymersnetwork.org/auto-mint" "Auto-Mint Engine Docs"
+  click D1 "https://docs.polymersnetwork.org/tokens#ply" "PLY Token Details"
+  click D2 "https://docs.polymersnetwork.org/tokens#carb" "CARB Token Details"
+  click D3 "https://docs.polymersnetwork.org/tokens#ewaste" "EWASTE Token Details"
+  click E "https://docs.polymersnetwork.org/nft-twins" "NFT Twin Minting Docs"
   click F "https://solanapay.com/docs" "Solana Metaplex Docs"
-  click G "https://docs.polymers.network/wallet" "Wallet & Dashboard Sync Docs"
+  click G "https://docs.polymersnetwork.org/wallet" "Wallet & Dashboard Sync Docs"
 
   %% Styling
-  classDef green fill:#00A86B,stroke:#333333,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,font-family:Satoshi;
-  classDef black fill:#333333,stroke:#00A86B,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,font-family:Satoshi;
+  classDef green fill:linear-gradient(135deg, #00A86B, #006633),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,border-radius:10px,font-family:Satoshi;
+  classDef black fill:linear-gradient(135deg, #333333, #1a1a1a),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,border-radius:10px,font-family:Satoshi;
   linkStyle default stroke:#333,stroke-width:2px,stroke-dasharray:4,4;
 
   %% Conditional Styling
@@ -84,10 +84,10 @@ flowchart TD
 ```
 
 **Hierarchy Logic**:
-- **Level 1**: SmartBin telemetry validation.
-- **Level 2**: Reward eligibility scoring.
-- **Level 3**: Token + NFT mint execution.
-- **Level 4**: Real-time reward display via Supabase & Solana Pay.
+- **Level 1**: Validates SmartBin telemetry.
+- **Level 2**: Assesses reward eligibility.
+- **Level 3**: Executes token and NFT minting.
+- **Level 4**: Displays rewards in real-time via Supabase & Solana Pay.
 
 ---
 
@@ -95,34 +95,34 @@ flowchart TD
 
 **Features**:
 - Manage users, enterprises, SmartBins, and reward pools.
-- Control token supply, minting thresholds, and payout cycles.
-- View ESG analytics, contamination heatmaps, and AI forecasts.
-- Audit-trail of all blockchain and IoT events.
+- Adjust token supply, minting thresholds, and payout cycles.
+- Explore ESG analytics, contamination heatmaps, and AI forecasts.
+- Review blockchain and IoT event audit trails.
 
 ```mermaid
 flowchart LR
-  A[Admin Panel]:::black --> B[Supabase DB]:::gray
-  A --> C[Reward Engine]:::green
-  A --> D[AI Analytics]:::gray
-  B --> E[User Stats & Telemetry]:::gray
-  C --> F[Solana Programs]:::black
-  F --> G[NFT + Token Data Sync]:::green
+  A([Admin Panel]):::black --> B([Supabase DB]):::gray
+  A --> C([Reward Engine]):::green
+  A --> D([AI Analytics]):::gray
+  B --> E([User Stats & Telemetry]):::gray
+  C --> F([Solana Programs]):::black
+  F --> G([NFT + Token Data Sync]):::green
   D --> A
 
   %% Clickable Nodes
-  click A "https://docs.polymers.network/admin-panel" "Admin Panel Guide"
+  click A "https://docs.polymersnetwork.org/admin-panel" "Admin Panel Guide"
   click B "https://supabase.com/docs" "Supabase DB Docs"
-  click C "https://docs.polymers.network/reward-engine" "Reward Engine Docs"
-  click D "https://docs.polymers.network/ai-analytics" "AI Analytics Docs"
-  click E "https://docs.polymers.network/user-stats" "User Stats & Telemetry Docs"
+  click C "https://docs.polymersnetwork.org/reward-engine" "Reward Engine Docs"
+  click D "https://docs.polymersnetwork.org/ai-analytics" "AI Analytics Docs"
+  click E "https://docs.polymersnetwork.org/user-stats" "User Stats & Telemetry Docs"
   click F "https://solanapay.com/docs" "Solana Programs Docs"
-  click G "https://docs.polymers.network/data-sync" "NFT & Token Sync Docs"
+  click G "https://docs.polymersnetwork.org/data-sync" "NFT & Token Sync Docs"
 
   %% Styling
-  classDef green fill:#00A86B,stroke:#333333,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,font-family:Satoshi;
-  classDef black fill:#333333,stroke:#00A86B,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,font-family:Satoshi;
+  classDef green fill:linear-gradient(135deg, #00A86B, #006633),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,border-radius:10px,font-family:Satoshi;
+  classDef black fill:linear-gradient(135deg, #333333, #1a1a1a),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,border-radius:10px,font-family:Satoshi;
   linkStyle default stroke:#333,stroke-width:2px,stroke-dasharray:4,4;
 
   %% Conditional Styling
@@ -136,23 +136,23 @@ flowchart LR
 ```mermaid
 flowchart TB
   subgraph IoT["IoT & SmartBins"]
-    SB["SmartBins<br>Fill / Weight / Temp"]:::green
-    Helium["Helium DePIN Gateway"]:::gray
+    SB([SmartBins<br>Fill / Weight / Temp]):::green
+    Helium([Helium DePIN Gateway]):::gray
   end
 
   subgraph Backend["Backend Services"]
-    Supabase["Supabase DB"]:::gray
-    RewardAPI["Reward API"]:::gray
-    AutoMint["Auto-Mint Engine"]:::black
+    Supabase([Supabase DB]):::gray
+    RewardAPI([Reward API]):::gray
+    AutoMint([Auto-Mint Engine]):::black
   end
 
   subgraph Blockchain["Solana Layer"]
-    Solana["Solana Programs + Metaplex"]:::black
+    Solana([Solana Programs + Metaplex]):::black
   end
 
   subgraph Frontend["Dashboards & Mobile App"]
-    Web["Admin & User Dashboards"]:::gray
-    App["Mobile App (Expo)"]:::gray
+    Web([Admin & User Dashboards]):::gray
+    App([Mobile App (Expo)]):::gray
   end
 
   %% Data Flow
@@ -161,20 +161,20 @@ flowchart TB
   AutoMint --> Supabase
 
   %% Clickable Nodes
-  click SB "https://docs.polymers.network/smartbins" "SmartBin Telemetry Docs"
+  click SB "https://docs.polymersnetwork.org/smartbins" "SmartBin Telemetry Docs"
   click Helium "https://www.helium.com/docs" "Helium DePIN Docs"
   click Supabase "https://supabase.com/docs" "Supabase Database Docs"
-  click RewardAPI "https://docs.polymers.network/reward-api" "Reward API Details"
-  click AutoMint "https://docs.polymers.network/auto-mint" "Auto-Mint Engine Docs"
+  click RewardAPI "https://docs.polymersnetwork.org/reward-api" "Reward API Details"
+  click AutoMint "https://docs.polymersnetwork.org/auto-mint" "Auto-Mint Engine Docs"
   click Solana "https://solanapay.com/docs" "Solana Programs & Metaplex Docs"
-  click Web "https://docs.polymers.network/dashboard" "Dashboard Guide"
-  click App "https://docs.polymers.network/mobile" "Mobile App Guide"
+  click Web "https://docs.polymersnetwork.org/dashboard" "Dashboard Guide"
+  click App "https://docs.polymersnetwork.org/mobile" "Mobile App Guide"
 
   %% Styling
-  classDef green fill:#00A86B,stroke:#333333,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,font-family:Satoshi;
-  classDef black fill:#333333,stroke:#00A86B,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,font-family:Satoshi;
+  classDef green fill:linear-gradient(135deg, #00A86B, #006633),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,border-radius:10px,font-family:Satoshi;
+  classDef black fill:linear-gradient(135deg, #333333, #1a1a1a),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,border-radius:10px,font-family:Satoshi;
   linkStyle default stroke:#333,stroke-width:2px,stroke-dasharray:4,4;
 
   %% Conditional Styling
@@ -201,7 +201,7 @@ flowchart TB
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node 18+, npm 9+
+- Node.js 18+, npm 9+
 - Solana CLI + Solana Pay SDK
 - Supabase Project
 - TensorFlow.js
@@ -213,8 +213,8 @@ git clone https://github.com/PolymersNetwork/polymers-recycling-platform.git
 cd polymers-recycling-platform
 npm ci
 cp .env.example .env
-npm run dev       # Dashboard
-npx expo start    # Mobile App
+npm run dev       # Launch Dashboard
+npx expo start    # Launch Mobile App
 ```
 
 ### Environment Variables
@@ -233,33 +233,33 @@ REWARD_WALLET_TOKEN_ACCOUNT=REWARD_WALLET_TOKEN
 
 ## 💰 Tokenized Rewards
 
-| Token  | Utility                     |
-|--------|-----------------------------|
-| PLY    | Polymer recycling points    |
-| CARB   | Carbon offset credits       |
-| EWASTE | E-waste recycling rewards   |
+| **Token** | **Utility**                  |
+|-----------|------------------------------|
+| PLY       | Polymer recycling points     |
+| CARB      | Carbon offset credits        |
+| EWASTE    | E-waste recycling rewards    |
 
 ```mermaid
 graph LR
-  U[User Deposit]:::green --> R[Reward API]:::gray
-  R --> M[Auto-Mint Engine]:::black
-  M --> T[Solana Tx + NFT Twin]:::gray
-  T --> W[Wallet & Dashboard]:::black
-  W --> L[Leaderboards & ESG Stats]:::gray
+  U([User Deposit]):::green --> R([Reward API]):::gray
+  R --> M([Auto-Mint Engine]):::black
+  M --> T([Solana Tx + NFT Twin]):::gray
+  T --> W([Wallet & Dashboard]):::black
+  W --> L([Leaderboards & ESG Stats]):::gray
 
   %% Clickable Nodes
-  click U "https://docs.polymers.network/user-deposits" "User Deposit Guide"
-  click R "https://docs.polymers.network/reward-api" "Reward API Docs"
-  click M "https://docs.polymers.network/auto-mint" "Auto-Mint Engine Docs"
+  click U "https://docs.polymersnetwork.org/user-deposits" "User Deposit Guide"
+  click R "https://docs.polymersnetwork.org/reward-api" "Reward API Docs"
+  click M "https://docs.polymersnetwork.org/auto-mint" "Auto-Mint Engine Docs"
   click T "https://solanapay.com/docs" "Solana Transaction Docs"
-  click W "https://docs.polymers.network/wallet" "Wallet & Dashboard Guide"
-  click L "https://docs.polymers.network/leaderboards" "Leaderboards & ESG Stats Docs"
+  click W "https://docs.polymersnetwork.org/wallet" "Wallet & Dashboard Guide"
+  click L "https://docs.polymersnetwork.org/leaderboards" "Leaderboards & ESG Stats Docs"
 
   %% Styling
-  classDef green fill:#00A86B,stroke:#333333,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,font-family:Satoshi;
-  classDef black fill:#333333,stroke:#00A86B,stroke-width:2px,color:#fff,font-family:Satoshi;
-  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,font-family:Satoshi;
+  classDef green fill:linear-gradient(135deg, #00A86B, #006633),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef gray fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333,border-radius:10px,font-family:Satoshi;
+  classDef black fill:linear-gradient(135deg, #333333, #1a1a1a),stroke:#00A86B,stroke-width:2px,color:#fff,border-radius:10px,font-family:Satoshi;
+  classDef active fill:#00A86B,stroke:#333333,stroke-width:3px,color:#fff,border-radius:10px,font-family:Satoshi;
   linkStyle default stroke:#333,stroke-width:2px,stroke-dasharray:4,4;
 
   %% Conditional Styling
@@ -269,9 +269,9 @@ graph LR
 ---
 
 ## 🧪 Testnet Sandbox
-1. Fund wallets on Devnet.
+1. Fund wallets on Devnet via a Solana faucet.
 2. Configure SmartBins for simulated deposits.
-3. Update `.env` to Devnet:
+3. Update `.env` for Devnet:
 ```
 NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
 PLY_MINT=DEV_PLY_MINT
@@ -280,7 +280,7 @@ EWASTE_MINT=DEV_EWASTE_MINT
 REWARD_WALLET_ADDRESS=DEV_REWARD_WALLET
 REWARD_WALLET_TOKEN_ACCOUNT=DEV_REWARD_WALLET_TOKEN
 ```
-4. Launch dashboard + mobile app.
+4. Launch dashboard and mobile app.
 
 ---
 
@@ -303,16 +303,16 @@ gantt
   ESG Report Update  :c2, after b2, 8d
 
   %% Clickable Tasks
-  click a1 "https://docs.polymers.network/user-deposits" "User Deposits Analytics"
-  click a2 "https://docs.polymers.network/enterprise-batches" "Enterprise Batches Analytics"
-  click b1 "https://docs.polymers.network/tokens#ply" "PLY Token Minting"
-  click b2 "https://docs.polymers.network/tokens#carb" "CARB Token Minting"
-  click b3 "https://docs.polymers.network/tokens#ewaste" "EWASTE Token Minting"
-  click c1 "https://docs.polymers.network/leaderboards" "Leaderboards Sync Details"
-  click c2 "https://docs.polymers.network/esg-reports" "ESG Report Details"
+  click a1 "https://docs.polymersnetwork.org/user-deposits" "User Deposits Analytics"
+  click a2 "https://docs.polymersnetwork.org/enterprise-batches" "Enterprise Batches Analytics"
+  click b1 "https://docs.polymersnetwork.org/tokens#ply" "PLY Token Minting"
+  click b2 "https://docs.polymersnetwork.org/tokens#carb" "CARB Token Minting"
+  click b3 "https://docs.polymersnetwork.org/tokens#ewaste" "EWASTE Token Minting"
+  click c1 "https://docs.polymersnetwork.org/leaderboards" "Leaderboards Sync Details"
+  click c2 "https://docs.polymersnetwork.org/esg-reports" "ESG Report Details"
 
   %% Styling
-  classDef active fill:#00A86B,stroke:#333333,stroke-width:2px,color:#fff;
+  classDef active fill:linear-gradient(135deg, #00A86B, #006633),stroke:#333333,stroke-width:2px,color:#fff;
   classDef default fill:#D3D3D3,stroke:#333333,stroke-width:2px,color:#333;
 ```
 
@@ -333,7 +333,7 @@ npm run test
 ---
 
 ## 🛠 Deployment
-- **Frontend**: Vercel (CI/CD)
+- **Frontend**: Vercel with CI/CD
 - **Mobile**: Expo OTA updates
 - **Blockchain**: Solana program rollouts
 - **Monitoring**: Sentry + Supabase telemetry
@@ -342,53 +342,52 @@ npm run test
 
 ## 📋 Recommendations
 
-To maximize the impact and scalability of the Polymers Protocol, consider the following enhancements:
+To maximize the impact and scalability of Polymers Protocol, consider these enhancements:
 
 1. **Enhanced User Engagement**:
-   - **Gamification Expansion**: Introduce dynamic missions (e.g., "Recycle 10kg of e-waste this week") with tiered rewards to boost user participation. Integrate push notifications in the mobile app to alert users about new missions or leaderboard updates.
-   - **Social Sharing**: Allow users to share recycling milestones (e.g., PLY tokens earned) on social platforms like X, with embedded NFT Twin visuals to promote the platform virally.
-   - **Localized Interfaces**: Support multiple languages in the dashboard and mobile app to expand accessibility in global markets.
+   - **Dynamic Missions**: Add tiered challenges (e.g., "Recycle 10kg e-waste") with push notifications.
+   - **Social Sharing**: Enable sharing of milestones with NFT visuals on X.
+   - **Multilingual Support**: Localize dashboards and apps for global reach.
 
 2. **Scalability & Performance**:
-   - **Solana Program Optimization**: Optimize Solana smart contracts to reduce transaction costs (e.g., batch token minting) and improve throughput for high-volume SmartBin deployments.
-   - **Supabase Scaling**: Implement Supabase edge functions for real-time telemetry processing to handle increased IoT data from large-scale SmartBin networks.
-   - **Cross-Chain Compatibility**: Explore bridges to other blockchains (e.g., Ethereum, Polygon) for NFT Twins to enhance interoperability with broader ESG ecosystems.
+   - **Solana Optimization**: Batch token minting to reduce costs and boost throughput.
+   - **Supabase Edge**: Use edge functions for real-time IoT data processing.
+   - **Cross-Chain**: Bridge NFT Twins to Ethereum/Polygon for wider adoption.
 
 3. **Advanced Analytics**:
-   - **Real-Time ESG Dashboards**: Integrate live contamination heatmaps and carbon offset visualizations into the admin and user dashboards, linked from chart nodes (e.g., `AI Analytics` in the Admin Dashboard chart).
-   - **AI Model Enhancements**: Train LSTM models on larger datasets to improve supply/demand forecasting accuracy. Add anomaly detection to flag irregular SmartBin data (e.g., contamination spikes).
-   - **External Data Integration**: Pull real-time CO₂e metrics from external oracles (e.g., Pyth, Chainlink) to enhance ESG score credibility.
+   - **Live ESG Dashboards**: Add heatmaps and carbon offset visuals, linked from chart nodes.
+   - **AI Refinement**: Enhance LSTM models with anomaly detection for SmartBin data.
+   - **External Oracles**: Integrate Pyth/Chainlink for real-time CO₂e metrics.
 
 4. **Interactivity & Integration**:
-   - **Chart Integration**: Embed interactive Mermaid charts in the dashboard and mobile app using React Native WebView, with real-time updates from Supabase subscriptions (e.g., highlight `SmartBin` nodes when fill levels exceed 80%).
-   - **API Documentation**: Publish Swagger/OpenAPI specs for the SmartBin Reward API to encourage third-party integrations, with chart nodes linking to API endpoints (e.g., `/api/reward/trigger`).
-   - **Wallet Integration**: Support additional Solana-compatible wallets (e.g., Phantom, Solflare) to improve user onboarding and reward accessibility.
+   - **Chart Embedding**: Use React Native WebView for interactive charts with Supabase updates.
+   - **API Specs**: Publish Swagger docs for the Reward API, linked from charts.
+   - **Wallet Support**: Add Phantom/Solflare for better user onboarding.
 
 5. **Sustainability & Compliance**:
-   - **Regulatory Reporting**: Add automated ESG report generation for compliance with global recycling standards (e.g., EU Circular Economy Action Plan), accessible via the admin dashboard.
-   - **Carbon Credit Marketplace**: Enable users to trade CARB tokens in a marketplace, with integration into the dashboard for real-time trading analytics.
-   - **Audit Enhancements**: Strengthen the audit trail with blockchain-based tamper-proof logging of all SmartBin and reward events, accessible via the admin panel.
+   - **ESG Reporting**: Automate reports for EU standards via the admin dashboard.
+   - **Carbon Marketplace**: Enable CARB token trading with live analytics.
+   - **Audit Trail**: Implement tamper-proof blockchain logging.
 
-6. **Community & Ecosystem Growth**:
-   - **Developer SDK**: Release an SDK for third-party developers to build apps on top of the Polymers Protocol, leveraging the SmartBin Reward API and NFT Twins.
-   - **Partnerships**: Collaborate with e-waste recycling facilities and ESG-focused organizations to expand SmartBin deployments and token adoption.
-   - **Open-Source Contributions**: Encourage community contributions to the `/lib` and `/programs/src` directories, with clear documentation in `/docs` to foster innovation.
+6. **Community & Ecosystem**:
+   - **Developer SDK**: Release an SDK for third-party apps using the API and NFTs.
+   - **Partnerships**: Collaborate with recycling facilities and ESG groups.
+   - **Open Source**: Encourage contributions to `/lib` and `/programs/src`.
 
-**Implementation Example** (for Chart Integration):
+**Implementation Example** (Chart Integration):
 ```javascript
-// Real-time chart update with Supabase
+// Real-time chart update
 supabase
   .channel('smartbins')
   .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'smartbins' }, payload => {
-    const smartBinNode = document.querySelector('#SB');
+    const node = document.querySelector('#SB');
     if (payload.new.fill_level > 80) {
-      smartBinNode.classList.add('active');
-      smartBinNode.setAttribute('data-tooltip', `High Fill Level: ${payload.new.fill_level}%`);
+      node.classList.add('active');
+      node.setAttribute('data-tooltip', `Fill: ${payload.new.fill_level}%`);
     }
   })
   .subscribe();
 ```
-- **Effect**: Dynamically updates the `SmartBin` node in the System Architecture chart when fill levels exceed 80%, enhancing user engagement.
 
 ---
 
