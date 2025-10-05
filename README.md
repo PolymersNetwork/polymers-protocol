@@ -12,7 +12,7 @@ The platform combines:
 
 **Version**: 1.0 Beta  
 **Live Demo**: [demo.polymersnetwork.org](https://demo.polymersnetwork.org)  
-**Repository**: [github.com/polymers-protocol/smartbin](https://github.com/polymers-protocol/smartbin)
+**Repository**: [github.com/PolymersNetwork/smartbin](https://github.com/PolymerNetwork/smartbin)
 
 ---
 
