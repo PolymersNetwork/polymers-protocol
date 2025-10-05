@@ -3,6 +3,7 @@
 Thank you for your interest in contributing! This document outlines the coding standards, commit message conventions, testing workflow, and pull request process to ensure a consistent, high-quality development workflow for the Polymers Protocol ecosystem.
 
 **Table of Contents**
+```
 	1.	Code of Conduct
 	2.	Getting Started
 	3.	Coding Standards
@@ -10,7 +11,7 @@ Thank you for your interest in contributing! This document outlines the coding s
 	5.	Testing Workflow
 	6.	Pull Request Guidelines
 	7.	Additional Resources
-
+```
 
 ## Code of Conduct
 
