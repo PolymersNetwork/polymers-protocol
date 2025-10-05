@@ -56,28 +56,37 @@ The Polymers Protocol integrates IoT, blockchain, AI, and frontend components in
 
 ```mermaid
 graph TD
+    %% IoT Layer
     subgraph IoT_Layer["IoT Layer"]
         A[SmartBin Sensors<br>Helium DePIN<br>NB-IoT, Sigfox] -->|Telemetry| B[IoT Gateway<br>Hivemapper<br>Mapbox AR]
     end
+
+    %% Data Layer
     subgraph Data_Layer["Data Layer"]
         B -->|Geospatial Data| C[Supabase DB<br>Real-time Telemetry]
     end
+
+    %% AI Layer
     subgraph AI_Layer["AI Layer"]
         C --> D[AI Engine<br>TensorFlow.js<br>LSTM Analytics]
         D -->|Material Detection| E[AI ESG Scanner<br>Expo Camera<br>>95% Accuracy]
         D -->|Predictive Analytics| F[ESG Metrics<br>Carbon Offset<br>Cleanliness Score]
         D -->|User Guidance| G[AI Assistant<br>OpenAI Chat<br>GPT/Grok 3, Dialect]
     end
+
+    %% Blockchain Layer
     subgraph Blockchain_Layer["Blockchain Layer"]
         C --> H[Rewards Engine<br>PLY, CARB, EWASTE<br>HONEY, SOL]
         H -->|Minting| I[NFT Twins<br>Metaplex cNFTs]
         H -->|Price Feeds| J[Oracles<br>PYTH, Chainlink]
         H -->|Token Swaps| K[Polymers Swap Panel<br>Solana Pay<br>Jupiter, Raydium]
-        K -->|Solana Pay Tx| L[Solana Pay<br>QR Codes<br>Transactions]
-        L -->|Payments| M[User Wallets<br>Phantom, Solflare<br>Backpack]
-        K -->|Observability| N[Helius<br>RPC, Event Streaming]
+        K -->|Transactions| L[Solana Pay QR Codes]
+        L -->|Payments| M[User Wallets<br>Phantom, Solflare, Backpack]
+        K -->|Observability| N[Helius RPC & Event Streaming]
         M -->|Staking| O[Staking Program<br>HONEY Rewards]
     end
+
+    %% Frontend Layer
     subgraph Frontend_Layer["Frontend Layer"]
         H -->|Rewards Data| P[Gamified Leaderboard<br>Animated Rankings<br>CARB/EWASTE Bonuses]
         I -->|NFT Data| P
@@ -89,21 +98,23 @@ graph TD
         P -->|User Rankings| Q
         P -->|User Rankings| R
     end
+
+    %% Security Layer
     subgraph Security_Layer["Security & Compliance"]
-        C -->|Encrypted Storage| S[Security<br>AES-256<br>Privy.io, Sentry]
+        C -->|Encrypted Storage| S[Security Layer<br>AES-256, Privy.io, Sentry]
         S -->|Compliance| T[GDPR, EU CSRD<br>ISO 14064-1]
     end
 
-    %% Enhanced Styling
-    classDef primary fill:#1A3C34,stroke:#F4A261,stroke-width:2px,color:#FFFFFF,font-size:12px;
-    classDef secondary fill:#F4A261,stroke:#1A3C34,stroke-width:2px,color:#1A3C34,font-size:12px;
-    classDef tertiary fill:#D3D3D3,stroke:#1A3C34,stroke-width:2px,color:#1A3C34,font-size:12px;
-    classDef neutral fill:#FFFFFF,stroke:#1A3C34,stroke-width:2px,color:#1A3C34,font-size:12px;
+    %% Styling
+    classDef primary fill:#1A3C34,stroke:#F4A261,stroke-width:2px,stroke-dasharray:0,font-size:12px,rx:8,ry:8,color:#FFFFFF;
+    classDef secondary fill:#F4A261,stroke:#1A3C34,stroke-width:2px,rx:8,ry:8,font-size:12px,color:#1A3C34;
+    classDef tertiary fill:#D3D3D3,stroke:#1A3C34,stroke-width:2px,rx:8,ry:8,font-size:12px,color:#1A3C34;
+    classDef neutral fill:#FFFFFF,stroke:#1A3C34,stroke-width:2px,rx:8,ry:8,font-size:12px,color:#1A3C34;
 
     class A primary;
     class K secondary;
-    class L,P tertiary;
-    class Q,R neutral;
+    class L,P,O tertiary;
+    class Q,R,S,T neutral;
 ```
 
 ---
