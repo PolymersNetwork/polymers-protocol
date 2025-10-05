@@ -2,8 +2,6 @@
 
 Thank you for your interest in contributing! This document outlines the coding standards, commit message conventions, testing workflow, and pull request process to ensure a consistent, high-quality development workflow for the Polymers Protocol ecosystem.
 
-⸻
-
 **Table of Contents**
 	1.	Code of Conduct
 	2.	Getting Started
@@ -13,14 +11,12 @@ Thank you for your interest in contributing! This document outlines the coding s
 	6.	Pull Request Guidelines
 	7.	Additional Resources
 
-⸻
 
 ## Code of Conduct
 
 Please read and adhere to our Code of Conduct.
 Polymers Protocol values collaboration, respect, and inclusivity.
 
-⸻
 
 ## Getting Started
 	1.	Fork the repository and clone your fork:
@@ -40,9 +36,6 @@ npm run simulate:iot            # IoT simulations
 npm run test:lstm               # LSTM analytics
 
 
-
-⸻
-
 ## Coding Standards
 	•	Language: TypeScript for all applications, with strict typing.
 	•	Styling: Tailwind CSS with custom color palette:
@@ -59,7 +52,7 @@ npm run format
 
 	•	File structure: Follow the monorepo layout:
 
-/apps
+**/apps**
 /shared
 /lib
 /hooks
@@ -74,8 +67,7 @@ npm run format
 	•	Use functional components and hooks.
 	•	Maintain separation between UI (/components) and logic (/lib, /api).
 	•	Add JSDoc/TSDoc comments for public functions.
-
-⸻
+	
 
 ## Commit Message Guidelines
 
@@ -91,7 +83,7 @@ Use Conventional Commits:
 	•	test: tests added/fixed
 	•	chore: build/config changes
 
-Examples:
+**Examples:**
 
 feat(helium): add NB-IoT fallback support
 fix(lstm_model): correct fill level prediction formula
@@ -134,7 +126,6 @@ npm run format
 
 ## All tests must pass before opening a PR.
 
-⸻
 
 Pull Request Guidelines
 	1.	Branch naming:
