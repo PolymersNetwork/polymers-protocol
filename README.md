@@ -10,8 +10,7 @@ The platform combines:
 - **AI**: TensorFlow.ts QR-code / ESG scanner, OpenAI, Deepseek, Anthropics, Grok AI agents via Solana and Dialect.
 - **Compliance**: GDPR, EU CSRD, ISO 14064-1, Plastic Pollution Treaty (INC-5.2, August 2025).
 
-**Version**: 1.0 Beta
-
+**Version**: 1.0 Beta  
 **Live Demo**: [demo.polymersnetwork.org](https://demo.polymersnetwork.org)  
 
 ---
@@ -53,52 +52,58 @@ The platform combines:
 
 ## 🏗️ Architecture Overview
 
-The Polymers Protocol integrates IoT, blockchain, AI, and frontend components to create a seamless waste management ecosystem. The diagram below illustrates the flow from SmartBins to user wallets, dashboards, and leaderboards, with Solana Pay facilitating transactions.
+The Polymers Protocol integrates IoT, blockchain, AI, and frontend components into a cohesive monorepo ecosystem. The optimized diagram below illustrates the data and transaction flow from SmartBins to user wallets, dashboards, and leaderboards, with Solana Pay facilitating seamless payments.
 
 ```mermaid
 graph TD
-    %% IoT Layer
-    A[SmartBin Sensors<br>Helium DePIN, NB-IoT, Sigfox] -->|Telemetry| B[IoT Gateway<br>Hivemapper, Mapbox AR]
-    B -->|Geospatial Data| C[Supabase DB<br>Real-time Telemetry]
+    subgraph IoT_Layer["IoT Layer"]
+        A[SmartBin Sensors<br>Helium DePIN<br>NB-IoT, Sigfox] -->|Telemetry| B[IoT Gateway<br>Hivemapper<br>Mapbox AR]
+    end
+    subgraph Data_Layer["Data Layer"]
+        B -->|Geospatial Data| C[Supabase DB<br>Real-time Telemetry]
+    end
+    subgraph AI_Layer["AI Layer"]
+        C --> D[AI Engine<br>TensorFlow.js<br>LSTM Analytics]
+        D -->|Material Detection| E[AI ESG Scanner<br>Expo Camera<br>>95% Accuracy]
+        D -->|Predictive Analytics| F[ESG Metrics<br>Carbon Offset<br>Cleanliness Score]
+        D -->|User Guidance| G[AI Assistant<br>OpenAI Chat<br>GPT/Grok 3, Dialect]
+    end
+    subgraph Blockchain_Layer["Blockchain Layer"]
+        C --> H[Rewards Engine<br>PLY, CARB, EWASTE<br>HONEY, SOL]
+        H -->|Minting| I[NFT Twins<br>Metaplex cNFTs]
+        H -->|Price Feeds| J[Oracles<br>PYTH, Chainlink]
+        H -->|Token Swaps| K[Polymers Swap Panel<br>Solana Pay<br>Jupiter, Raydium]
+        K -->|Solana Pay Tx| L[Solana Pay<br>QR Codes<br>Transactions]
+        L -->|Payments| M[User Wallets<br>Phantom, Solflare<br>Backpack]
+        K -->|Observability| N[Helius<br>RPC, Event Streaming]
+        M -->|Staking| O[Staking Program<br>HONEY Rewards]
+    end
+    subgraph Frontend_Layer["Frontend Layer"]
+        H -->|Rewards Data| P[Gamified Leaderboard<br>Animated Rankings<br>CARB/EWASTE Bonuses]
+        I -->|NFT Data| P
+        K -->|Swap Data| P
+        L -->|Tx Confirmation| P
+        F -->|ESG Data| Q[Dashboard<br>Next.js<br>GSAP Bezier Flows]
+        F -->|ESG Data| R[Mobile App<br>React Native<br>Expo, AR Wayfinder]
+        G -->|Notifications| R
+        P -->|User Rankings| Q
+        P -->|User Rankings| R
+    end
+    subgraph Security_Layer["Security & Compliance"]
+        C -->|Encrypted Storage| S[Security<br>AES-256<br>Privy.io, Sentry]
+        S -->|Compliance| T[GDPR, EU CSRD<br>ISO 14064-1]
+    end
 
-    %% AI Layer
-    C --> D[AI Engine<br>TensorFlow.js, LSTM Analytics]
-    D -->|Material Detection| E[AI ESG Scanner<br>Expo Camera, >95% Accuracy]
-    D -->|Predictive Analytics| F[ESG Metrics<br>Carbon Offset, Cleanliness Score]
-    D -->|User Guidance| G[AI Assistant<br>OpenAI Chat, GPT/Grok 3, Dialect]
+    %% Enhanced Styling
+    classDef primary fill:#1A3C34,stroke:#F4A261,stroke-width:2px,color:#FFFFFF,font-size:12px;
+    classDef secondary fill:#F4A261,stroke:#1A3C34,stroke-width:2px,color:#1A3C34,font-size:12px;
+    classDef tertiary fill:#D3D3D3,stroke:#1A3C34,stroke-width:2px,color:#1A3C34,font-size:12px;
+    classDef neutral fill:#FFFFFF,stroke:#1A3C34,stroke-width:2px,color:#1A3C34,font-size:12px;
 
-    %% Blockchain Layer
-    C --> H[Rewards Engine<br>PLY, CARB, EWASTE, HONEY, SOL]
-    H -->|Minting| I[NFT Twins<br>Metaplex cNFTs]
-    H -->|Price Feeds| J[Oracles<br>PYTH, Chainlink]
-    H -->|Token Swaps| K[Polymers Swap Panel<br>Solana Pay, Jupiter, Raydium]
-    K -->|Solana Pay Tx| L[Solana Pay<br>QR Codes, Transactions]
-    L -->|Payments| M[User Wallets<br>Phantom, Solflare, Backpack]
-    K -->|Observability| N[Helius<br>RPC, Event Streaming]
-    M -->|Staking| O[Staking Program<br>HONEY Rewards]
-
-    %% Frontend Layer
-    H -->|Rewards Data| P[Gamified Leaderboard<br>Animated Rankings, CARB/EWASTE Bonuses]
-    I -->|NFT Data| P
-    K -->|Swap Data| P
-    L -->|Tx Confirmation| P
-    F -->|ESG Data| Q[Dashboard<br>Next.js, GSAP Bezier Flows, Analytics]
-    F -->|ESG Data| R[Mobile App<br>React Native, Expo, AR Wayfinder]
-    G -->|Notifications| R
-    P -->|User Rankings| Q
-    P -->|User Rankings| R
-
-    %% Security & Compliance
-    C -->|Encrypted Storage| S[Security Layer<br>AES-256, Privy.io, Sentry]
-    S -->|Compliance| T[GDPR, EU CSRD, ISO 14064-1]
-
-    %% Styling
-    style A fill:#1A3C34,stroke:#F4A261,color:#FFFFFF
-    style K fill:#F4A261,stroke:#1A3C34,color:#1A3C34
-    style L fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
-    style P fill:#D3D3D3,stroke:#1A3C34,color:#1A3C34
-    style Q fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
-    style R fill:#FFFFFF,stroke:#1A3C34,color:#1A3C34
+    class A primary;
+    class K secondary;
+    class L,P tertiary;
+    class Q,R neutral;
 ```
 
 ---
